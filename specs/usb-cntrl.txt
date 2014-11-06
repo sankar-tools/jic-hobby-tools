@@ -1,0 +1,8 @@
+Auto launch controller on connecting USB device
+Scan system for necessary files based on file extensions
+Create a queue of all found files (maintain list along with complete path)
+Start copying files from source disc to USB device
+Copy files along with complete path as per the files queue
+Save queue data to USB device on disconnection
+Use a unique identifier (may be a mac address) to identify each PC uniquely
+Configuration file to define
