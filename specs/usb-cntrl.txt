@@ -1,8 +1,15 @@
 Auto launch controller on connecting USB device
-Scan system for necessary files based on file extensions
+Configuration file to define key parameters
+   (log_file, dir_list, file_ext, dest_path, preserv_path)
+Use a unique identifier (may be a mac address or hostname) to identify each PC uniquely - make sure not access issues
+Scan system for necessary files starting with $config.dir_list for extensions $config.file_ext
+	Use existing queue (if any) at dest_path
 Create a queue of all found files (maintain list along with complete path)
 Start copying files from source disc to USB device
-Copy files along with complete path as per the files queue
+	Copy file to path $config.dest_path\hostname\$$image_path
+	Check file existence before copying (skip or rename on duplicates)
+	Copy files along with complete path as per the files queue
 Save queue data to USB device on disconnection
-Use a unique identifier (may be a mac address) to identify each PC uniquely
-Configuration file to define
+	Save queue $config.dest_path\hostname\scan.q
+
+
