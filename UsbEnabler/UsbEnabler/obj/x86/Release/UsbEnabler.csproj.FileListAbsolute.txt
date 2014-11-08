@@ -1,0 +1,4 @@
+D:\wspace\github\jic-hobby-tools\UsbEnabler\UsbEnabler\bin\Release\UsbEnabler.exe
+D:\wspace\github\jic-hobby-tools\UsbEnabler\UsbEnabler\bin\Release\UsbEnabler.pdb
+D:\wspace\github\jic-hobby-tools\UsbEnabler\UsbEnabler\obj\x86\Release\UsbEnabler.exe
+D:\wspace\github\jic-hobby-tools\UsbEnabler\UsbEnabler\obj\x86\Release\UsbEnabler.pdb
