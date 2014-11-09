@@ -22,24 +22,29 @@ namespace UsbEnabler
             if (configData == null)
             {
                 configData = new Config();
-                configData = configData.loadConfigXml();
+                configData.loadConfigXml();
             }
 
             return configData;
         }
 
 
-        private Config loadConfigXml()
+        private void loadConfigXml()
         {
             XElement xdoc = XElement.Load("../../config.xml");
 
-            var config = xdoc.Descendants("UsbEnabler").Select(cfg => new Config
-                       {
-                           FileExtList = cfg.Element("FileTypes").Value,
-                           StorePath = cfg.Element("Store").Value
-                       });
+            //var config = xdoc.Descendants("UsbEnabler").Select(cfg => new Config
+            //           {
+            //               FileExtList = cfg.Element("FileTypes").Value,
+            //               StorePath = cfg.Element("Store").Value
+            //           });
 
-            return config as Config;
+            //configData = config as Config;
+            configData.StorePath = @"d:\temp\store";
+            configData.FileExtList = "jpg;png";
+            configData.ParseDirs = new string[] { @"d:\dump", @"c:\dump", "$desktop" };
+
+            //return config as Config;
         }
     }
 }

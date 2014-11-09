@@ -12,7 +12,8 @@ namespace UsbEnabler
         {
             System.Console.Out.WriteLine("Hello World!!!");
 
-            string saveTo = Config.Instance().StorePath;
+            FileScanner.Init();
+            FileSaver.Init();
         }
     }
 }
