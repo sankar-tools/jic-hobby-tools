@@ -1,8 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <UsbEnabler>
-  <FileTypes></FileTypes>
-  <Store></Store>
+  <Params>
+  <FileTypes>*.jpg;*.png</FileTypes>
+  <Store>d:\temp</Store>
   <Dirs>
-    <Dir></Dir>
+    <Dir>d:\dump</Dir>
+    <Dir>c:\dump</Dir>
   </Dirs>
+  </Params>
 </UsbEnabler>

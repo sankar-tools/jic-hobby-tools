@@ -7,12 +7,12 @@ namespace UsbEnabler
 {
     class Program
     {
-        Queue<string> files = new Queue<string>()
+        Queue<string> files = new Queue<string>();
         static void Main(string[] args)
         {
             System.Console.Out.WriteLine("Hello World!!!");
+
+            string saveTo = Config.Instance().StorePath;
         }
-
-
     }
 }
