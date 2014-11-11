@@ -14,8 +14,8 @@ x64/
 x86/
 build/
 bld/
-[Bb]in/
-[Oo]bj/
+*/[Bb]in/
+*/[Oo]bj/
 # Roslyn cache directories
 *.ide/
 # MSTest test Results
@@ -150,6 +150,11 @@ UpgradeLog*.htm
 *.bim_*.settings
 # Microsoft Fakes
 FakesAssemblies/
+
+########################
+# Usb Enabler files
+UsbEnabler/UsbEnabler/obj/
+UsbEnabler/UsbEnabler/bin/
 
 ################
 # Android git ignore entries

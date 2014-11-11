@@ -52,9 +52,9 @@ namespace UsbEnabler
                         }
                     }
                 }
-                catch (InvalidOperationException ex) // deque failed, no more items in queue
+                catch (InvalidOperationException ) // deque failed, no more items in queue
                 {
-                    if (FileQueue.ScanComplete == false)
+                    if (FileQueue.ScanComplete == true)
                     {
                         Logger.Write("FileSaver", "All item copied");
                         break;
