@@ -44,9 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
+    <Compile Include="FileHelper.cs" />
     <Compile Include="FileQueue.cs" />
     <Compile Include="FileSaver.cs" />
     <Compile Include="FileScanner.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

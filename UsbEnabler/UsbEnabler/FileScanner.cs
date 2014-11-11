@@ -3,22 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Threading;
 
 namespace UsbEnabler
 {
     class FileScanner
     {
-        //Queue<string> q = new Queue<string>();
-
         public static void Init()
         {
-            FileScanner scanner = new FileScanner();
-            scanner.ScanFiles();
+            Logger.Write("FileScanner", "Process init");
+            try
+            {
+                FileScanner scanner = new FileScanner();
+                scanner.ScanFiles();
+            }
+            catch (ThreadAbortException e) 
+            {
+                Logger.Write("FileScanner", e.ToString());
+            }
         }
 
         public void ScanFiles()
         {
-            
+            Logger.Write("FileScanner", "Start Scan");
             try
             {
                 Config cfg = Config.Instance();
@@ -28,39 +35,31 @@ namespace UsbEnabler
                     if (!System.IO.Directory.Exists(fileDir))
                         continue;
 
+                    Logger.Write("FileScanner", "Scanning " + fileDir.ToString());
+
                     IEnumerable<string> allFiles = Directory.GetFiles(fileDir, "*.*", SearchOption.AllDirectories);
+                    int fileCount = 0;
                     foreach(string file in allFiles)
                     {
-                        foreach(string e in ext.Split(new char[] {',',';'}))
-                            if(file.Contains(e))
+                        foreach (string e in ext.Split(new char[] { ',', ';' }))
+                        {
+                            if (file.Contains(e))
+                            {
                                 FileQueue.Files.Enqueue(file);
+                                fileCount++;
+                            }
+                        }
                     }
 
+                    Logger.Write("FileScanner", fileCount.ToString() + " files added for " + fileDir + ", queue length " + FileQueue.Files.Count.ToString());
                 }
                 FileQueue.ScanComplete = true;
+                Logger.Write("FileScanner", "Scan complete");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-            }
-            Console.WriteLine("Files scanned " + FileQueue.Files.Count);
+                Logger.Write("FileScanner", ex.ToString());
+            } 
         }
-
-        //public bool MatchFileExtension(string fileName, string extensions)
-        //{
-        //    foreach(string ext in extensions.Split(new char[] {',',';'}))
-        //        if(fileName.Contains(ext))
-        //            return true;
-
-        //    return false;
-        //}
-
-        //public IEnumerable<FileInfo> GetFilesByExtensions(this DirectoryInfo dir, params string[] extensions)
-        //{
-        //    if (extensions == null)
-        //        throw new ArgumentNullException("extensions");
-        //    IEnumerable<FileInfo> files = dir.EnumerateFiles();
-        //    return files.Where(f => extensions.Contains(f.Extension));
-        //}
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Threading;
 
 namespace UsbEnabler
 {
@@ -11,8 +12,16 @@ namespace UsbEnabler
 
         public static void Init()
         {
-            FileSaver saver = new FileSaver();
-            saver.Save();
+            Logger.Write("FileSaver", "Process init");
+            try
+            {
+                FileSaver saver = new FileSaver();
+                saver.Save();
+            }
+            catch (ThreadAbortException ex)
+            {
+                Logger.Write("FileSaver", ex.ToString());
+            }
         }
 
         public void Save()
@@ -20,11 +29,7 @@ namespace UsbEnabler
             Config cfg = Config.Instance();
             string storePath = cfg.StorePath + @"\" + System.Environment.MachineName + @"\";
 
-            if (!System.IO.Directory.Exists(storePath))
-            {
-                System.IO.Directory.CreateDirectory(storePath);
-            }
-
+            Logger.Write("FileSaver", "Storage path " + storePath);
             while (true)
             {
                 string file = FileQueue.Files.Dequeue();
@@ -33,13 +38,15 @@ namespace UsbEnabler
                     string destFile = GetDestinationPath(storePath, file);
                     try
                     {
-                        EnsurePath(destFile);
+                        FileHelper.EnsurePath(destFile);
 
                         System.IO.File.Copy(file, destFile, true);
+                        Logger.Write("FileSaver", file + " saved to " + destFile);
                     }
                     catch (Exception ex) 
                     {
-                        Console.WriteLine(ex.ToString());
+                        Logger.Write("FileSaver", "Error saving " + file + " saved to " + destFile);
+                        Logger.Write("FileSaver", ex.ToString());
                     }
                 }
                 else
@@ -47,19 +54,9 @@ namespace UsbEnabler
                     if (FileQueue.ScanComplete == false)
                         break;
                     else
-                        break;
-                        //wait for further files to be scanned by file scanner
+                        Thread.Sleep(new TimeSpan(0,0,5)); // wait 5 sec for more files to scan
                 }
 
-            }
-        }
-
-        private static void EnsurePath(string destFile)
-        {
-            string destFolder = Path.GetDirectoryName(destFile);
-            if (!System.IO.Directory.Exists(destFolder))
-            {
-                System.IO.Directory.CreateDirectory(destFolder);
             }
         }
 
