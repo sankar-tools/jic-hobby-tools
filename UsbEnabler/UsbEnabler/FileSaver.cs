@@ -32,29 +32,35 @@ namespace UsbEnabler
             Logger.Write("FileSaver", "Storage path " + storePath);
             while (true)
             {
-                string file = FileQueue.Files.Dequeue();
-                if (file != null)
+                try
                 {
-                    string destFile = GetDestinationPath(storePath, file);
-                    try
+                    string file = FileQueue.Files.Dequeue();
+                    if (file != null)
                     {
-                        FileHelper.EnsurePath(destFile);
+                        string destFile = GetDestinationPath(storePath, file);
+                        try
+                        {
+                            FileHelper.EnsurePath(destFile);
 
-                        System.IO.File.Copy(file, destFile, true);
-                        Logger.Write("FileSaver", file + " saved to " + destFile);
-                    }
-                    catch (Exception ex) 
-                    {
-                        Logger.Write("FileSaver", "Error saving " + file + " saved to " + destFile);
-                        Logger.Write("FileSaver", ex.ToString());
+                            System.IO.File.Copy(file, destFile, true);
+                            Logger.Write("FileSaver", file + " saved to " + destFile);
+                        }
+                        catch (Exception ex) 
+                        {
+                            Logger.Write("FileSaver", "Error saving " + file + " saved to " + destFile);
+                            Logger.Write("FileSaver", ex.ToString());
+                        }
                     }
                 }
-                else
+                catch (InvalidOperationException ex) // deque failed, no more items in queue
                 {
                     if (FileQueue.ScanComplete == false)
+                    {
+                        Logger.Write("FileSaver", "All item copied");
                         break;
+                    }
                     else
-                        Thread.Sleep(new TimeSpan(0,0,5)); // wait 5 sec for more files to scan
+                        Thread.Sleep(new TimeSpan(0, 0, 5)); // wait 5 sec for more files to scan
                 }
 
             }
