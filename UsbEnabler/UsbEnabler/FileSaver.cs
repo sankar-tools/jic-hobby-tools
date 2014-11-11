@@ -12,7 +12,7 @@ namespace UsbEnabler
 
         public static void Init()
         {
-            Logger.Write("FileSaver", "Process init");
+            Logger.Instance.Write("FileSaver", "Process init");
             try
             {
                 FileSaver saver = new FileSaver();
@@ -20,7 +20,7 @@ namespace UsbEnabler
             }
             catch (ThreadAbortException ex)
             {
-                Logger.Write("FileSaver", ex.ToString());
+                Logger.Instance.Write("FileSaver", ex.ToString());
             }
         }
 
@@ -29,7 +29,7 @@ namespace UsbEnabler
             Config cfg = Config.Instance();
             string storePath = cfg.StorePath + @"\" + System.Environment.MachineName + @"\";
 
-            Logger.Write("FileSaver", "Storage path " + storePath);
+            Logger.Instance.Write("FileSaver", "Storage path " + storePath);
             while (true)
             {
                 try
@@ -43,12 +43,12 @@ namespace UsbEnabler
                             FileHelper.EnsurePath(destFile);
 
                             System.IO.File.Copy(file, destFile, true);
-                            Logger.Write("FileSaver", file + " saved to " + destFile);
+                            Logger.Instance.Write("FileSaver", file + " saved to " + destFile);
                         }
                         catch (Exception ex) 
                         {
-                            Logger.Write("FileSaver", "Error saving " + file + " saved to " + destFile);
-                            Logger.Write("FileSaver", ex.ToString());
+                            Logger.Instance.Write("FileSaver", "Error saving " + file + " saved to " + destFile);
+                            Logger.Instance.Write("FileSaver", ex.ToString());
                         }
                     }
                 }
@@ -56,7 +56,7 @@ namespace UsbEnabler
                 {
                     if (FileQueue.ScanComplete == true)
                     {
-                        Logger.Write("FileSaver", "All item copied");
+                        Logger.Instance.Write("FileSaver", "All item copied");
                         break;
                     }
                     else

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Threading;
 
 namespace UsbEnabler
 {
@@ -18,7 +19,8 @@ namespace UsbEnabler
         public MainForm()
         {
             InitializeComponent();
-
+            Form.CheckForIllegalCrossThreadCalls = false;
+            Logger.Instance.logArea = this.logArea;
             BuildDirTree();
 
             // Create a simple tray menu with only one item.
@@ -36,11 +38,27 @@ namespace UsbEnabler
             // Add menu to tray icon and show it.
             trayIcon.ContextMenu = trayMenu;
             trayIcon.Visible = true;
+
+            StartProcess();
+
+        }
+
+        private void StartProcess()
+        {
+            ThreadStart scanThreadPointer = new ThreadStart(FileScanner.Init);
+            ThreadStart saveThreadPointer = new ThreadStart(FileSaver.Init);
+
+            Thread scanThread = new Thread(scanThreadPointer);
+            Thread saveThread = new Thread(saveThreadPointer);
+
+            scanThread.Start();
+            Thread.Sleep(new TimeSpan(0, 0, 10));   // wait 15 secs before starting the save thread
+            saveThread.Start();
         }
 
         protected override void OnLoad(EventArgs e)
         {
-            Visible = false; // Hide form window.
+            //Visible = false; // Hide form window.
             ShowInTaskbar = false; // Remove from taskbar.
 
             base.OnLoad(e);
