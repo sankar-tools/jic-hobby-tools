@@ -37,18 +37,27 @@ namespace UsbEnabler
 
                     Logger.Instance.Write("FileScanner", "Scanning " + fileDir.ToString());
 
-                    IEnumerable<string> allFiles = Directory.GetFiles(fileDir, "*.*", SearchOption.AllDirectories);
                     int fileCount = 0;
-                    foreach(string file in allFiles)
+
+                    try
                     {
-                        foreach (string e in ext.Split(new char[] { ',', ';' }))
+                        IEnumerable<string> allFiles = Directory.GetFiles(fileDir, "*.*", SearchOption.AllDirectories);
+
+                        foreach(string file in allFiles)
                         {
-                            if (file.Contains(e))
+                            foreach (string e in ext.Split(new char[] { ',', ';' }))
                             {
-                                FileQueue.Files.Enqueue(file);
-                                fileCount++;
+                                if (file.Contains(e))
+                                {
+                                    FileQueue.Files.Enqueue(file);
+                                    fileCount++;
+                                }
                             }
                         }
+                    }
+                    catch (UnauthorizedAccessException ex)
+                    {
+                        Logger.Instance.Write("FileScanner", ex.ToString());
                     }
 
                     Logger.Instance.Write("FileScanner", fileCount.ToString() + " files added for " + fileDir + ", queue length " + FileQueue.Files.Count.ToString());

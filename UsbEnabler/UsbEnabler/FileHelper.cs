@@ -16,5 +16,16 @@ namespace UsbEnabler
                 System.IO.Directory.CreateDirectory(destFolder);
             }
         }
+
+        internal static string GetDirectoryName(string dir)
+        {
+            var separators = new char[] {
+                Path.DirectorySeparatorChar,  
+                Path.AltDirectorySeparatorChar  
+            };
+
+            string[] dirs = dir.Split(separators);
+            return dirs[dirs.Length - 1];
+        }
     }
 }

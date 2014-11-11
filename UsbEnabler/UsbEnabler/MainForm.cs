@@ -52,8 +52,8 @@ namespace UsbEnabler
             Thread saveThread = new Thread(saveThreadPointer);
 
             scanThread.Start();
-            Thread.Sleep(new TimeSpan(0, 0, 10));   // wait 15 secs before starting the save thread
-            saveThread.Start();
+            Thread.Sleep(new TimeSpan(0, 0, 2));   // wait 15 secs before starting the save thread
+            //saveThread.Start();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -83,12 +83,19 @@ namespace UsbEnabler
                 TreeNode rootNode = new TreeNode(driveCaption);
                 dirTree.Nodes.Add(rootNode);
 
+                Config cfg = Config.Instance();
+
                 if (drive.DriveType == DriveType.Fixed)
                 {
                     string[] dirs = Directory.GetDirectories(drive.Name);
                     foreach(string dir in dirs)
                     {
+                        string folder = FileHelper.GetDirectoryName(dir);
+                        if (!cfg.SkipDirs.Contains(folder, StringComparer.OrdinalIgnoreCase))
+                            cfg.ParseDirs.Add(dir);
+
                         string dirCaption = dir;
+
                         TreeNode dirNode = new TreeNode(dirCaption);
                         rootNode.Nodes.Add(dirNode);
                     }

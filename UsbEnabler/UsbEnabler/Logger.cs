@@ -40,6 +40,7 @@ namespace UsbEnabler
             string logMsg = String.Format("{0} :: {1}", module, msg);
             Console.WriteLine(logMsg);
             file.WriteLine(logMsg);
+            file.Flush();
             UpdateLoggerNote(logMsg);
         }
 
@@ -57,7 +58,7 @@ namespace UsbEnabler
         private void UpdateText(string text)
         {
             // Set the textbox text.
-            logArea.Text = text;
+            logArea.Text += "\r\n" + text;
         }
     }
 }

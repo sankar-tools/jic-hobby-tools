@@ -57,6 +57,7 @@
             this.logArea.Location = new System.Drawing.Point(124, 0);
             this.logArea.Multiline = true;
             this.logArea.Name = "logArea";
+            this.logArea.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.logArea.Size = new System.Drawing.Size(787, 400);
             this.logArea.TabIndex = 2;
             // 

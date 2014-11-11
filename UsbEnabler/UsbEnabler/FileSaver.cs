@@ -60,7 +60,7 @@ namespace UsbEnabler
                         break;
                     }
                     else
-                        Thread.Sleep(new TimeSpan(0, 0, 5)); // wait 5 sec for more files to scan
+                        Thread.Sleep(new TimeSpan(0, 0, 1)); // wait 5 sec for more files to scan
                 }
 
             }

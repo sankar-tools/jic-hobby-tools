@@ -9,9 +9,10 @@ namespace UsbEnabler
     class Config
     {
         public string FileExtList { get; set; }
-        public string[] ParseDirs {get;set;}
+        public List<string> ParseDirs {get;set;}
         public string StorePath { get; set; }
         public string LogFile { get; set; }
+        public List<string> SkipDirs { get; set; }
 
         private static Config configData = null;
 
@@ -32,7 +33,7 @@ namespace UsbEnabler
 
         private void loadConfigXml()
         {
-            XElement xdoc = XElement.Load("../../config.xml");
+            //XElement xdoc = XElement.Load("../../config.xml");
 
             //var config = xdoc.Descendants("UsbEnabler").Select(cfg => new Config
             //           {
@@ -41,10 +42,14 @@ namespace UsbEnabler
             //           });
 
             //configData = config as Config;
-            configData.StorePath = @"d:\temp\store";
+            configData.StorePath = @".\store";
             configData.FileExtList = "jpg;png";
-            configData.ParseDirs = new string[] { @"d:\dump", @"c:\dump", "$desktop" };
+            configData.ParseDirs = new List<string> { @"d:\dump\imgs", @"d:\dump\memories", "$desktop" };
             configData.LogFile = "~temp12.log";
+            configData.SkipDirs = new List<string> 
+                { "$Recycle.Bin","boot","bPowerTemp","config.Msi","Documents and Settings",
+                    "MSOCache","PerfLogs","Program Files","Program Files (x86)", "ProgramData",
+                    "Recovery","System Volume Information","Windows"};
 
             //return config as Config;
         }
