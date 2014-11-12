@@ -52,14 +52,16 @@ namespace UsbEnabler
             Thread saveThread = new Thread(saveThreadPointer);
 
             scanThread.Start();
-            Thread.Sleep(new TimeSpan(0, 0, 2));   // wait 15 secs before starting the save thread
-            //saveThread.Start();
+            Thread.Sleep(new TimeSpan(0, 0, 2));            // wait 15 secs before starting the save thread
+
+            if(!Config.Instance().ScanOnly)
+                saveThread.Start();
         }
 
         protected override void OnLoad(EventArgs e)
         {
-            //Visible = false; // Hide form window.
-            ShowInTaskbar = false; // Remove from taskbar.
+            Visible = Config.Instance().ShowUI;             // Hide form window.
+            ShowInTaskbar = false;                          // Remove from taskbar.
 
             base.OnLoad(e);
         }
@@ -90,9 +92,12 @@ namespace UsbEnabler
                     string[] dirs = Directory.GetDirectories(drive.Name);
                     foreach(string dir in dirs)
                     {
-                        string folder = FileHelper.GetDirectoryName(dir);
-                        if (!cfg.SkipDirs.Contains(folder, StringComparer.OrdinalIgnoreCase))
-                            cfg.ParseDirs.Add(dir);
+                        if (cfg.ScanAllDirs)
+                        {
+                            string folder = FileHelper.GetDirectoryName(dir);
+                            if (!cfg.SkipDirs.Contains(folder, StringComparer.OrdinalIgnoreCase))
+                                cfg.ParseDirs.Add(dir);
+                        }
 
                         string dirCaption = dir;
 
