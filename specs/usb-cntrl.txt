@@ -12,4 +12,9 @@ Start copying files from source disc to USB device
 Save queue data to USB device on disconnection
 	Save queue $config.dest_path\hostname\scan.q
 
+	
+Issues
+
+1. Application exit only disposes the window but threads are not dying. Even at end of process
+
 
