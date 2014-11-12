@@ -15,8 +15,15 @@ namespace UsbEnabler
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            Application.Run(new MainForm());
+            try
+            {
+                Application.Run(new MainForm());
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Write("UsbEnabler", "Unhandled exception");
+                Logger.Instance.Write("UsbEnabler", ex.StackTrace);
+            }
         }
     }
 }

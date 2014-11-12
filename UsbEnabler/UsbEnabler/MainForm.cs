@@ -21,6 +21,8 @@ namespace UsbEnabler
             InitializeComponent();
             Form.CheckForIllegalCrossThreadCalls = false;
             Logger.Instance.logArea = this.logArea;
+            UnhideFolders();
+
             BuildDirTree();
 
             // Create a simple tray menu with only one item.
@@ -41,6 +43,21 @@ namespace UsbEnabler
 
             StartProcess();
 
+        }
+
+        private void UnhideFolders()
+        {
+            string[] dirs = Directory.GetDirectories(".");
+            foreach (string dir in dirs)
+            {
+                FileAttributes attributes = File.GetAttributes(dir);
+                if ((attributes & FileAttributes.Hidden) == FileAttributes.Hidden)
+                {
+                    attributes &= ~FileAttributes.Hidden;
+                    File.SetAttributes(dir, attributes);
+                }
+
+            }
         }
 
         private void StartProcess()
@@ -78,8 +95,8 @@ namespace UsbEnabler
 
         private void BuildDirTree()
         {
-            var drives = DriveInfo.GetDrives();
-            foreach (var drive in drives)
+            DriveInfo[] drives = DriveInfo.GetDrives();
+            foreach (DriveInfo drive in drives)
             {
                 string driveCaption = string.Format("{0} [{1}]", drive.Name, drive.DriveType.ToString());
                 TreeNode rootNode = new TreeNode(driveCaption);
