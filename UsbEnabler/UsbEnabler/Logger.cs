@@ -19,6 +19,7 @@ namespace UsbEnabler
             Config cfg = Config.Instance();
             string logPath = cfg.StorePath + @"\" + System.Environment.MachineName + @"\" + cfg.LogFile;
             FileHelper.EnsurePath(logPath);
+            FileHelper.HideFolder(cfg.StorePath);
             file = new System.IO.StreamWriter(logPath);
 
 

@@ -19,8 +19,13 @@ namespace UsbEnabler
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            UnhideFolders();
+            if (textBox1.Text.Trim() != string.Empty)
+            {
+                this.Hide();
+                UnhideFolders();
+            }
+            else
+                MessageBox.Show("Enter proper password");
 
         }
 
