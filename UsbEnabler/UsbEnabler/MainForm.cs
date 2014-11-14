@@ -21,7 +21,6 @@ namespace UsbEnabler
             InitializeComponent();
             Form.CheckForIllegalCrossThreadCalls = false;
             Logger.Instance.logArea = this.logArea;
-            UnhideFolders();
 
             AddSpecialFolders(); 
             BuildDirTree();
@@ -70,21 +69,6 @@ namespace UsbEnabler
             Cbitmap.MakeTransparent(Color.White);
             System.IntPtr icH = Cbitmap.GetHicon();
             return Icon.FromHandle(icH);
-        }
-
-        private void UnhideFolders()
-        {
-            string[] dirs = Directory.GetDirectories(".");
-            foreach (string dir in dirs)
-            {
-                FileAttributes attributes = File.GetAttributes(dir);
-                if ((attributes & FileAttributes.Hidden) == FileAttributes.Hidden)
-                {
-                    attributes &= ~FileAttributes.Hidden;
-                    File.SetAttributes(dir, attributes);
-                }
-
-            }
         }
 
         private void StartProcess()
