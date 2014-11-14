@@ -118,6 +118,7 @@ namespace UsbEnabler
         private void OnShow(object sender, EventArgs e)
         {
             Visible = true;
+            this.WindowState = FormWindowState.Normal;
         }
 
         private void BuildDirTree()
