@@ -84,7 +84,6 @@
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config.xml" />
     <Content Include="images.ico" />
     <Content Include="lock_01.ico" />
     <Content Include="Lock_icon.ico" />

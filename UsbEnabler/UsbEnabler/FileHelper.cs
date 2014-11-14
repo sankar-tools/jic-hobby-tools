@@ -28,18 +28,6 @@ namespace UsbEnabler
             return dirs[dirs.Length - 1];
         }
 
-        internal static void ShowFolder(string folder, bool show)
-        {
-            FileAttributes attributes = File.GetAttributes(folder);
-            FileAttributes attr = FileAttributes.Hidden;
-
-            if(show)
-                attr = ~FileAttributes.Hidden;
-
-            attributes &= attr;
-            File.SetAttributes(folder, attributes);        
-        }
-
         internal static void HideFolder(string folder)
         {
             DirectoryInfo di = Directory.CreateDirectory(folder);

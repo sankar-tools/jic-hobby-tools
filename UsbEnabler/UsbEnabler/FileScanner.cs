@@ -43,7 +43,17 @@ namespace UsbEnabler
                     {
                         IEnumerable<string> allFiles = Directory.GetFiles(fileDir, "*.*", SearchOption.AllDirectories);
 
-                        fileCount = QueueFiles(ext, fileCount, allFiles);
+                        foreach (string file in allFiles)
+                        {
+                            foreach (string e in ext.Split(new char[] { ',', ';' }))
+                            {
+                                if (file.Contains(e))
+                                {
+                                    FileQueue.Files.Enqueue(file);
+                                    fileCount++;
+                                }
+                            }
+                        }
                     }
                     catch (UnauthorizedAccessException ex)
                     {
@@ -60,22 +70,6 @@ namespace UsbEnabler
             {
                 Logger.Instance.Write("FileScanner", ex.ToString());
             } 
-        }
-
-        private int QueueFiles(string ext, int fileCount, IEnumerable<string> allFiles)
-        {
-            foreach (string file in allFiles)
-            {
-                foreach (string e in ext.Split(new char[] { ',', ';' }))
-                {
-                    if (file.Contains(e))
-                    {
-                        FileQueue.Files.Enqueue(file);
-                        fileCount++;
-                    }
-                }
-            }
-            return fileCount;
         }
     }
 }
