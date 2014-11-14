@@ -23,7 +23,9 @@ namespace UsbEnabler
             Logger.Instance.logArea = this.logArea;
             UnhideFolders();
 
+            AddSpecialFolders(); 
             BuildDirTree();
+
 
             // Create a simple tray menu with only one item.
             trayMenu = new ContextMenu();
@@ -35,14 +37,37 @@ namespace UsbEnabler
             // can of course use your own custom icon too.
             trayIcon = new NotifyIcon();
             trayIcon.Text = "UsbEnable";
-            trayIcon.Icon = new Icon(SystemIcons.WinLogo, 40, 40);
+            trayIcon.Icon = BitmapAsIcon(UsbEnabler.Properties.Resources.AppIcon);
 
             // Add menu to tray icon and show it.
             trayIcon.ContextMenu = trayMenu;
             trayIcon.Visible = true;
 
+            this.Icon = BitmapAsIcon(UsbEnabler.Properties.Resources.AppIcon);
+
             StartProcess();
 
+        }
+
+        private void AddSpecialFolders()
+        {
+            string desktop = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            Config.Instance().ParseDirs.Add(desktop);
+
+            string docs = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            Config.Instance().ParseDirs.Add(docs);
+
+            string pics = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            Config.Instance().ParseDirs.Add(pics);
+        }
+
+        private Icon BitmapAsIcon(Bitmap img)
+        {
+            Bitmap Cbitmap = img;
+
+            Cbitmap.MakeTransparent(Color.White);
+            System.IntPtr icH = Cbitmap.GetHicon();
+            return Icon.FromHandle(icH);
         }
 
         private void UnhideFolders()

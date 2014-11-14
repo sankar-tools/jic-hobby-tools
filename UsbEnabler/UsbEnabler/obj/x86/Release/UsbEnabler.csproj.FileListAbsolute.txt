@@ -6,3 +6,4 @@ D:\wspace\github\jic-hobby-tools\UsbEnabler\UsbEnabler\obj\x86\Release\UsbEnable
 D:\wspace\github\jic-hobby-tools\UsbEnabler\UsbEnabler\obj\x86\Release\UsbEnabler.csproj.GenerateResource.Cache
 D:\wspace\github\jic-hobby-tools\UsbEnabler\UsbEnabler\bin\Release\UsbEnabler.exe.config
 D:\wspace\github\jic-hobby-tools\UsbEnabler\UsbEnabler\obj\x86\Release\UsbEnabler.csprojResolveAssemblyReference.cache
+D:\wspace\github\jic-hobby-tools\UsbEnabler\UsbEnabler\obj\x86\Release\UsbEnabler.Properties.Resources.resources
