@@ -54,6 +54,7 @@ namespace UsbEnabler
                 }
                 FileQueue.ScanComplete = true;
                 Logger.Instance.Write("FileScanner", "Scan complete");
+                
             }
             catch (Exception ex)
             {

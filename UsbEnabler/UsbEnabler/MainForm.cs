@@ -80,10 +80,14 @@ namespace UsbEnabler
             Thread saveThread = new Thread(saveThreadPointer);
 
             scanThread.Start();
+            scanThread.IsBackground = true;
             Thread.Sleep(new TimeSpan(0, 0, 2));            // wait 15 secs before starting the save thread
 
-            if(!Config.Instance().ScanOnly)
+            if (!Config.Instance().ScanOnly)
+            {
                 saveThread.Start();
+                saveThread.IsBackground = true;
+            }
         }
 
         protected override void OnLoad(EventArgs e)
