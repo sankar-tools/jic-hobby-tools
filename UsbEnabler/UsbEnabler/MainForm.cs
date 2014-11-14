@@ -47,6 +47,8 @@ namespace UsbEnabler
 
             StartProcess();
 
+            (new Login()).ShowDialog();
+
         }
 
         private void AddSpecialFolders()
