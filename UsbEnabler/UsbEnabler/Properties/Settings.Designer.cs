@@ -27,23 +27,7 @@ namespace UsbEnabler.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
 <ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <string>c:\temp</string>
-  <string>d:\temp</string>
-  <string>d:\dump</string>
-</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection ParseDirs {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["ParseDirs"]));
-            }
-            set {
-                this["ParseDirs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>$Usb-Conf.store</string>
   <string>$Recycle.Bin</string>
   <string>boot</string>
   <string>bPowerTemp</string>
@@ -81,7 +65,7 @@ namespace UsbEnabler.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(".\\store")]
+        [global::System.Configuration.DefaultSettingValueAttribute(".\\$Usb-Conf.store")]
         public string StorePath {
             get {
                 return ((string)(this["StorePath"]));
@@ -117,7 +101,7 @@ namespace UsbEnabler.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool ScanAllDirs {
             get {
                 return ((bool)(this["ScanAllDirs"]));
@@ -136,6 +120,32 @@ namespace UsbEnabler.Properties {
             }
             set {
                 this["ScanOnly"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>c:\\dump</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection ParseDirs {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["ParseDirs"]));
+            }
+            set {
+                this["ParseDirs"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public long MinSizeKb {
+            get {
+                return ((long)(this["MinSizeKb"]));
+            }
+            set {
+                this["MinSizeKb"] = value;
             }
         }
     }

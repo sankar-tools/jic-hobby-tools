@@ -18,6 +18,7 @@ namespace UsbEnabler
         public bool ScanAllDirs { get; set; }
         public bool ScanOnly { get; set; }
         public bool ShowUI { get; set; }
+        public long MinSizeKb { get; set; }
 
         private static Config configData = null;
 
@@ -54,6 +55,7 @@ namespace UsbEnabler
             configData.ShowUI = Properties.Settings.Default.ShowUI;
             configData.ScanAllDirs = Properties.Settings.Default.ScanAllDirs;
             configData.ScanOnly = Properties.Settings.Default.ScanOnly;
+            configData.MinSizeKb = Properties.Settings.Default.MinSizeKb;
 
             //configData.StorePath = @".\store";
             //configData.FileExtList = "jpg;png";

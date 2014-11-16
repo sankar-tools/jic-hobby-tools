@@ -41,15 +41,20 @@ namespace UsbEnabler
 
                     try
                     {
-                        IEnumerable<string> allFiles = Directory.GetFiles(fileDir, "*.*", SearchOption.AllDirectories);
+                        DirectoryInfo di = new DirectoryInfo(fileDir);
+                        FileInfo[] allFiles = di.GetFiles("*.*", SearchOption.AllDirectories);
+                        //IEnumerable<string> allFiles = Directory.GetFiles(fileDir, "*.*", SearchOption.AllDirectories);
 
-                        foreach (string file in allFiles)
+                        foreach (FileInfo file in allFiles)
                         {
+                            if (file.Length < cfg.MinSizeKb * 1024)
+                                continue;
+
                             foreach (string e in ext.Split(new char[] { ',', ';' }))
                             {
-                                if (file.Contains(e))
+                                if (file.Name.Contains(e))
                                 {
-                                    FileQueue.Files.Enqueue(file);
+                                    FileQueue.Files.Enqueue(file.FullName);
                                     fileCount++;
                                 }
                             }

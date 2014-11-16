@@ -2,17 +2,10 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="UsbEnabler.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ParseDirs" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;c:\temp&lt;/string&gt;
-  &lt;string&gt;d:\temp&lt;/string&gt;
-  &lt;string&gt;d:\dump&lt;/string&gt;
-&lt;/ArrayOfString&gt;</Value>
-    </Setting>
     <Setting Name="SkipDirs" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;$Usb-Conf.store&lt;/string&gt;
   &lt;string&gt;$Recycle.Bin&lt;/string&gt;
   &lt;string&gt;boot&lt;/string&gt;
   &lt;string&gt;bPowerTemp&lt;/string&gt;
@@ -32,7 +25,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="StorePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">.\store</Value>
+      <Value Profile="(Default)">.\$Usb-Conf.store</Value>
     </Setting>
     <Setting Name="FileExtList" Type="System.String" Scope="User">
       <Value Profile="(Default)">jpg,jpeg,png</Value>
@@ -41,10 +34,19 @@
       <Value Profile="(Default)">~temp12.log</Value>
     </Setting>
     <Setting Name="ScanAllDirs" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ScanOnly" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ParseDirs" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;c:\dump&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="MinSizeKb" Type="System.Int64" Scope="User">
+      <Value Profile="(Default)">150</Value>
     </Setting>
   </Settings>
 </SettingsFile>
