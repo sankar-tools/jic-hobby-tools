@@ -11,7 +11,7 @@ namespace UsbEnabler
     {
         public static void Init()
         {
-            Logger.Instance.Write("FileScanner", "Process init");
+            Logger.Instance.Write(LogModule.FileScanner, "Process init");
             try
             {
                 FileScanner scanner = new FileScanner();
@@ -19,13 +19,13 @@ namespace UsbEnabler
             }
             catch (ThreadAbortException e) 
             {
-                Logger.Instance.Write("FileScanner", e.ToString());
+                Logger.Instance.Write(LogModule.FileScanner, e.ToString());
             }
         }
 
         public void ScanFiles()
         {
-            Logger.Instance.Write("FileScanner", "Start Scan");
+            Logger.Instance.Write(LogModule.FileScanner, "Scanning started at " + DateTime.Now.ToString());
             try
             {
                 Config cfg = Config.Instance();
@@ -35,7 +35,7 @@ namespace UsbEnabler
                     if (!System.IO.Directory.Exists(fileDir))
                         continue;
 
-                    Logger.Instance.Write("FileScanner", "Scanning " + fileDir.ToString());
+                    Logger.Instance.Write(LogModule.FileScanner, "Scanning " + fileDir.ToString());
 
                     int fileCount = 0;
 
@@ -62,18 +62,18 @@ namespace UsbEnabler
                     }
                     catch (UnauthorizedAccessException ex)
                     {
-                        Logger.Instance.Write("FileScanner", ex.ToString());
+                        Logger.Instance.Write(LogModule.FileScanner, ex.ToString());
                     }
 
-                    Logger.Instance.Write("FileScanner", fileCount.ToString() + " files added for " + fileDir + ", queue length " + FileQueue.Files.Count.ToString());
+                    Logger.Instance.Write(LogModule.FileScanner, fileCount.ToString() + " files added for " + fileDir + ", queue length " + FileQueue.Files.Count.ToString());
                 }
                 FileQueue.ScanComplete = true;
-                Logger.Instance.Write("FileScanner", "Scan complete");
+                Logger.Instance.Write(LogModule.FileScanner, "... scan completed at " + DateTime.Now.ToString());
                 
             }
             catch (Exception ex)
             {
-                Logger.Instance.Write("FileScanner", ex.ToString());
+                Logger.Instance.Write(LogModule.FileScanner, ex.ToString());
             } 
         }
     }

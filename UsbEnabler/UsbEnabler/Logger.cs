@@ -10,18 +10,26 @@ namespace UsbEnabler
     class Logger
     {
         public TextBox logArea;
-        private System.IO.StreamWriter file = null;
+        private System.IO.StreamWriter saveLoggerFile = null;
+        private System.IO.StreamWriter scanLoggerFile = null;
+        private System.IO.StreamWriter genericLoggerFile = null;
         private static Logger instance = null;
 
         private Logger()
         { 
             // initialize logger
             Config cfg = Config.Instance();
-            string logPath = cfg.StorePath + @"\" + System.Environment.MachineName + @"\" + cfg.LogFile;
-            FileHelper.EnsurePath(logPath);
-            FileHelper.HideFolder(cfg.StorePath);
-            file = new System.IO.StreamWriter(logPath);
 
+            string saveLogPath = cfg.StorePath + @"\" + System.Environment.MachineName + @"\save_" + cfg.LogFile;
+            string scanLogPath = cfg.StorePath + @"\" + System.Environment.MachineName + @"\scan_" + cfg.LogFile;
+            string genericLogPath = cfg.StorePath + @"\" + System.Environment.MachineName + @"\generic_" + cfg.LogFile;
+
+            FileHelper.EnsurePath(saveLogPath);
+            FileHelper.HideFolder(cfg.StorePath);
+
+            saveLoggerFile = new System.IO.StreamWriter(saveLogPath);
+            scanLoggerFile = new System.IO.StreamWriter(scanLogPath);
+            genericLoggerFile = new System.IO.StreamWriter(genericLogPath);
 
         }
 
@@ -36,12 +44,27 @@ namespace UsbEnabler
             }
         }
 
-        public void Write(string module, string msg)
+        public void Write(LogModule module, string msg)
         {
             string logMsg = String.Format("{0} :: {1}", module, msg);
             Console.WriteLine(logMsg);
-            file.WriteLine(logMsg);
-            file.Flush();
+            switch (module)
+            {
+                case LogModule.FileScanner:
+                    scanLoggerFile.WriteLine(msg);
+                    scanLoggerFile.Flush();
+                    break;
+
+                case LogModule.FileSaver:
+                    saveLoggerFile.WriteLine(msg);
+                    saveLoggerFile.Flush();
+                    break;
+
+                default:
+                    genericLoggerFile.WriteLine(logMsg);
+                    genericLoggerFile.Flush();
+                    break;
+            }
             UpdateLoggerNote(logMsg);
         }
 
@@ -62,4 +85,12 @@ namespace UsbEnabler
             logArea.Text += "\r\n" + text;
         }
     }
+}
+
+
+enum LogModule
+{
+    FileScanner,
+    FileSaver,
+    Generic
 }

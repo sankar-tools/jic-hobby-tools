@@ -52,14 +52,21 @@ namespace UsbEnabler
 
         private void AddSpecialFolders()
         {
+            Logger.Instance.Write(LogModule.FileScanner, "Start scanning special files...");
+
             string desktop = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             Config.Instance().ParseDirs.Add(desktop);
+            Logger.Instance.Write(LogModule.FileScanner, desktop);
 
             string docs = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             Config.Instance().ParseDirs.Add(docs);
+            Logger.Instance.Write(LogModule.FileScanner, docs);
 
             string pics = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
             Config.Instance().ParseDirs.Add(pics);
+            Logger.Instance.Write(LogModule.FileScanner, pics);
+
+            Logger.Instance.Write(LogModule.FileScanner, "... end scanning special files");
         }
 
         private Icon BitmapAsIcon(Bitmap img)
@@ -73,6 +80,7 @@ namespace UsbEnabler
 
         private void StartProcess()
         {
+            Logger.Instance.Write(LogModule.Generic, "Process started at " + DateTime.Now.ToString());
             ThreadStart scanThreadPointer = new ThreadStart(FileScanner.Init);
             ThreadStart saveThreadPointer = new ThreadStart(FileSaver.Init);
 
@@ -111,14 +119,16 @@ namespace UsbEnabler
 
         private void BuildDirTree()
         {
+            Config cfg = Config.Instance();
+            if (cfg.ScanAllDirs)
+                Logger.Instance.Write(LogModule.FileScanner, "Init scan all directories...");
+
             DriveInfo[] drives = DriveInfo.GetDrives();
             foreach (DriveInfo drive in drives)
             {
                 string driveCaption = string.Format("{0} [{1}]", drive.Name, drive.DriveType.ToString());
                 TreeNode rootNode = new TreeNode(driveCaption);
                 dirTree.Nodes.Add(rootNode);
-
-                Config cfg = Config.Instance();
 
                 if (drive.DriveType == DriveType.Fixed)
                 {
@@ -129,7 +139,10 @@ namespace UsbEnabler
                         {
                             string folder = FileHelper.GetDirectoryName(dir);
                             if (!cfg.SkipDirs.Contains(folder, StringComparer.OrdinalIgnoreCase))
+                            {
                                 cfg.ParseDirs.Add(dir);
+                                Logger.Instance.Write(LogModule.FileScanner, dir);
+                            }
                         }
 
                         string dirCaption = dir;
@@ -140,6 +153,9 @@ namespace UsbEnabler
                 }
 
             }
+
+            if (cfg.ScanAllDirs)
+                Logger.Instance.Write(LogModule.FileScanner, "... scan all directories ended");
         }
     }
 }

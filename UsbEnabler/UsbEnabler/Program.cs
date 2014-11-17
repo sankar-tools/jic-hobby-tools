@@ -18,11 +18,12 @@ namespace UsbEnabler
             try
             {
                 Application.Run(new MainForm());
+                Logger.Instance.Write(LogModule.Generic, "Application started at " + DateTime.Now.ToString());
             }
             catch (Exception ex)
             {
-                Logger.Instance.Write("UsbEnabler", "Unhandled exception");
-                Logger.Instance.Write("UsbEnabler", ex.StackTrace);
+                Logger.Instance.Write(LogModule.Generic, "Unhandled exception");
+                Logger.Instance.Write(LogModule.Generic, ex.StackTrace);
             }
         }
     }
