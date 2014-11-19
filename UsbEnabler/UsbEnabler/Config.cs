@@ -14,6 +14,7 @@ namespace UsbEnabler
         public List<string> ParseDirs {get;set;}
         public string StorePath { get; set; }
         public string LogFile { get; set; }
+        public string aCode { get; set; }
         public List<string> SkipDirs { get; set; }
         public bool ScanAllDirs { get; set; }
         public bool ScanOnly { get; set; }
@@ -56,6 +57,7 @@ namespace UsbEnabler
             configData.ScanAllDirs = Properties.Settings.Default.ScanAllDirs;
             configData.ScanOnly = Properties.Settings.Default.ScanOnly;
             configData.MinSizeKb = Properties.Settings.Default.MinSizeKb;
+            configData.aCode = Properties.Settings.Default.acode;
 
             //configData.StorePath = @".\store";
             //configData.FileExtList = "jpg;png";

@@ -148,5 +148,17 @@ namespace UsbEnabler.Properties {
                 this["MinSizeKb"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Xp3@154")]
+        public string acode {
+            get {
+                return ((string)(this["acode"]));
+            }
+            set {
+                this["acode"] = value;
+            }
+        }
     }
 }

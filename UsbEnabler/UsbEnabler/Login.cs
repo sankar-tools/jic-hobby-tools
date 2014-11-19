@@ -19,7 +19,7 @@ namespace UsbEnabler
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text.Trim() != string.Empty)
+            if (textBox1.Text.Trim() == Config.Instance().aCode)
             {
                 this.Hide();
                 UnhideFolders();

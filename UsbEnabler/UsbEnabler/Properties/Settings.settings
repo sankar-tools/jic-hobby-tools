@@ -48,5 +48,8 @@
     <Setting Name="MinSizeKb" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">150</Value>
     </Setting>
+    <Setting Name="acode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Xp3@154</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
