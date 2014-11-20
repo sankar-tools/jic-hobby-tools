@@ -87,6 +87,7 @@
     <Content Include="images.ico" />
     <Content Include="lock_01.ico" />
     <Content Include="Lock_icon.ico" />
+    <None Include="Resources\usblock.jpg" />
     <None Include="Resources\Lock_icon.png" />
     <None Include="Resources\AppIcon.jpg" />
   </ItemGroup>

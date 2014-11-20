@@ -29,7 +29,7 @@ namespace UsbEnabler
             // Create a simple tray menu with only one item.
             trayMenu = new ContextMenu();
             trayMenu.MenuItems.Add("Show", OnShow);
-            trayMenu.MenuItems.Add("Exit", OnExit);
+            trayMenu.MenuItems.Add("Lock", OnExit);
 
             // Create a tray icon. In this example we use a
             // standard system icon for simplicity, but you

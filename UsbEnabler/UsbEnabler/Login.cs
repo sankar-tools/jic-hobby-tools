@@ -43,5 +43,10 @@ namespace UsbEnabler
 
             }
         }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            textBox1.Enabled = true;
+        }
     }
 }
