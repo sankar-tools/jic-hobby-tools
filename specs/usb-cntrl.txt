@@ -17,4 +17,10 @@ Issues
 
 1. Application exit only disposes the window but threads are not dying. Even at end of process
 
+Duplicate destination
+Lock menu option to exit
+Not working on XP
+Test on fresh XP and win7 systems
+
+
 
