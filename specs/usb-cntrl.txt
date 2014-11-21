@@ -18,8 +18,11 @@ Issues
 1. Application exit only disposes the window but threads are not dying. Even at end of process
 
 Duplicate destination
+
 Lock menu option to exit
-Not working on XP
+
+Not working on XP: XP problem is bit complex. We need .net framework installed on a xp machine which cannot be safe assumption in most of the cases. We need a way to run out application by embedding framework inside without having to setup the framework separately. This is challenging 
+
 Test on fresh XP and win7 systems
 
 
