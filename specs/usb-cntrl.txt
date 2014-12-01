@@ -25,5 +25,9 @@ Not working on XP: XP problem is bit complex. We need .net framework installed o
 
 Test on fresh XP and win7 systems
 
+Future Direction:
+
+Only java centric code running on winxp sp1. This is cri
+
 
 
