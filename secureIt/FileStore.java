@@ -2,6 +2,6 @@ import java.util.*;
 
 class FileStore
 {
-	public static Stack Files = new Stack();
-	public static boolean ScanComplete = false;
+	public static Queue Files = new Queue();
+	public static boolean scanComplete = false;
 }

@@ -15,9 +15,14 @@ public class Logger
 	{
 		Config cfg = Config.Instance();
 		
-		String saveLogPath = cfg.StorePath + "\\" + "todo" + "\\save_" + cfg.LogFile;
-		String scanLogPath = cfg.StorePath + "\\" + "todo" + "\\scan_" + cfg.LogFile;
-		String genericLogPath = cfg.StorePath + "\\" + "todo" + "\\generic_" + cfg.LogFile;
+		String logPath = cfg.storePath + "\\" + "todo";
+		
+		FileHelper.ensureDirPath(logPath);
+		
+		String saveLogPath =  logPath + "\\save_" + cfg.logFile;
+		String scanLogPath = logPath + "\\scan_" + cfg.logFile;
+		String genericLogPath = logPath + "\\generic_" + cfg.logFile;
+		
 		System.out.println(saveLogPath);
 		
 		saveLoggerFile = GetBufferedWriter(saveLogPath);
@@ -58,22 +63,25 @@ public class Logger
 	public void Write(int module, String msg)
 	{
 		String logMsg = module + " :: " +  msg;
-		System.out.println(logMsg);
+		//System.out.println(logMsg);
 		try {
 			switch (module)
 			{
 				case 1:
-					scanLoggerFile.write(msg);
+					scanLoggerFile.write(msg ) ;
+					scanLoggerFile.newLine();
 					scanLoggerFile.flush();
 					break;
 
 				case 2:
 					saveLoggerFile.write(msg);
+					scanLoggerFile.newLine();
 					saveLoggerFile.flush();
 					break;
 
 				default:
 					genericLoggerFile.write(logMsg);
+					scanLoggerFile.newLine();
 					genericLoggerFile.flush();
 					break;
 			}

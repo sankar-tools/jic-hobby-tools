@@ -1,19 +1,18 @@
-
-
 public class Config
 {
 
-	public String FileExtList;
-	public String StorePath;
-	public String LogFile;
+	public String fileExtList;
+	public String storePath;
+	public String logFile;
 	public String authUser;
 	public String authCode;
-	public String[] ParseDirs;
-	public String[] SkipDirs;
-	public boolean ScanAllDirs;
-	public boolean ScanOnly;
-	public boolean ShowUI;
-	public long MinSizeKb;
+	public Queue parseDirs;
+	public String[] skipDirs;
+	public boolean scanAllDirs;
+	public boolean scanOnly;
+	public boolean showUI;
+	public long minSizeKb;
+	public int bufferSize;
 	
 	private static Config configData = null;
 	
@@ -34,14 +33,17 @@ public class Config
 	
 	private void loadConfig()
 	{
-		configData.FileExtList = "jpg;png";
-		configData.StorePath = ".\\store\\";
-		configData.LogFile = "this.log";
+		configData.parseDirs = new Queue();
+		
+		configData.fileExtList = "jpg;png";
+		configData.storePath = ".\\store\\";
+		configData.logFile = "this.log";
 		configData.authUser = "sans";
 		configData.authCode = "sans";
-		configData.ScanAllDirs = true;
-		configData.ScanOnly = false;
-		configData.MinSizeKb = 150;
+		configData.scanAllDirs = true;
+		configData.scanOnly = false;
+		configData.minSizeKb = 150;
+		configData.bufferSize = 8192;
 		
 	}
 	

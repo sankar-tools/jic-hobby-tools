@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import java.util.*;
 
 public class SecureMain {
 	private Frame mainFrame;
@@ -15,14 +16,32 @@ public class SecureMain {
 	private JButton loginButton;
 
 	public SecureMain(){
-		ScanFiles scanner = new ScanFiles();
-		scanner.initScan();
 		prepareGUI();
 	}
 
 	public static void main(String[] args){
+		Logger.Instance().Write(3, "Process started at " + new Date().toString());
+		Config cfg = Config.Instance();
+		Logger log = Logger.Instance();
+		
+		ScanFiles scanner = new ScanFiles();
+		scanner.init();
+		FileSaver saver = new FileSaver();
+		saver.init();
+		
+		Thread scanThread = new Thread(scanner, "scanThread");
+		scanThread.start();
+		try
+		{
+			Thread.sleep(5 * 1000);   	//wait 5 sec before starting the save thread
+		}catch(InterruptedException ex)
+		{}
+		
+		Thread saveThread = new Thread(saver, "saveThread");
+		saveThread.start();
+		
 		SecureMain  SecureMain = new SecureMain();  
-		SecureMain.showGridLayoutDemo();       
+		//SecureMain.showGridLayoutDemo();       
 	}
       
    private void prepareGUI(){
@@ -32,6 +51,11 @@ public class SecureMain {
 
 		mainFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent){
+				Logger.Instance().Write(1, "Save process terminated by window close ");
+				Logger.Instance().Write(1, "File left in queue: " + Integer.toString(FileStore.Files.size()));
+				Logger.Instance().Write(2, "Scan process terminated by window close ");
+				Logger.Instance().Write(2, "File left in queue: " + Integer.toString(FileStore.Files.size()));
+				Logger.Instance().Write(3, "Process ended at " + new Date().toString());
 				System.exit(0);
 			}        
 		});   
@@ -165,25 +189,5 @@ public class SecureMain {
 		mainFrame.add(controlPanel);
 		mainFrame.add(statusLabel); */
 		mainFrame.setVisible(true);  
-	}
-
-	private void showGridLayoutDemo(){
-		//headerLabel.setText("Layout in action: GridLayout");      
-
-/* 		Panel panel = new Panel();
-		panel.setBackground(Color.darkGray);
-		panel.setSize(300,300);
-		GridLayout layout = new GridLayout(0,3);
-		layout.setHgap(10);
-		layout.setVgap(10);
-
-		panel.setLayout(layout);        
-		panel.add(new Button("Button 1"));
-		panel.add(new Button("Button 2")); 
-		panel.add(new Button("Button 3")); 
-		panel.add(new Button("Button 4")); 
-		panel.add(new Button("Button 5")); 
-		controlPanel.add(panel);
-		mainFrame.setVisible(true);   */
 	}
 }
