@@ -75,13 +75,13 @@ public class Logger
 
 				case 2:
 					saveLoggerFile.write(msg);
-					scanLoggerFile.newLine();
+					saveLoggerFile.newLine();
 					saveLoggerFile.flush();
 					break;
 
 				default:
 					genericLoggerFile.write(logMsg);
-					scanLoggerFile.newLine();
+					genericLoggerFile.newLine();
 					genericLoggerFile.flush();
 					break;
 			}

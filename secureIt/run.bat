@@ -1,3 +1,4 @@
+D:\bin\Java\jdk1.2.2_017\bin\javac ImageImplement.java
 D:\bin\Java\jdk1.2.2_017\bin\javac Queue.java
 D:\bin\Java\jdk1.2.2_017\bin\javac Config.java
 D:\bin\Java\jdk1.2.2_017\bin\javac Logger.java

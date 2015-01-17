@@ -18,11 +18,22 @@ public class ScanFiles implements Runnable
 	{
 		// run directory scan for each item in the parseDirs
 		Config cfg = Config.Instance();
+		Logger log = Logger.Instance();
+		
+		log.Write(3, "File scanning started at " + new Date().toString());
 		
 		while(cfg.parseDirs.hasItems())
 		{
-			getFilesRecursive(cfg.parseDirs.dequeue());
-		}	
+			String scanPath = cfg.parseDirs.dequeue();
+			log.Write(3, "Scanning dir: " + scanPath);
+			getFilesRecursive(scanPath);
+			log.Write(3, "Total files found " + Long.toString(FileStore.fileCounter));
+		}
+		
+		FileStore.scanComplete = true;
+		
+		log.Write(3, "Total files found " + Long.toString(FileStore.fileCounter));
+		log.Write(3, "File scanning ended at " + new Date().toString());
 	}
 	
 	public static void getFilesRecursive(String path)
@@ -45,19 +56,14 @@ public class ScanFiles implements Runnable
 			else {
 				//if file extension is part of Config FileExtList then add to queue
 				String ext = FileHelper.getFileExtension(f.getName());
-				if(cfg.fileExtList.lastIndexOf(ext) > -1)
+				if(cfg.fileExtList.toUpperCase().lastIndexOf(ext.toUpperCase()) > -1)
 				{
 					log.Write(1, f.getAbsolutePath());
 					FileStore.Files.enqueue(f.getAbsolutePath());
 					fileCount++;
 					//System.out.print("[ok]");
+					System.out.println( "     File:" + f.getAbsoluteFile()  + "    " + ext);
 				}
-				else
-				{
-					//System.out.print("[xx]");
-				}
-					
-				System.out.println( "     File:" + f.getAbsoluteFile()  + "    " + ext);
 			}
 		}
 		
@@ -67,6 +73,8 @@ public class ScanFiles implements Runnable
 	private void addFileRoots()
 	{
 		Config cfg = Config.Instance();
+		Logger log = Logger.Instance();
+		
 		File[] roots;
 		FileSystemView fsv = FileSystemView.getFileSystemView();
 
@@ -78,7 +86,7 @@ public class ScanFiles implements Runnable
 		for(i = 0; i < roots.length ; i++)
 		{
 			// prints file and directory paths
-			System.out.println("Drive Name: "+roots[i]);
+			log.Write(3, "Drive Name: "+ roots[i].getAbsolutePath());
 			cfg.parseDirs.enqueue(roots[i].getAbsolutePath());
 			//System.out.println("Description: "+fsv.getSystemTypeDescription(roots[i]));
 		}

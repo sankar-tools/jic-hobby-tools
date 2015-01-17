@@ -24,7 +24,7 @@ public class SecureMain {
 		Config cfg = Config.Instance();
 		Logger log = Logger.Instance();
 		
-		ScanFiles scanner = new ScanFiles();
+/* 		ScanFiles scanner = new ScanFiles();
 		scanner.init();
 		FileSaver saver = new FileSaver();
 		saver.init();
@@ -38,7 +38,7 @@ public class SecureMain {
 		{}
 		
 		Thread saveThread = new Thread(saver, "saveThread");
-		saveThread.start();
+		saveThread.start(); */
 		
 		SecureMain  SecureMain = new SecureMain();  
 		//SecureMain.showGridLayoutDemo();       
@@ -165,11 +165,41 @@ public class SecureMain {
 		msglabel = new Label();
 		msglabel.setAlignment(Label.CENTER);
 		msglabel.setText("Welcome to TutorialsPoint AWT Tutorial.");
+		
+		leftPanel.setLayout(null);
+		
+		ImageImplement panel = new ImageImplement(new ImageIcon("usblock.png").getImage());
+
+		panel.setVisible(true);
+		panel.setSize(300,300);
+		panel.setBounds(5,5,250,450);
+		
+		rightPanel.add(panel);
+		
+/*         ImageIcon imageIcon = new ImageIcon("usblock.png");
+        JLabel jLabel = new JLabel();
+        jLabel.setIcon(imageIcon);
+		jLabel.setBounds(5,5,280,470);
+		leftPanel.add(jLabel); */
+		
+		ImageIcon imageIcon = new ImageIcon("usblock.png");
+		System.out.println(imageIcon);
+		JLabel imgLabel = new JLabel(imageIcon);
+		imgLabel.setIcon(imageIcon);
+		//imgLabel.setAlignment(Label.LEFT);
+		//imgLabel.setText("User ID");
+		imgLabel.setBounds(5,120,100,40);
+		
+		leftPanel.setLayout(null);
+		leftPanel.add(imgLabel);
+		
+		leftPanel.add(panel);
+		//panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	  
 	  		//Add left image
-		ImagePanel panel = new ImagePanel(new ImageIcon(".\\usblock.bmp").getImage());
+/* 		ImagePanel panel = new ImagePanel(new ImageIcon(".\\usblock.bmp").getImage());
 		panel.setBackground(new Color(255,0,255));
-		panel.setBounds(40,40,200,500);
+		panel.setBounds(40,40,200,500); */
 		//splashFrame.getContentPane().add(panel);
 		
 /* 		Label lblCopyright = new Label("");
