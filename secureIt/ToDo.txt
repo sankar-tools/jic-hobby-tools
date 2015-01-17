@@ -1,0 +1,17 @@
+ToDo List
+// ToDo :: Filter CD Drives and other removable media
+
+//ToDo:: Add root directories
+
+//ToDo:: Filter skip directories (both by absolute and relative paths)
+
+Use external file for config parameters
+
+Log folder wise count and size in generic log
+
+Handle duplicate files
+
+Handle paths longer than 255 chars
+
+Use machine name in store path
+
