@@ -10,12 +10,6 @@ public class ScanFiles implements Runnable
 
 	public void init()
 	{
-/* 		Config cfg = Config.Instance();		
-
-		for(int i=0; i<cfg.skipDirs.size(); i++)
-		{
-			System.out.println(cfg.skipDirs.get(i));
-		} */
 		addFileRoots();
 		addSpecialFolders();
 	}
@@ -33,12 +27,12 @@ public class ScanFiles implements Runnable
 			String scanPath = cfg.parseDirs.get(i);
 			log.Write(3, "Scanning dir: " + scanPath);
 			getFilesRecursive(scanPath);
-			log.Write(3, "Total files found " + Long.toString(FileStore.fileCounter));
+			log.Write(3, "Total files found " + Long.toString(FileStore.fileSaveCounter));
 		}
 		
 		FileStore.scanComplete = true;
 		
-		log.Write(3, "Total files found " + Long.toString(FileStore.fileCounter));
+		log.Write(3, "Total files found " + Long.toString(FileStore.fileScanCounter));
 		log.Write(3, "File scanning ended at " + new Date().toString());
 	}
 	
@@ -85,7 +79,10 @@ public class ScanFiles implements Runnable
 						log.Write(1, f.getAbsolutePath());
 						FileStore.Files.enqueue(f.getAbsolutePath());
 						fileCount++;
-						FileStore.fileCounter++;
+						FileStore.fileScanCounter++;
+						if(FileStore.frame != null)
+							FileStore.frame.updateHash();
+							
 						if(cfg.showUi)
 							System.out.println(f.getAbsoluteFile()  + "    " + Double.toString(f.length()));
 					}
@@ -100,6 +97,12 @@ public class ScanFiles implements Runnable
 	{
 		Config cfg = Config.Instance();
 		Logger log = Logger.Instance();
+		
+		if(cfg.scanAllDirs == false)
+		{
+			log.Write(3, "Scan all files is false");
+			return;
+		}
 		
 		File[] roots;
 		FileSystemView fsv = FileSystemView.getFileSystemView();

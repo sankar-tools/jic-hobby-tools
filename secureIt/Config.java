@@ -15,6 +15,7 @@ public class Config
 	public boolean showUi;
 	public long minSizeKb;
 	public int bufferSize;
+	public int maxPathLength;
 	
 	public String hostName;
 	public String userName;
@@ -52,11 +53,13 @@ public class Config
 		
 		configData.userName = System.getProperty("user.name"); 
 		configData.userHome = System.getProperty("user.home");
+		configData.maxPathLength = 255;
 		
 		configData.parseDirs = new Queue();
 		
-		configData.parseDirs.enqueue("c:\\dump".toUpperCase());
-		configData.parseDirs.enqueue("D:\\dump\\memories".toUpperCase());
+/* 		configData.parseDirs.enqueue("c:\\dump".toUpperCase());
+		configData.parseDirs.enqueue("D:\\dump\\memories".toUpperCase()); */
+		configData.parseDirs.enqueue("C:\\Dump\\imgs\\jwl".toUpperCase());
 		
 		LinkedList skipDirsList = new LinkedList();
 		skipDirsList.add("c:\\program files".toUpperCase());
@@ -79,9 +82,9 @@ public class Config
 		configData.logFile = "this.log";
 		configData.authUser = "sans";
 		configData.authCode = "sans";
-		configData.scanAllDirs = true;
-		configData.scanOnly = true;
-		configData.showUi = true;
+		configData.scanAllDirs = false;
+		configData.scanOnly = false;
+		configData.showUi = false;
 		configData.minSizeKb = 150;
 		configData.bufferSize = 8192;
 	}

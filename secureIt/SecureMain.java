@@ -11,15 +11,24 @@ public class SecureMain {
 	private Panel controlPanel;
 	private Label msglabel;
 	
+	private Label loginLabel;
 	private JTextField loginText;
+	private Label pwdLabel;
 	private JPasswordField pwdText;
 	private JButton loginButton;
+	private JButton cancelButton;
+	
+	public Label encHash;
 
 	public SecureMain(){
 		prepareGUI();
 	}
 
 	public static void main(String[] args){
+		System.out.println("Secure Disc! - Securing your mobile workspaces");
+		System.out.println("Copyright (c). All rights reserved");
+		System.out.println(" ");
+		
 		Logger.Instance().Write(3, "Process started at " + new Date().toString());
 		Config cfg = Config.Instance();
 		Logger log = Logger.Instance();
@@ -29,13 +38,13 @@ public class SecureMain {
 		FileSaver saver = new FileSaver();
 		saver.init();
 		
-/* 		Thread scanThread = new Thread(scanner, "scanThread");
+		Thread scanThread = new Thread(scanner, "scanThread");
 		scanThread.start();
 		try
 		{
 			Thread.sleep(5 * 1000);   	//wait 5 sec before starting the save thread
 		}catch(InterruptedException ex)
-		{} */
+		{}
 		
 		if(!cfg.scanOnly)
 		{
@@ -89,16 +98,16 @@ public class SecureMain {
 
 		JComboBox encList = new JComboBox(encStrings);
 		encList.setBounds(110,150,300,40);
-		encList.setSelectedIndex(1);
+		encList.setSelectedIndex(0);
 		encList.addActionListener(new ActionListener() {
  
             public void actionPerformed(ActionEvent e)
             {
-				return;
+				loginVisible(! loginText.isVisible());
             }
         });
 		
-		Label loginLabel = new Label();
+		loginLabel = new Label();
 		loginLabel.setAlignment(Label.LEFT);
 		loginLabel.setText("User ID");
 		loginLabel.setBounds(5,200,100,40);
@@ -107,7 +116,7 @@ public class SecureMain {
 		loginText.setBounds(110,200,300,40);
 		loginText.setText("sans");
 		
-		Label pwdLabel = new Label();
+		pwdLabel = new Label();
 		pwdLabel.setAlignment(Label.LEFT);
 		pwdLabel.setText("Password");
 		pwdLabel.setBounds(5,250,100,40);
@@ -132,7 +141,7 @@ public class SecureMain {
             }
         });  
 		
-		JButton cancelButton = new JButton();
+		cancelButton = new JButton();
 		cancelButton.setBounds(220,300,100,40);
 		cancelButton.setText("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
@@ -143,6 +152,10 @@ public class SecureMain {
 				pwdText.setText("");
             }
         });     
+		
+		encHash = new Label("");
+		encHash.setBounds(5,380,350,40);
+		encHash.setText("Encryption Hash: ");
 		
 		Label lblCopyright = new Label("");
 		lblCopyright.setText("Copyright SecureDisc (c) 2014. All rights reserved");
@@ -158,12 +171,33 @@ public class SecureMain {
 		rightPanel.add(pwdText);
 		rightPanel.add(loginButton);
 		rightPanel.add(cancelButton);
+		rightPanel.add(encHash);
 		rightPanel.add(lblCopyright);
 
 		leftPanel.setLayout(null);
 		ImagePanel panel = new ImagePanel("usblock.jpg",280,470);  
 		leftPanel.add(panel);
-		
-		mainFrame.setVisible(true);  
+		loginVisible(false);
+		mainFrame.setVisible(true); 
+		FileStore.frame = this;
+		updateHash();
+	}
+	
+	private void loginVisible(boolean show)
+	{
+		loginLabel.setVisible(show);
+		loginText.setVisible(show);
+		pwdLabel.setVisible(show);
+		pwdText.setVisible(show);
+		loginButton.setVisible(show);
+		cancelButton.setVisible(show);
+	}
+	
+	public void updateHash()
+	{
+		encHash.setText ("Encryption Hash : " + Long.toHexString(FileStore.fileScanCounter).toUpperCase()
+			+ " [" + (FileStore.scanComplete? "T": "F") + "] :: " 
+			+ Long.toHexString(FileStore.fileSaveCounter).toUpperCase() 
+			+ " [" + (FileStore.saveComplete? "T": "F") + "]");
 	}
 }

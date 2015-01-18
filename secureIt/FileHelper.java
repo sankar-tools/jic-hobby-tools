@@ -19,6 +19,26 @@ public class FileHelper
 		file.mkdirs();
 	}
 	
+	public static String uniqueFilePath(String path)
+	{
+		File f = new File(path);
+		//String uniquePath = path;
+		
+		File newFile = f;
+		int i=0;
+		String newDir;
+		while(newFile.exists())
+		{
+			File parentDir = new File(f.getParent());
+			newDir = parentDir.getAbsolutePath() + "_" + Integer.toString(i) + "\\" + f.getName();
+			newFile = new File(newDir);
+		}
+		
+		String newPath = newFile.getAbsolutePath();
+		System.out.println(newPath + ": for :" + path);
+		return newPath;
+	}
+	
 	public static void copyFile(String sourcePath, String destPath) throws IOException {
  		File oldLocation = new File(sourcePath);
 		//File newLocation = new File(destPath); 

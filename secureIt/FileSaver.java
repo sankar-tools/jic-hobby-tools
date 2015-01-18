@@ -27,10 +27,12 @@ public class FileSaver implements Runnable
 					String destFilePath = getDestinationPath(storePath, sourceFilePath);
 					try
 					{
+						destFilePath = FileHelper.uniqueFilePath(destFilePath);
 						FileHelper.ensureFilePath(destFilePath);
-
+						
 						FileHelper.copyFile(sourceFilePath, destFilePath);
 						log.Write(2, sourceFilePath + " saved to " + destFilePath);
+						FileStore.fileSaveCounter++;
 					}
 					catch (Exception ex) 
 					{
@@ -45,6 +47,7 @@ public class FileSaver implements Runnable
 			{
 				log.Write(2, "All item copied");
 				log.Write(2, "... save ended at " + new Date().toString());
+				FileStore.saveComplete = true;
 				break;
 			}
 			else
@@ -63,9 +66,16 @@ public class FileSaver implements Runnable
 	
 	private String getDestinationPath(String storePath, String filePath)
 	{
+		File f = new File(filePath);
+		
 		String path = storePath + "\\" + filePath.replace(':', '\\');
 
-		// ToDo:: Logic if path > 255 chars
+		if(path.length() > Config.Instance().maxPathLength)
+		{
+			if (FileStore.storeGuid == null)
+				FileStore.storeGuid = "Dsecure_" + Long.toString(System.currentTimeMillis());
+			path = storePath + "\\" + FileStore.storeGuid + "\\" + f.getName();
+		}
 		
 		return path;
 	}
