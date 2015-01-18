@@ -10,6 +10,12 @@ public class ScanFiles implements Runnable
 
 	public void init()
 	{
+/* 		Config cfg = Config.Instance();		
+
+		for(int i=0; i<cfg.skipDirs.size(); i++)
+		{
+			System.out.println(cfg.skipDirs.get(i));
+		} */
 		addFileRoots();
 		addSpecialFolders();
 	}
@@ -36,7 +42,7 @@ public class ScanFiles implements Runnable
 		log.Write(3, "File scanning ended at " + new Date().toString());
 	}
 	
-	public static void getFilesRecursive(String path)
+	public void getFilesRecursive(String path)
 	{
 		Config cfg = Config.Instance();
 		Logger log = Logger.Instance();
@@ -50,19 +56,31 @@ public class ScanFiles implements Runnable
 		for (int i=0; i<list.length; i++ ) {
 			File f = list[i];
 			if ( f.isDirectory() ) {
-				getFilesRecursive( f.getAbsolutePath());
-				//System.out.println( "Dir:" + f.getAbsoluteFile() );
+				//String thisDir = f.getName();
+				boolean skipDir = skipThisDir(f.getAbsolutePath());
+				if(skipDir == false)
+				{
+					getFilesRecursive(f.getAbsolutePath());
+					log.Write(3, "[ok]   " + f.getAbsolutePath());
+				}
+				else
+					log.Write(3, "[x]  " + f.getAbsolutePath());
+				
 			}
 			else {
 				//if file extension is part of Config FileExtList then add to queue
 				String ext = FileHelper.getFileExtension(f.getName());
 				if(cfg.fileExtList.toUpperCase().lastIndexOf(ext.toUpperCase()) > -1)
 				{
-					log.Write(1, f.getAbsolutePath());
-					FileStore.Files.enqueue(f.getAbsolutePath());
-					fileCount++;
-					//System.out.print("[ok]");
-					System.out.println( "     File:" + f.getAbsoluteFile()  + "    " + ext);
+					// check file min size
+					if(f.length() > (cfg.minSizeKb * 1000))
+					{
+						log.Write(1, f.getAbsolutePath());
+						FileStore.Files.enqueue(f.getAbsolutePath());
+						fileCount++;
+						FileStore.fileCounter++;
+						//System.out.println(f.getAbsoluteFile()  + "    " + Double.toString(f.length()));
+					}
 				}
 			}
 		}
@@ -88,13 +106,35 @@ public class ScanFiles implements Runnable
 			// prints file and directory paths
 			log.Write(3, "Drive Name: "+ roots[i].getAbsolutePath());
 			cfg.parseDirs.enqueue(roots[i].getAbsolutePath());
-			//System.out.println("Description: "+fsv.getSystemTypeDescription(roots[i]));
+
+			// ToDo :: Filter CD Drives and other removable media
+			
+			//ToDo:: Add root directories
 		}
 	}
 	
 	private void addSpecialFolders()
 	{
 		//ToDo: Iterate special folders
+	}
+	
+	private boolean skipThisDir(String dir)
+	{
+		Config cfg = Config.Instance();		
+		dir = dir.toUpperCase();
+		System.out.println("Verify " + dir);
+		for(int i=0; i<cfg.skipDirs.size(); i++)
+		{
+			System.out.println(cfg.skipDirs.get(i));
+			if(cfg.skipDirs.get(i).equals(dir))
+			{
+				System.out.println("skip");
+				return true;
+
+			}
+		}
+		System.out.println("include");
+		return false;
 	}
 	
 }

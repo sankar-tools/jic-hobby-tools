@@ -8,11 +8,11 @@ class Queue {
 	}
 
 	public String dequeue() {
-		return (String) list.removeLast();
+		return (String) list.removeFirst();
 	}
 	
 	public String peek() {
-		return (String) list.getLast();
+		return (String) list.getFirst();
 	}
 
 	public boolean hasItems() {

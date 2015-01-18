@@ -24,7 +24,7 @@ public class SecureMain {
 		Config cfg = Config.Instance();
 		Logger log = Logger.Instance();
 		
-/* 		ScanFiles scanner = new ScanFiles();
+		ScanFiles scanner = new ScanFiles();
 		scanner.init();
 		FileSaver saver = new FileSaver();
 		saver.init();
@@ -37,10 +37,13 @@ public class SecureMain {
 		}catch(InterruptedException ex)
 		{}
 		
-		Thread saveThread = new Thread(saver, "saveThread");
-		saveThread.start(); */
+		if(!cfg.scanOnly)
+		{
+			Thread saveThread = new Thread(saver, "saveThread");
+			saveThread.start();
+		}
 		
-		SecureMain  SecureMain = new SecureMain();  
+		//SecureMain  SecureMain = new SecureMain();  
 		//SecureMain.showGridLayoutDemo();       
 	}
       
