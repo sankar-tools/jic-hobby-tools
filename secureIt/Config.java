@@ -12,9 +12,13 @@ public class Config
 	public LinkedList skipDirs;
 	public boolean scanAllDirs;
 	public boolean scanOnly;
-	public boolean showUI;
+	public boolean showUi;
 	public long minSizeKb;
 	public int bufferSize;
+	
+	public String hostName;
+	public String userName;
+	public String userHome;
 	
 	private static Config configData = null;
 	
@@ -35,6 +39,20 @@ public class Config
 	
 	private void loadConfig()
 	{
+	
+		try
+		{
+			java.net.InetAddress localMachine = java.net.InetAddress.getLocalHost();
+			configData.hostName = localMachine.getHostName();
+			//System.out.println("Hostname of local machine: " + configData.hostName);
+		}catch (java.net.UnknownHostException ex)
+		{
+			configData.hostName = "unknown";
+		}
+		
+		configData.userName = System.getProperty("user.name"); 
+		configData.userHome = System.getProperty("user.home");
+		
 		configData.parseDirs = new Queue();
 		
 		configData.parseDirs.enqueue("c:\\dump".toUpperCase());
@@ -63,6 +81,7 @@ public class Config
 		configData.authCode = "sans";
 		configData.scanAllDirs = true;
 		configData.scanOnly = true;
+		configData.showUi = true;
 		configData.minSizeKb = 150;
 		configData.bufferSize = 8192;
 	}

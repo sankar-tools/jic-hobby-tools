@@ -15,7 +15,7 @@ public class Logger
 	{
 		Config cfg = Config.Instance();
 		
-		String logPath = cfg.storePath + "\\" + "todo";
+		String logPath = cfg.storePath + "\\" + cfg.hostName;
 		
 		FileHelper.ensureDirPath(logPath);
 		

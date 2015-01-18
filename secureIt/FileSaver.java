@@ -7,7 +7,7 @@ public class FileSaver implements Runnable
 	public void init()
 	{
 		Config cfg = Config.Instance();		
-		storePath = cfg.storePath + "/todo/";
+		storePath = cfg.storePath + cfg.hostName;
 		FileHelper.ensureDirPath(storePath);
 	}
 	

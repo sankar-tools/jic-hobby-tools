@@ -9,8 +9,6 @@ Use external file for config parameters
 
 Log folder wise count and size in generic log
 
-Handle duplicate files
-
 Handle paths longer than 255 chars
 
 Use machine name in store path

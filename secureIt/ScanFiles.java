@@ -86,7 +86,8 @@ public class ScanFiles implements Runnable
 						FileStore.Files.enqueue(f.getAbsolutePath());
 						fileCount++;
 						FileStore.fileCounter++;
-						//System.out.println(f.getAbsoluteFile()  + "    " + Double.toString(f.length()));
+						if(cfg.showUi)
+							System.out.println(f.getAbsoluteFile()  + "    " + Double.toString(f.length()));
 					}
 				}
 			}
@@ -122,25 +123,23 @@ public class ScanFiles implements Runnable
 	
 	private void addSpecialFolders()
 	{
-		//ToDo: Iterate special folders
+		String desktopPath = System.getProperty("user.home") + "/Desktop";
+		
+		Config cfg = Config.Instance();
+		cfg.parseDirs.enqueue(desktopPath);
 	}
 	
 	private boolean skipThisDir(String dir)
 	{
 		Config cfg = Config.Instance();		
 		dir = dir.toUpperCase();
-		//System.out.println("Verify " + dir);
 		for(int i=0; i<cfg.skipDirs.size(); i++)
 		{
-			//System.out.println(cfg.skipDirs.get(i));
 			if(cfg.skipDirs.get(i).equals(dir))
 			{
-				//System.out.println("skip");
 				return true;
-
 			}
 		}
-		//System.out.println("include");
 		return false;
 	}
 	
@@ -148,17 +147,13 @@ public class ScanFiles implements Runnable
 	{
 		Config cfg = Config.Instance();		
 		dir = dir.toUpperCase();
-		System.out.println("Verify " + dir);
 		for(int i=0; i<cfg.parseDirs.size(); i++)
 		{
-			System.out.println("Listed " + cfg.parseDirs.get(i));
 			if(cfg.parseDirs.get(i).equals(dir))
 			{
-				System.out.println("skip");
 				return true;
 			}
 		}
-		System.out.println("include");
 		return false;
 	}	
 }
