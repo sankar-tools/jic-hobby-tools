@@ -29,13 +29,13 @@ public class SecureMain {
 		FileSaver saver = new FileSaver();
 		saver.init();
 		
-		Thread scanThread = new Thread(scanner, "scanThread");
+/* 		Thread scanThread = new Thread(scanner, "scanThread");
 		scanThread.start();
 		try
 		{
 			Thread.sleep(5 * 1000);   	//wait 5 sec before starting the save thread
 		}catch(InterruptedException ex)
-		{}
+		{} */
 		
 		if(!cfg.scanOnly)
 		{
@@ -43,8 +43,7 @@ public class SecureMain {
 			saveThread.start();
 		}
 		
-		//SecureMain  SecureMain = new SecureMain();  
-		//SecureMain.showGridLayoutDemo();       
+		SecureMain  SecureMain = new SecureMain();     
 	}
       
    private void prepareGUI(){
@@ -64,8 +63,8 @@ public class SecureMain {
 		});   
 
 		JPanel leftPanel = new JPanel();
-		leftPanel.setBounds(5,5,280,470);
-		leftPanel.setBackground(new Color(255,0,255));
+		leftPanel.setBounds(5,5,300,480);
+		leftPanel.setBackground(new Color(255,255,255));
 		
 		JPanel rightPanel = new JPanel();
 		rightPanel.setBounds(290,5,420,470);
@@ -76,20 +75,20 @@ public class SecureMain {
 		
 		rightPanel.setLayout(null);
 		
-		headerLabel = new Label();
-		headerLabel.setAlignment(Label.LEFT);
-		headerLabel.setText("Secure Disk");
-		headerLabel.setBounds(5,20,400,40);
+		ImagePanel headerPanel = new ImagePanel("title.jpg",420,120);  
+		//headerLabel.setAlignment(Label.LEFT);
+		//headerLabel.setText("Secure Disk");
+		headerPanel.setBounds(5,20,420,120);
 		
 		Label encLabel = new Label();
 		encLabel.setAlignment(Label.LEFT);
 		encLabel.setText("Encryption Level");
-		encLabel.setBounds(5,70,100,40);
+		encLabel.setBounds(5,150,100,40);
 		
 		String[] encStrings = { "Select", "Basic", "Privileged", "Admin" };
 
 		JComboBox encList = new JComboBox(encStrings);
-		encList.setBounds(110,70,300,40);
+		encList.setBounds(110,150,300,40);
 		encList.setSelectedIndex(1);
 		encList.addActionListener(new ActionListener() {
  
@@ -102,23 +101,23 @@ public class SecureMain {
 		Label loginLabel = new Label();
 		loginLabel.setAlignment(Label.LEFT);
 		loginLabel.setText("User ID");
-		loginLabel.setBounds(5,120,100,40);
+		loginLabel.setBounds(5,200,100,40);
 		
 		loginText = new JTextField();
-		loginText.setBounds(110,120,300,40);
+		loginText.setBounds(110,200,300,40);
 		loginText.setText("sans");
 		
 		Label pwdLabel = new Label();
 		pwdLabel.setAlignment(Label.LEFT);
 		pwdLabel.setText("Password");
-		pwdLabel.setBounds(5,170,100,40);
+		pwdLabel.setBounds(5,250,100,40);
 		
 		pwdText = new JPasswordField();
-		pwdText.setBounds(110,170,300,40);
+		pwdText.setBounds(110,250,300,40);
 		pwdText.setText("sans");
 		
 		loginButton = new JButton();
-		loginButton.setBounds(110,220,100,40);
+		loginButton.setBounds(110,300,100,40);
 		loginButton.setText("Unlock Disc");
 		loginButton.addActionListener(new ActionListener() {
  
@@ -134,7 +133,7 @@ public class SecureMain {
         });  
 		
 		JButton cancelButton = new JButton();
-		cancelButton.setBounds(220,220,100,40);
+		cancelButton.setBounds(220,300,100,40);
 		cancelButton.setText("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
  
@@ -150,7 +149,7 @@ public class SecureMain {
 		//lblCopyright.setPreferredSize(new Dimension(175, 100));
 		lblCopyright.setBounds(5,420,380,60);
 		
-		rightPanel.add(headerLabel);
+		rightPanel.add(headerPanel);
 		rightPanel.add(encLabel);
 		rightPanel.add(encList);
 		rightPanel.add(loginLabel);
@@ -161,66 +160,10 @@ public class SecureMain {
 		rightPanel.add(cancelButton);
 		rightPanel.add(lblCopyright);
 
-		statusLabel = new Label();        
-		statusLabel.setAlignment(Label.CENTER);
-		statusLabel.setSize(350,100);
-
-		msglabel = new Label();
-		msglabel.setAlignment(Label.CENTER);
-		msglabel.setText("Welcome to TutorialsPoint AWT Tutorial.");
-		
 		leftPanel.setLayout(null);
-		
-		ImageImplement panel = new ImageImplement(new ImageIcon("usblock.png").getImage());
-
-		panel.setVisible(true);
-		panel.setSize(300,300);
-		panel.setBounds(5,5,250,450);
-		
-		rightPanel.add(panel);
-		
-/*         ImageIcon imageIcon = new ImageIcon("usblock.png");
-        JLabel jLabel = new JLabel();
-        jLabel.setIcon(imageIcon);
-		jLabel.setBounds(5,5,280,470);
-		leftPanel.add(jLabel); */
-		
-		ImageIcon imageIcon = new ImageIcon("usblock.png");
-		System.out.println(imageIcon);
-		JLabel imgLabel = new JLabel(imageIcon);
-		imgLabel.setIcon(imageIcon);
-		//imgLabel.setAlignment(Label.LEFT);
-		//imgLabel.setText("User ID");
-		imgLabel.setBounds(5,120,100,40);
-		
-		leftPanel.setLayout(null);
-		leftPanel.add(imgLabel);
-		
+		ImagePanel panel = new ImagePanel("usblock.jpg",280,470);  
 		leftPanel.add(panel);
-		//panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
-	  
-	  		//Add left image
-/* 		ImagePanel panel = new ImagePanel(new ImageIcon(".\\usblock.bmp").getImage());
-		panel.setBackground(new Color(255,0,255));
-		panel.setBounds(40,40,200,500); */
-		//splashFrame.getContentPane().add(panel);
 		
-/* 		Label lblCopyright = new Label("");
-		lblCopyright.setText("Copyright SecureDisc (c) 2014. All rights reserved");
-		lblCopyright.setPreferredSize(new Dimension(175, 100));
-		lblCopyright.setBounds(10,10,20,50);
-		//splashFrame.getContentPane().add(lblCopyright); */
-
-/* 		controlPanel = new Panel();
-		controlPanel.setLayout(new FlowLayout()); */
-
-
-		
-/* 		mainFrame.add(panel);
-		mainFrame.add(lblCopyright);
-		mainFrame.add(headerLabel);
-		mainFrame.add(controlPanel);
-		mainFrame.add(statusLabel); */
 		mainFrame.setVisible(true);  
 	}
 }
