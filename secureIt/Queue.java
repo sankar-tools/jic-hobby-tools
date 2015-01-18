@@ -28,6 +28,11 @@ class Queue {
 			list.addLast(q.dequeue());
 	}
 	
+	public String get(int i)
+	{
+		return (String) list.get(i);
+	}
+	
 	// Queue test function
    
 	public static void main(String[] args) {

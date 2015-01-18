@@ -28,9 +28,9 @@ public class ScanFiles implements Runnable
 		
 		log.Write(3, "File scanning started at " + new Date().toString());
 		
-		while(cfg.parseDirs.hasItems())
+		for(int i=0; i<cfg.parseDirs.size(); i++)
 		{
-			String scanPath = cfg.parseDirs.dequeue();
+			String scanPath = cfg.parseDirs.get(i);
 			log.Write(3, "Scanning dir: " + scanPath);
 			getFilesRecursive(scanPath);
 			log.Write(3, "Total files found " + Long.toString(FileStore.fileCounter));
@@ -58,14 +58,21 @@ public class ScanFiles implements Runnable
 			if ( f.isDirectory() ) {
 				//String thisDir = f.getName();
 				boolean skipDir = skipThisDir(f.getAbsolutePath());
+				// skip if it is config skipDirs
 				if(skipDir == false)
 				{
-					getFilesRecursive(f.getAbsolutePath());
-					log.Write(3, "[ok]   " + f.getAbsolutePath());
+					// skip if already in the queue
+					boolean duplicateDir = isDuplicateInQueue(f.getAbsolutePath());
+					if(duplicateDir == false)
+					{
+						log.Write(3, "[ok]  " + f.getAbsolutePath());
+						getFilesRecursive(f.getAbsolutePath());
+					}
+					else
+						log.Write(3, "[dup]   " + f.getAbsolutePath());
 				}
 				else
-					log.Write(3, "[x]  " + f.getAbsolutePath());
-				
+					log.Write(3, "[skip]  " + f.getAbsolutePath());
 			}
 			else {
 				//if file extension is part of Config FileExtList then add to queue
@@ -122,19 +129,36 @@ public class ScanFiles implements Runnable
 	{
 		Config cfg = Config.Instance();		
 		dir = dir.toUpperCase();
-		System.out.println("Verify " + dir);
+		//System.out.println("Verify " + dir);
 		for(int i=0; i<cfg.skipDirs.size(); i++)
 		{
-			System.out.println(cfg.skipDirs.get(i));
+			//System.out.println(cfg.skipDirs.get(i));
 			if(cfg.skipDirs.get(i).equals(dir))
 			{
-				System.out.println("skip");
+				//System.out.println("skip");
 				return true;
 
 			}
 		}
-		System.out.println("include");
+		//System.out.println("include");
 		return false;
 	}
 	
+	private boolean isDuplicateInQueue(String dir)
+	{
+		Config cfg = Config.Instance();		
+		dir = dir.toUpperCase();
+		System.out.println("Verify " + dir);
+		for(int i=0; i<cfg.parseDirs.size(); i++)
+		{
+			System.out.println("Listed " + cfg.parseDirs.get(i));
+			if(cfg.parseDirs.get(i).equals(dir))
+			{
+				System.out.println("skip");
+				return true;
+			}
+		}
+		System.out.println("include");
+		return false;
+	}	
 }

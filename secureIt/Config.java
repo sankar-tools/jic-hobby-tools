@@ -37,6 +37,9 @@ public class Config
 	{
 		configData.parseDirs = new Queue();
 		
+		configData.parseDirs.enqueue("c:\\dump".toUpperCase());
+		configData.parseDirs.enqueue("D:\\dump\\memories".toUpperCase());
+		
 		LinkedList skipDirsList = new LinkedList();
 		skipDirsList.add("c:\\program files".toUpperCase());
 		skipDirsList.add("c:\\program files (x86)".toUpperCase());
@@ -51,9 +54,7 @@ public class Config
 		skipDirsList.add("C:\\jdk1.2.2".toUpperCase());
 		skipDirsList.add("c:\\IBM".toUpperCase());
 		
-		
 		configData.skipDirs = skipDirsList;
-		
 		
 		configData.fileExtList = "jpg;png";
 		configData.storePath = ".\\store\\";
@@ -64,7 +65,6 @@ public class Config
 		configData.scanOnly = true;
 		configData.minSizeKb = 150;
 		configData.bufferSize = 8192;
-		
 	}
 	
 	
