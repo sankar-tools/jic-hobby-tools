@@ -35,11 +35,25 @@ public class FileHelper
 		}
 		
 		String newPath = newFile.getAbsolutePath();
-		System.out.println(newPath + ": for :" + path);
+		//System.out.println(newPath + ": for :" + path);
+		System.out.print(":::" + Long.toString(System.currentTimeMillis()) + ":::\r");
 		return newPath;
 	}
 	
-	public static void copyFile(String sourcePath, String destPath) throws IOException {
+	public static void copyFile(String sourcePath, String destPath)
+	{
+		try{
+			String[] cmd1 = {"copy",sourcePath,destPath};
+			Runtime.getRuntime().exec(cmd1);
+		}catch (IOException ex)
+		{
+			Logger.Instance().Write(3, "Exception writing " + sourcePath + " to " + destPath);
+			Logger.Instance().Write(3, ex.toString());
+		}
+		
+	}
+	
+	public static void copyFile1(String sourcePath, String destPath) throws IOException {
  		File oldLocation = new File(sourcePath);
 		//File newLocation = new File(destPath); 
 		
@@ -77,6 +91,32 @@ public class FileHelper
 		}
 		return name.substring(lastIndexOf+1);
 	}
+	
+	public static void HideFolder(String path, boolean flag)
+	{
+		String cmdFlag = "-h";
+		
+		if(flag)
+			cmdFlag = "+h";
+			
+		try
+		{
+			String[] cmd1 = {"attrib",cmdFlag,path};
+			Runtime.getRuntime().exec(cmd1);
+		}catch(IOException ex)
+		{}
+	}
+	
+	public static String getDriveLetter(String path)
+	{
+		File file = new File(path).getAbsoluteFile();
+		File root = file.getParentFile();
+		
+		while (root.getParentFile() != null) {
+			root = root.getParentFile();
+		}
 
-
+		//System.out.println("Drive is: "+root.getPath());
+		return root.getPath();
+	}
 }

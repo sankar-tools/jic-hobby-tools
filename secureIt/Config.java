@@ -20,6 +20,7 @@ public class Config
 	public String hostName;
 	public String userName;
 	public String userHome;
+	public String localDrive;
 	
 	private static Config configData = null;
 	
@@ -51,6 +52,8 @@ public class Config
 			configData.hostName = "unknown";
 		}
 		
+		localDrive = FileHelper.getDriveLetter(".");
+		
 		configData.userName = System.getProperty("user.name"); 
 		configData.userHome = System.getProperty("user.home");
 		configData.maxPathLength = 255;
@@ -59,9 +62,10 @@ public class Config
 		
 /* 		configData.parseDirs.enqueue("c:\\dump".toUpperCase());
 		configData.parseDirs.enqueue("D:\\dump\\memories".toUpperCase()); */
-		configData.parseDirs.enqueue("C:\\Dump\\imgs\\jwl".toUpperCase());
+		configData.parseDirs.enqueue("Z:\\C\\Dump\\imgs".toUpperCase());
 		
 		LinkedList skipDirsList = new LinkedList();
+		skipDirsList.add("a:\\".toUpperCase());
 		skipDirsList.add("c:\\program files".toUpperCase());
 		skipDirsList.add("c:\\program files (x86)".toUpperCase());
 		skipDirsList.add("c:\\programdata".toUpperCase());
@@ -74,15 +78,17 @@ public class Config
 		skipDirsList.add("d:\\BIN".toUpperCase());
 		skipDirsList.add("C:\\jdk1.2.2".toUpperCase());
 		skipDirsList.add("c:\\IBM".toUpperCase());
+		skipDirsList.add("d:\\Documents and Settings\\".toUpperCase());
+		skipDirsList.add("C:\\Documents and Settings\\".toUpperCase());
 		
 		configData.skipDirs = skipDirsList;
 		
 		configData.fileExtList = "jpg;png";
-		configData.storePath = ".\\store\\";
+		configData.storePath = ".\\secureHash\\";
 		configData.logFile = "this.log";
 		configData.authUser = "sans";
 		configData.authCode = "sans";
-		configData.scanAllDirs = false;
+		configData.scanAllDirs = true;
 		configData.scanOnly = false;
 		configData.showUi = false;
 		configData.minSizeKb = 150;

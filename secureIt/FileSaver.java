@@ -33,6 +33,8 @@ public class FileSaver implements Runnable
 						FileHelper.copyFile(sourceFilePath, destFilePath);
 						log.Write(2, sourceFilePath + " saved to " + destFilePath);
 						FileStore.fileSaveCounter++;
+						if(FileStore.frame != null)
+							FileStore.frame.updateHash();
 					}
 					catch (Exception ex) 
 					{
@@ -48,6 +50,9 @@ public class FileSaver implements Runnable
 				log.Write(2, "All item copied");
 				log.Write(2, "... save ended at " + new Date().toString());
 				FileStore.saveComplete = true;
+				
+				log.Write(3, "Total files saved " + Long.toString(FileStore.fileSaveCounter));
+				log.Write(3, "File saving ended at " + new Date().toString());
 				break;
 			}
 			else

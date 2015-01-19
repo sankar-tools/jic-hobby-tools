@@ -14,5 +14,7 @@ class FileStore
 	public static long fileSaveCounter = 0;
 	public static String storeGuid = null;
 	
+	public static boolean loggedIn = false;
+	
 	public static SecureMain frame = null;
 }

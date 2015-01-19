@@ -115,8 +115,13 @@ public class ScanFiles implements Runnable
 		for(i = 0; i < roots.length ; i++)
 		{
 			// prints file and directory paths
-			log.Write(3, "Drive Name: "+ roots[i].getAbsolutePath());
-			cfg.parseDirs.enqueue(roots[i].getAbsolutePath());
+			String filePath = roots[i].getAbsolutePath().toUpperCase();
+			if(!(filePath.equals("A:\\") || filePath.equals(cfg.localDrive.toUpperCase())))
+			{
+				cfg.parseDirs.enqueue(roots[i].getAbsolutePath());
+				//System.out.println(roots[i].getAbsolutePath());
+				log.Write(3, "Drive Name: "+ roots[i].getAbsolutePath());
+			}
 
 			// ToDo :: Filter CD Drives and other removable media
 			

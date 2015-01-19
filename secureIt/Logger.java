@@ -23,7 +23,7 @@ public class Logger
 		String scanLogPath = logPath + "\\scan_" + cfg.logFile;
 		String genericLogPath = logPath + "\\generic_" + cfg.logFile;
 		
-		System.out.println(saveLogPath);
+		//System.out.println(saveLogPath);
 		
 		saveLoggerFile = GetBufferedWriter(saveLogPath);
 		scanLoggerFile = GetBufferedWriter(scanLogPath);
@@ -80,7 +80,7 @@ public class Logger
 					break;
 
 				default:
-					genericLoggerFile.write(logMsg);
+					genericLoggerFile.write(msg);
 					genericLoggerFile.newLine();
 					genericLoggerFile.flush();
 					break;
