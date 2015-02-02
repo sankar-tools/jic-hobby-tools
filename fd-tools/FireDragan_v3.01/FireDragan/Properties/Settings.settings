@@ -1,0 +1,78 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="FireDragan.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ShowScriptErrors" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="FilterLevel" Type="FireDragan.PopupBlockerFilterLevel" Scope="User">
+      <Value Profile="(Default)">Low</Value>
+    </Setting>
+    <Setting Name="ImageExpression" Type="System.String" Scope="User">
+      <Value Profile="(Default)">jpeg,jpg,jpe,gif,bmp,png,tiff</Value>
+    </Setting>
+    <Setting Name="OnOpenNewFocusTab" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DBConnection" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Provider=SQLOLEDB.1;User Id=sa;Password=openopen;Initial Catalog=Biz;Data Source=.;</Value>
+    </Setting>
+    <Setting Name="PageExpression" Type="System.String" Scope="User">
+      <Value Profile="(Default)">html,htm,php,asp,aspx,mspx</Value>
+    </Setting>
+    <Setting Name="AlterImageLevel" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="JavascriptExpression" Type="System.String" Scope="User">
+      <Value Profile="(Default)">js</Value>
+    </Setting>
+    <Setting Name="StyleExpression" Type="System.String" Scope="User">
+      <Value Profile="(Default)">css</Value>
+    </Setting>
+    <Setting Name="CheckUrlExistance" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MaxGrabThreads" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="MaxGrabBuckets" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="PreservePath" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="UseProxy" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="BufferSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10240</Value>
+    </Setting>
+    <Setting Name="UserAgent" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</Value>
+    </Setting>
+    <Setting Name="GrabberSaveLocation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">E:\Sankar\Temp\Test\abc\Gra</Value>
+    </Setting>
+    <Setting Name="ImageSaveLocation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">E:\Sankar\Temp\Test\abc</Value>
+    </Setting>
+    <Setting Name="UseReferrer" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="LinkProcPreString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&amp;url=|50&amp;u=|60&amp;u=</Value>
+    </Setting>
+    <Setting Name="LinkProcPostString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&amp;p|&amp;link</Value>
+    </Setting>
+    <Setting Name="ImageCategories" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Process|Presentation</Value>
+    </Setting>
+    <Setting Name="IdentityDB" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Data Source=YH1323\SQLExpress;Initial Catalog=Biz;Integrated Security=True;Pooling=False</Value>
+    </Setting>
+    <Setting Name="MaxTabs" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
