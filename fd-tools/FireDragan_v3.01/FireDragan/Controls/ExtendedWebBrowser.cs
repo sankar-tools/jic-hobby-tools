@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Security.Permissions;
 
+using mshtml = MSHTML;
 using SansTech.Net.Http;
 
 namespace FireDragan
@@ -843,6 +844,7 @@ namespace FireDragan
           object obj = el.DomElement;
           System.Reflection.MemberInfo mi = obj.GetType().GetMethod("click");
           //mi.
+
           mshtml.HTMLInputElement el2 = (mshtml.HTMLInputElement)el.DomElement;
           el2.click();
 

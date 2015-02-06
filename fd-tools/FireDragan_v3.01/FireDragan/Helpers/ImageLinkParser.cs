@@ -128,6 +128,7 @@ namespace FireDragan
                         ImageLinks newLink = new ImageLinks();
                         newLink.Link = hrefStr;
                         newLink.Image = imgStr;
+                        
                         newLink.Filename = Helpers.UrlHelper.GetFilename(imgStr);
                         if (!GoodUrls.Contains(newLink))
                         {

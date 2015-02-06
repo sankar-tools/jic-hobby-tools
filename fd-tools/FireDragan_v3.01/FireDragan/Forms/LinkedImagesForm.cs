@@ -104,18 +104,29 @@ namespace FireDragan
 
         private Image LoadImage(string url)
         {
-            System.Net.WebRequest request =
-                System.Net.WebRequest.Create(url);
+            try
+            {
+                System.Net.WebRequest request =
+                    System.Net.WebRequest.Create(url);
 
-            System.Net.WebResponse response = request.GetResponse();
-            System.IO.Stream responseStream =
-                response.GetResponseStream();
+                System.Net.WebResponse response = request.GetResponse();
+                System.IO.Stream responseStream =
+                    response.GetResponseStream();
 
-            Bitmap bmp = new Bitmap(responseStream);
+                //Bitmap bmp = new Bitmap(responseStream);
+                Image img = Image.FromStream(responseStream);
 
-            responseStream.Dispose();
+                responseStream.Dispose();
 
-            return bmp;
+
+                return img;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+            return null;
+
         }
 
         // Controlled crawling method written on Data received event of HttpHelper
@@ -123,54 +134,26 @@ namespace FireDragan
         {
             if(args.Done) // Current page fetch is complete
             {
-                lock (lck)
-                {
-                    if (lck.fetchLevel == 1)
-                    {
-                        ImageLinkParser lparse = new ImageLinkParser();
-                        lparse.ParseHrefLinks(args.Document, currentUrl);
+                ImageLinkParser lparse = new ImageLinkParser();
+                lparse.ParseHrefLinks(args.Document, currentUrl);
 
-                        ImageList images = new ImageList();
-                        images.ImageSize = new Size(150, 150);
+                ImageList images = new ImageList();
+                images.ImageSize = new Size(150, 150);
                         
-                        for (int i=0; i < lparse.GoodUrls.Count; i++)
+                for (int i=0; i < lparse.GoodUrls.Count; i++)
+                {
+                    if (lparse.GoodUrls[i].Image != null)
+                    {
+                        Image bmp = LoadImage(lparse.GoodUrls[i].Image);
+                        if (bmp != null)
                         {
-                            if(lparse.GoodUrls[i].Image != null)
-                                images.Images.Add(
-                                    LoadImage(lparse.GoodUrls[i].Image));
-                            lvwLinkHierarchy.Items.Add("item" + i, i);
-                            //listView1.Items.Add("Another item item", 1);
+                            images.Images.Add(bmp);
+                            lvwLinkHierarchy.Items.Add(lparse.GoodUrls[i].Filename, i);
                         }
-
-                        //lvwLinkHierarchy.SmallImageList = images;
-                        lvwLinkHierarchy.LargeImageList = images;
-                        //AddNewFoundLink("   " + lnk);
-                        //lck.fetchLevel = 2;
                     }
-
-                    //else if (lck.fetchLevel == 2)
-                    //{
-                    //    LinkParser lparse = new LinkParser();
-                    //    lparse.ParseImgLinks(args.Document, currentUrl);
-
-                    //    foreach (string img in lparse.GoodUrls)
-                    //    {
-                    //        AddNewFoundLink("      " + img);
-                    //    }
-
-                    //    lparse.ParseHrefLinks(args.Document, currentUrl);
-                    //    foreach (string lnk in lparse.GoodUrls)
-                    //    {
-                    //        if (LinkParser.GetLinkType(lnk) == LinkType.Image)
-                    //        {
-                    //            AddNewFoundLink("      " + lnk);
-                    //        }
-                    //    }
-
-                    //}
-
-                    //GoWithNextFetch();
                 }
+
+                lvwLinkHierarchy.LargeImageList = images;
             }
             else // Current page fetch is in progress update status
             {
