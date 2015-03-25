@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="OliverBlogLog.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DBConnection" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Provider=SQLOLEDB.1;User Id=sa;Password=openopen;Initial Catalog=Biz;Data Source=.;timeout=20000</Value>
+    </Setting>
+    <Setting Name="ImageViewer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Program Files\ACD Systems\ACDSee\14.0\acdsee14.exe</Value>
+    </Setting>
+    <Setting Name="ArchievePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">S:\gras005\</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

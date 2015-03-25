@@ -1,0 +1,36 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="OliverBlogCruz.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="FileExtExpressionJS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">js</Value>
+    </Setting>
+    <Setting Name="FileExtExpressionWebPage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">html,htm,php,asp,aspx,mspx</Value>
+    </Setting>
+    <Setting Name="FileExtExpressionImage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">jpeg,jpg,jpe,gif,bmp,png,tiff</Value>
+    </Setting>
+    <Setting Name="FileExtExpressionStyle" Type="System.String" Scope="User">
+      <Value Profile="(Default)">css</Value>
+    </Setting>
+    <Setting Name="StoreBasePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d:\temp\test\</Value>
+    </Setting>
+    <Setting Name="UserAgent" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Test User Agent</Value>
+    </Setting>
+    <Setting Name="DBConnection" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Provider=SQLOLEDB.1;User Id=sa;Password=openopen;Initial Catalog=BizGenX;Data Source=.;</Value>
+    </Setting>
+    <Setting Name="FiltersInclude" Type="System.String" Scope="User">
+      <Value Profile="(Default)">pzy.be,photoshare,hubimg,postimage,imagebam,idlebrain,hqimage,desiupload,cinesnacks,cineindya,cinefun,cinegoer,tamilsguide,bollywoodmantra,tamilmax,sulekha,uploadhouse,imagerevenue,ragalahari,photobucket,indiaglitz,sphotos,imgbox,postimage,piczclub,indiaglitz,sphotos,imgbox,postimage,piczclub,pixslam,imagebam,yoopic,imagehost,imageshack</Value>
+    </Setting>
+    <Setting Name="FiltersExclude" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="UrlPattern" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://www.exbii.com/showthread.php?t=abc&amp;page=[i]</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
