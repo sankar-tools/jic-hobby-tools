@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="GenXModel">
+  <DataContextMoniker Name="/GenXModelDataContext" />
+  <nestedChildShapes>
+    <classShape Id="03811f3b-8a08-4757-96a3-1a78302cdcf5" absoluteBounds="5.125, 1.75, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/GenXModelDataContext/GrabList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6edcdde0-d813-4375-a0dd-8bf69657d45a" absoluteBounds="5.14, 2.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

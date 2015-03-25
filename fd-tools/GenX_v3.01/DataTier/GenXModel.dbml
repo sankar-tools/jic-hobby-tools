@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BizGenX" Class="GenXModelDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=BizGenX;Integrated Security=True" SettingsObjectName="Oliva.GenX.DataTier.Properties.Settings" SettingsPropertyName="BizGenXConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.GrabList" Member="GrabLists">
+    <Type Name="GrabList">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="url" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="referrer" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="priority" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="tags" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sizeGrabbed" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="sizeTotal" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="retry" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="created" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="lastModified" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
