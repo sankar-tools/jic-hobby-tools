@@ -1,0 +1,10 @@
+E:\Sankar\5. Dev\MyDev\FireSoft\FireSarpent\PixGrabber_v2.01\bin\Debug\Sans.FireDragan.PixGrabber.exe.config
+E:\Sankar\5. Dev\MyDev\FireSoft\FireSarpent\PixGrabber_v2.01\obj\Debug\Sans.FireDragan.PixGrabber.exe
+E:\Sankar\5. Dev\MyDev\FireSoft\FireSarpent\PixGrabber_v2.01\obj\Debug\Sans.FireDragan.PixGrabber.pdb
+E:\Sankar\5. Dev\MyDev\FireSoft\FireSarpent\PixGrabber_v2.01\bin\Debug\Sans.FireDragan.PixGrabber.exe
+E:\Sankar\5. Dev\MyDev\FireSoft\FireSarpent\PixGrabber_v2.01\bin\Debug\Sans.FireDragan.PixGrabber.pdb
+E:\Sankar\5. Dev\MyDev\FireSoft\FireSarpent\PixGrabber_v2.01\obj\Debug\ResolveAssemblyReference.cache
+E:\Sankar\5. Dev\MyDev\FireSoft\FireSarpent\PixGrabber_v2.01\obj\Debug\Sans.FireDragan.PixGrabber.PixGrabberForm.resources
+E:\Sankar\5. Dev\MyDev\FireSoft\FireSarpent\PixGrabber_v2.01\obj\Debug\Sans.FireDragan.PixGrabber.SeriesForm.resources
+E:\Sankar\5. Dev\MyDev\FireSoft\FireSarpent\PixGrabber_v2.01\obj\Debug\PixGrabber.csproj.GenerateResource.Cache
+E:\Sankar\5. Dev\MyDev\FireSoft\FireSarpent\PixGrabber_v2.01\obj\Debug\Sans.FireDragan.PixGrabber.Properties.Resources.resources
