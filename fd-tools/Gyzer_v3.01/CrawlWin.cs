@@ -73,6 +73,7 @@ namespace GTech.Olivia.Gyzer
         private ToolStripButton tsbtnRefreshDB;
         private ColumnHeader selectedTag;
         private ColumnHeader selectedOriginal;
+        private ToolStripTextBox tbstxtRecLimit;
 		private ThreadStart[] myThreadDelegates;
 
         public CrawlWin()
@@ -199,6 +200,7 @@ namespace GTech.Olivia.Gyzer
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tscboDBLogic = new System.Windows.Forms.ToolStripComboBox();
             this.tsbtnRefreshDB = new System.Windows.Forms.ToolStripButton();
+            this.tbstxtRecLimit = new System.Windows.Forms.ToolStripTextBox();
             this.tcMain.SuspendLayout();
             this.tpInprogress.SuspendLayout();
             this.pnlMain.SuspendLayout();
@@ -523,6 +525,7 @@ namespace GTech.Olivia.Gyzer
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tbstxtRecLimit,
             this.tscboDBLogic,
             this.tsbtnRefreshDB});
             this.toolStrip1.Location = new System.Drawing.Point(0, 28);
@@ -547,6 +550,12 @@ namespace GTech.Olivia.Gyzer
             this.tsbtnRefreshDB.Text = "toolStripButton1";
             this.tsbtnRefreshDB.ToolTipText = "Refresh Grid";
             this.tsbtnRefreshDB.Click += new System.EventHandler(this.tsbtnRefreshDB_Click);
+            // 
+            // tbstxtRecLimit
+            // 
+            this.tbstxtRecLimit.Name = "tbstxtRecLimit";
+            this.tbstxtRecLimit.Size = new System.Drawing.Size(100, 25);
+            this.tbstxtRecLimit.Text = "1000";
             // 
             // CrawlWin
             // 
@@ -850,7 +859,7 @@ namespace GTech.Olivia.Gyzer
 
             string constr = ConfigurationSettings.AppSettings["ControlDatabase"];
 
-            string selectionVw = "select * from " + tscboDBLogic.SelectedText;
+            string selectionVw = "select top " + tbstxtRecLimit.Text + " * from " + tscboDBLogic.SelectedText;
 
             try
             {
@@ -1129,7 +1138,37 @@ namespace GTech.Olivia.Gyzer
 
         private void tsbtnRefreshDB_Click(object sender, EventArgs e)
         {
-            LoadLinks();
+            if(IsUserInputValid() == true)
+                LoadLinks();
+        }
+
+        private bool IsUserInputValid()
+        {
+            if (String.IsNullOrEmpty(tbstxtRecLimit.Text))
+            {
+                MessageBox.Show("Record limit cannot be empty", "Incorrect Input");
+                tbstxtRecLimit.Focus();
+                return false;
+            }
+
+            int n;
+
+            if (!int.TryParse(tbstxtRecLimit.Text, out n))
+            {
+                MessageBox.Show("Record limit should be numeric", "Incorrect Input");
+                tbstxtRecLimit.Focus();
+                return false;
+            }
+
+
+            if (String.IsNullOrEmpty(tscboDBLogic.Text))
+            {
+                MessageBox.Show("DB logic cannot be empty", "Incorrect Input");
+                tscboDBLogic.Focus();
+                return false;
+            }
+
+            return true;
         }
 
         private void LoadDBLogicCombo()
