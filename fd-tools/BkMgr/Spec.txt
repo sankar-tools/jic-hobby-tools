@@ -1,0 +1,8 @@
+Display Properties dialog
+
+
+
+Properties Dialog
+
+1. DB Connection String
+2. Property bag [read / save / display / refresh / edit]
