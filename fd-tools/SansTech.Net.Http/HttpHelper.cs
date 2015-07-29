@@ -3,6 +3,7 @@ using System.Net;
 using System.IO;
 using System.Text;
 using System.Web;
+using System.Text.RegularExpressions;
 
 namespace SansTech.Net.Http
 {
@@ -678,6 +679,9 @@ namespace SansTech.Net.Http
                         oArgs.CurrentByteCount = lnTotalBytes;
                         oArgs.NumberOfReads = lnCount;
                         oArgs.CurrentChunk = lcTemp;
+                        oArgs.ContentType = this.oWebResponse.ContentType;
+                        oArgs.DocumentType = HttpHelper.GetDocType(oArgs.ContentType);
+                        oArgs.Url = Url;
                         this.OnReceiveData(this, oArgs);
 
                         // *** Check for cancelled flag
@@ -696,6 +700,8 @@ namespace SansTech.Net.Http
             {
                 // *** Update the event handler
                 oArgs.Done = true;
+                oArgs.Document = loWriter.ToString();
+                oArgs.Title = GetDocTitle(oArgs.Document);
                 this.OnReceiveData(this, oArgs);
             }
 
@@ -703,7 +709,20 @@ namespace SansTech.Net.Http
             return loWriter.ToString();
         }
 
+        protected String GetDocTitle(string contents)
+        {
+            Regex titleCheck = new Regex(@"<title>\s*(.+?)\s*</title>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            string title = "unknown";
+            Match m = titleCheck.Match(contents);
 
+            if (m.Success)
+            {
+                // we found a <title></title> match =]
+                title = m.Groups[1].Value.ToString();
+            }
+
+            return title;
+        }
         protected void InitializeProxy(HttpWebRequest Request)
         {
             // *** Handle Proxy Server configuration
@@ -736,6 +755,11 @@ namespace SansTech.Net.Http
 
         public class OnReceiveDataEventArgs
         {
+            public string Document = string.Empty;
+            public string Title = string.Empty;
+            public string ContentType = string.Empty;
+            public DocType DocumentType = DocType.unknown;
+            public string Url = string.Empty;
             public long CurrentByteCount = 0;
             public long TotalBytes = 0;
             public int NumberOfReads = 0;
@@ -745,6 +769,26 @@ namespace SansTech.Net.Http
             public bool Error = false;
             public HttpStatusCode StatusCode;
             public string ErrorMsg = string.Empty;
+        }
+
+        public static DocType GetDocType(string contentType)
+        { 
+            if(contentType.Contains("image"))
+                return DocType.image;
+
+            if (contentType.Contains("html"))
+                return DocType.html;
+
+            return DocType.unknown;
+        }
+
+        public enum DocType
+        { 
+            html,
+            image,
+            script,
+            style,
+            unknown
         }
     }
 }
