@@ -186,9 +186,10 @@ namespace FormSmartGetIm
             }
         }
 
+        string imagePath = string.Empty;
         private void ProcessSubLinks(string title)
         {
-            string savePath = @"D:\temp\~!0001" + "\\" + title;
+            string savePath = Properties.Settings.Default.savePath + "\\" + title;
  
             for (int i = 0; i < lvwProcess.Items.Count; i++)
             {
@@ -197,19 +198,29 @@ namespace FormSmartGetIm
                 LogMessage("Downloading " + url);
 
                 string saveFile = savePath + "\\" + UrlHelper.GetFilename(url);
+                imagePath = savePath;
 
                 HttpHelper http = new HttpHelper();
                 http.OnReceiveData += new HttpHelper.OnReceiveDataHandler(http_OnReceiveData);
+                http.UseReferrer = true;
+                http.Referrer = currentUrl;
+                http.UserAgent = "Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0";
+                http.HandleCookies = true;
+                //http.Cookies
+                attempt = 2;
                 http.GetUrlEvents(url, 10240);
                 //http.DownloadFileEv(url, currentUrl, saveFile);
                 LogMessage(url + " saved to " + saveFile);
             }
         }
 
+        static int attempt = 0;
+
         private void http_OnReceiveData(object sender, HttpHelper.OnReceiveDataEventArgs args)
         {
             if (args.Done) // Current page fetch is complete
             {
+                string referrer = currentUrl;
                 LogMessage(args.ContentType);
                 switch (args.DocumentType)
                 { 
@@ -220,14 +231,31 @@ namespace FormSmartGetIm
                     case HttpHelper.DocType.html:
                         string postParam = "pre";
 
-                        for (int i = 1; i < 4; i++)
+                        if(attempt < 3)
+                        //for (int i = 1; i < 4; i++)
                         {
                             HttpHelper http = new HttpHelper();
-                            http.AddPostKey(postParam, i.ToString());
+ 
+                            http.AddPostKey("op", "view");
+                            string imageId = args.Url.Substring(args.Url.IndexOf("/", 9)+1);
+                            http.AddPostKey("id", imageId);
+                            http.AddPostKey(postParam, (attempt).ToString());
+                            //if(attempt ==2)
+                                http.AddPostKey("next", "Continue+to+image.");
+                            http.UseReferrer = true;
+                            http.Referrer = referrer;
+                            http.UserAgent = "Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0";
+                            http.HandleCookies = true;
                             http.OnReceiveData += new HttpHelper.OnReceiveDataHandler(http_OnReceiveData);
                             string doc = http.GetUrl(args.Url);
+                            //new FileViewer().Show(doc);
+                            referrer = args.Url;
+                            attempt++;
                             //http.get
+                            SaveImages(doc, args.Url);
                         }
+                        else
+                            MessageBox.Show("Max attempts exhausted");
 
                         break;
 
@@ -256,6 +284,33 @@ namespace FormSmartGetIm
             }
         }
 
+        private void SaveImages(string doc, string url)
+        {
+            ImageLinkParser lparse = new ImageLinkParser();
+            lparse.ParseImageLinks(doc, url);
+
+            for (int i = 0; i < lparse.GoodUrls.Count; i++)
+            {
+                if (lparse.GoodUrls[i].Link != null)
+                {
+                    try
+                    {
+                        string saveFile = imagePath + "\\" + UrlHelper.GetFilename(lparse.GoodUrls[i].Link);
+                        HttpHelper http = new HttpHelper();
+                        http.AllowRedirect = true;
+                        http.DownloadFileEv(lparse.GoodUrls[i].Link, url, saveFile);
+                        //SaveImage(lparse.GoodUrls[i].Link, saveFile);
+                        LogMessage("image " + lparse.GoodUrls[i].Link + " saved to " + saveFile);
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show("failed " + lparse.GoodUrls[i].Link);
+                    }
+                }
+                LogMessage(i.ToString() + " image(s) saved.");
+            }
+        }
+
         private ListViewItem GetNextUrlItem()
         {
             for (int i = 0; i < lvwUrls.Items.Count; i++)
@@ -269,10 +324,10 @@ namespace FormSmartGetIm
 
         private void LogMessage(string s)
         {
-            txtLog.Text += "[" + DateTime.Now.ToString() + s + "\r\n";
+            txtLog.Text += "[" + DateTime.Now.ToString() + "] " + s + "\r\n";
         }
 
-        private Image LoadImage(string url)
+        private void SaveImage(string url, string path)
         {
             try
             {
@@ -287,15 +342,15 @@ namespace FormSmartGetIm
                 Image img = Image.FromStream(responseStream);
 
                 responseStream.Dispose();
+                img.Save(path);
 
-
-                return img;
+                //return img;
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
             }
-            return null;
+            //return null;
 
         }
     }

@@ -146,6 +146,80 @@ namespace SansTech.Net.Http
             }
         }
 
+        public void ParseImageLinks(string pageText, string sourceUrl)
+        {
+            GoodUrls.Clear();
+
+            MatchCollection matches = Regex.Matches(pageText, _IMG_REGEX);
+
+            for (int i = 0; i <= matches.Count - 1; i++)
+            {
+                Match anchorMatch = matches[i];
+                string anchorStr = anchorMatch.Value;
+
+                if (anchorStr == String.Empty)
+                {
+                    BadUrls.Add("Blank url value on page " + sourceUrl);
+                    continue;
+                }
+
+                //string hrefStr = null, imgStr = null;
+                try
+                {
+                //    MatchCollection hrefMatches = Regex.Matches(anchorStr, _HREF_REGEX);
+                //    if (hrefMatches.Count > 0)
+                //    {
+                //        hrefStr = hrefMatches[0].Value.Replace("href=\"", "");
+                //        hrefStr = FixPath(sourceUrl, hrefStr);
+                //        hrefStr = hrefStr.Substring(0, hrefStr.IndexOf("\""));
+                //    }
+                //    MatchCollection imgMatches = Regex.Matches(anchorStr, _IMG_REGEX);
+                //    if (imgMatches.Count > 0)
+                //    {
+                //        imgStr = imgMatches[0].Value.Replace("src=\"", "");
+                //        imgStr = FixPath(sourceUrl, imgStr);
+                //        imgStr = imgStr.Substring(0, imgStr.IndexOf("\""));
+
+                //    }
+                    //anchorStr = anchorMatch.Value.Replace("href=\"", "");
+                    anchorStr = anchorMatch.Value.Replace("src=\"", "");
+                    anchorStr = anchorStr.Substring(0, anchorStr.IndexOf("\""));
+
+
+                //    //foundHref = FixPath(sourceUrl, foundHref);
+
+                    if ((anchorStr != null))
+                    {
+                        ImageLinks newLink = new ImageLinks();
+                        newLink.Link = anchorStr;
+                        newLink.Image = anchorStr;
+
+                        newLink.Filename = UrlHelper.GetFilename(anchorStr);
+                        if (!GoodUrls.Contains(newLink))
+                        {
+                            //if (IsExternalUrl(foundHref))
+                            //{
+                            //    _externalUrls.Add(foundHref);
+                            //}
+                            //else if (!IsAWebPage(foundHref))
+                            //{
+                            //    foundHref = FixPath(sourceUrl, foundHref);
+                            //    _otherUrls.Add(foundHref);
+                            //}
+                            //else
+                            {
+                                GoodUrls.Add(newLink);
+                            }
+                        }
+                    }
+                }
+                catch (Exception exc)
+                {
+                    Exceptions.Add("Error parsing matched href: " + exc.Message);
+                }
+            }
+        }
+
         //public void ParseHrefLinks(string pageText, string sourceUrl)
         //{
         //    ParseLinks(pageText, sourceUrl, _HREF_REGEX);

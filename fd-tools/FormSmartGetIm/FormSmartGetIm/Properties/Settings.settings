@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="savePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\temp\~!0001</Value>
+      <Value Profile="(Default)">c:\temp\~!0001</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -55,6 +55,12 @@ namespace SansTech.Net.Http
 
         #region Class Members
 
+        public string Referrer
+        {
+            get { return this.cReferrer; }
+            set { this.cReferrer = value; }
+        }
+
         public int PostMode
         {
             get { return this.nPostMode; }
@@ -463,6 +469,8 @@ namespace SansTech.Net.Http
                             goto case 1;
                     }
 
+                    if (!String.IsNullOrEmpty(cReferrer))
+                        Request.Referer = cReferrer;
 
                     Stream loPostData = Request.GetRequestStream();
                     //loPostData.Write(lcPostData,0,lcPostData.Length);
@@ -576,7 +584,7 @@ namespace SansTech.Net.Http
             HttpWebRequest oHttpWebRequest = null;
 
             oHttpWebRequest = (HttpWebRequest)System.Net.WebRequest.Create(Url);
-            oHttpWebRequest.Referer = referer;
+            oHttpWebRequest.Referer = cReferrer;
 
             return this.GetUrlStream(Url, oHttpWebRequest);
         }
