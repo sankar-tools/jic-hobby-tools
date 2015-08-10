@@ -181,8 +181,10 @@ namespace SansTech.Net.Http
                 //        imgStr = imgStr.Substring(0, imgStr.IndexOf("\""));
 
                 //    }
+                    
                     //anchorStr = anchorMatch.Value.Replace("href=\"", "");
                     anchorStr = anchorMatch.Value.Replace("src=\"", "");
+                    anchorStr = FixPath(sourceUrl, anchorStr);
                     anchorStr = anchorStr.Substring(0, anchorStr.IndexOf("\""));
 
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace SansTech.IO
 {
@@ -15,6 +16,16 @@ namespace SansTech.IO
                 foreach(string line in lines)
                     file.WriteLine(line);
             }
+        }
+
+        public static void WriteBinary(string savePath, string p)
+        {
+            BinaryWriter bw;
+
+            bw = new BinaryWriter(new FileStream(savePath, FileMode.Create));
+            bw.Write(p);
+
+            bw.Close();
         }
     }
 }

@@ -310,45 +310,43 @@ namespace FormSmartGetIm
 
                 UrlTrackParams oparams = new UrlTrackParams(args.Params);
 
-                ImageLinkParser lparse = new ImageLinkParser();
-                lparse.ParseHrefLinks(args.Document, currentUrl);
-
-                //ImageList images = new ImageList();
-                //images.ImageSize = new Size(150, 150);
-                //lvwProcess.Items.Clear();
-
-                for (int i = 0; i < lparse.GoodUrls.Count; i++)
+                switch (args.DocumentType)
                 {
-                    if (lparse.GoodUrls[i].Link != null)
-                    {
-                        //Image bmp = LoadImage(lparse.GoodUrls[i].Image);
-                        //if (bmp != null)
-                        //{
-                        //    images.Images.Add(bmp);
-                        //    lvwLinkHierarchy.Items.Add(lparse.GoodUrls[i].Filename, i);
-                        //}
+                    case HttpHelper.DocType.html:
 
-                        //ListViewItem item = new ListViewItem((i + 1).ToString());
-                        //item.SubItems.Add(new ListViewItem.ListViewSubItem().Text = lparse.GoodUrls[i].Link);
-                        //lvwProcess.Items.Add(item);
+                        ImageLinkParser lparse = new ImageLinkParser();
 
-                        oparams.DownloadedSize = args.Params.Size;
-                        oparams.Status = "Done";
+                        lparse.ParseImageLinks(args.Document, currentUrl);
 
+                        //ImageList images = new ImageList();
+                        //images.ImageSize = new Size(150, 150);
+                        //lvwProcess.Items.Clear();
 
-                        AddUrl2Tree(lparse.GoodUrls[i].Link, GlobalParams.CurrentNode);
-                    }
-                    
+                        AddUrlSet2Tree(lparse);
+                        int imageCount = lparse.GoodUrls.Count;
+
+                        lparse.ParseHrefLinks(args.Document, currentUrl);
+                        AddUrlSet2Tree(lparse);
+                        int pageCount = lparse.GoodUrls.Count;
+
+                        LogMessage(String.Format("{0} processed, {1} image(s) & {2} page(s) found", currentUrl, imageCount, pageCount));
+                        break;
+
+                    case HttpHelper.DocType.image:
+                        string savePath = Properties.Settings.Default.savePath + "\\" + UrlHelper.GetFilename(args.Params.Url);
+                        SansTech.IO.File.WriteBinary(savePath, args.Document);
+                        LogMessage(currentUrl + " image saved to " + savePath);
+                        break;
+
+                    default:
+                        LogMessage(currentUrl + " is skipped");
+                        break;
                 }
 
+                oparams.DownloadedSize = args.Params.Size;
+                oparams.Status = "Done";
                 UpdateTreeNode(oparams, GlobalParams.CurrentNode);
-                LogMessage(currentUrl + " processsed, " + lparse.GoodUrls.Count.ToString() + " link(s) found");
-
-
-
-                //ProcessSubLinks(args.Title);
-
-                //lvwLinkHierarchy.LargeImageList = images;
+                
             }
             else // Current page fetch is in progress update status
             {
@@ -368,6 +366,32 @@ namespace FormSmartGetIm
                 oparams.Status = args.ErrorMsg;
 
                 UpdateTreeNode(oparams, GlobalParams.CurrentNode);
+
+            }
+        }
+
+        private void AddUrlSet2Tree(ImageLinkParser lparse)
+        {
+            for (int i = 0; i < lparse.GoodUrls.Count; i++)
+            {
+                if (lparse.GoodUrls[i].Link != null)
+                {
+                    //Image bmp = LoadImage(lparse.GoodUrls[i].Image);
+                    //if (bmp != null)
+                    //{
+                    //    images.Images.Add(bmp);
+                    //    lvwLinkHierarchy.Items.Add(lparse.GoodUrls[i].Filename, i);
+                    //}
+
+                    //ListViewItem item = new ListViewItem((i + 1).ToString());
+                    //item.SubItems.Add(new ListViewItem.ListViewSubItem().Text = lparse.GoodUrls[i].Link);
+                    //lvwProcess.Items.Add(item);
+
+
+
+
+                    AddUrl2Tree(lparse.GoodUrls[i].Link, GlobalParams.CurrentNode);
+                }
 
             }
         }
