@@ -687,9 +687,10 @@ namespace SansTech.Net.Http
                         oArgs.CurrentByteCount = lnTotalBytes;
                         oArgs.NumberOfReads = lnCount;
                         oArgs.CurrentChunk = lcTemp;
-                        oArgs.ContentType = this.oWebResponse.ContentType;
-                        oArgs.DocumentType = HttpHelper.GetDocType(oArgs.ContentType);
-                        oArgs.Url = Url;
+                        oArgs.Params.ContentType = this.oWebResponse.ContentType;
+                        oArgs.DocumentType = HttpHelper.GetDocType(oArgs.Params.ContentType);
+                        oArgs.Params.Url = Url;
+                        oArgs.Params.Size = lnTotalBytes;
                         this.OnReceiveData(this, oArgs);
 
                         // *** Check for cancelled flag
@@ -709,7 +710,7 @@ namespace SansTech.Net.Http
                 // *** Update the event handler
                 oArgs.Done = true;
                 oArgs.Document = loWriter.ToString();
-                oArgs.Title = GetDocTitle(oArgs.Document);
+                oArgs.Params.Title = GetDocTitle(oArgs.Document);
                 this.OnReceiveData(this, oArgs);
             }
 
@@ -764,10 +765,8 @@ namespace SansTech.Net.Http
         public class OnReceiveDataEventArgs
         {
             public string Document = string.Empty;
-            public string Title = string.Empty;
-            public string ContentType = string.Empty;
+            public UrlParams Params = null;
             public DocType DocumentType = DocType.unknown;
-            public string Url = string.Empty;
             public long CurrentByteCount = 0;
             public long TotalBytes = 0;
             public int NumberOfReads = 0;
@@ -777,6 +776,11 @@ namespace SansTech.Net.Http
             public bool Error = false;
             public HttpStatusCode StatusCode;
             public string ErrorMsg = string.Empty;
+
+            public OnReceiveDataEventArgs()
+            {
+                Params = new UrlParams();
+            }
         }
 
         public static DocType GetDocType(string contentType)
@@ -797,6 +801,17 @@ namespace SansTech.Net.Http
             script,
             style,
             unknown
+        }
+
+        public static UrlParams Ping(string url)
+        {
+            UrlParams oparams = new UrlParams();
+            oparams.Url = url;
+            oparams.Title = "To be implemented";
+            oparams.ContentType = "Unknown";
+            oparams.Size = -1;
+
+            return oparams;
         }
     }
 }

@@ -5,5 +5,14 @@
     <Setting Name="savePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">c:\temp\~!0001</Value>
     </Setting>
+    <Setting Name="logPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\temp\~!0001\SmartIm.log</Value>
+    </Setting>
+    <Setting Name="linkList" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\temp\~!0001\Links.log</Value>
+    </Setting>
+    <Setting Name="domains" Type="System.String" Scope="User">
+      <Value Profile="(Default)">localhost,abc.com,def.com,hij.com</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

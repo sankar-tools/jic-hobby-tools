@@ -8,8 +8,8 @@
     <ProjectGuid>{670381E5-F421-45A8-94C5-7E1CC705BBC2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SansTech.Net.Http</RootNamespace>
-    <AssemblyName>SansTech.Net.Http</AssemblyName>
+    <RootNamespace>SansTech</RootNamespace>
+    <AssemblyName>SansTech.Libs</AssemblyName>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -43,12 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HttpHelper.cs" />
-    <Compile Include="ImageLinkParser.cs" />
-    <Compile Include="ImageLinks.cs" />
-    <Compile Include="LinkType.cs" />
+    <Compile Include="Diagonstics\Log.cs" />
+    <Compile Include="IO\File.cs" />
+    <Compile Include="Net\Http\HttpHelper.cs" />
+    <Compile Include="Net\Http\ImageLinkParser.cs" />
+    <Compile Include="Net\Http\ImageLinks.cs" />
+    <Compile Include="IO\Directory.cs" />
+    <Compile Include="Net\Http\LinkType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UrlHelper.cs" />
+    <Compile Include="Net\Http\UrlHelper.cs" />
+    <Compile Include="Net\Http\UrlParams.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -31,7 +31,7 @@ namespace FormSmartGetIm
             myBros.OnReceiveData += new HttpHelper.OnReceiveDataHandler(myBros_OnReceiveData);
             myBros.ThrowExceptions = true;
 
-            Params.State = RunState.Start;
+            GlobalParams.State = RunState.Start;
         }
 
         private void tsbtnAddUrl_Click(object sender, EventArgs e)
@@ -44,7 +44,7 @@ namespace FormSmartGetIm
             pnlAddUrl.Visible = false;
             if(!String.IsNullOrEmpty(txtAddUrl.Text))
             {
-                ListViewItem item = new ListViewItem(Params.Counter++.ToString());
+                ListViewItem item = new ListViewItem(GlobalParams.Counter++.ToString());
                 item.SubItems.Add(txtAddUrl.Text);
                 item.SubItems.Add("Unknowm");
                 item.SubItems.Add("-1");
@@ -60,13 +60,13 @@ namespace FormSmartGetIm
 
         private void tsbtnRun_Click(object sender, EventArgs e)
         {
-            if(Params.State == RunState.Start)
+            if(GlobalParams.State == RunState.Start)
             {
                 webThreadStartDelegate = new ThreadStart(ThreadStartAction);
                 webThread = new Thread(webThreadStartDelegate);
                 webThread.Start();
 
-                Params.State = RunState.Running;
+                GlobalParams.State = RunState.Running;
                 tsbtnRun.Text = "Stop";
             }
             else
@@ -74,7 +74,7 @@ namespace FormSmartGetIm
             {
                 //ToDo:: Destroy threads
 
-                Params.State = RunState.Start;
+                GlobalParams.State = RunState.Start;
                 tsbtnRun.Text = "Start";
             }
 
@@ -99,7 +99,7 @@ namespace FormSmartGetIm
         {
             while (true)
             {
-                if(Params.State == RunState.Stopped)
+                if(GlobalParams.State == RunState.Stopped)
                     break;
 
                 ListViewItem nextUrlItem = GetNextUrlItem();
@@ -162,7 +162,7 @@ namespace FormSmartGetIm
 
                 LogMessage(currentUrl + " processsed, " + lparse.GoodUrls.Count.ToString() + " link(s) found");
 
-                ProcessSubLinks(args.Title);
+                ProcessSubLinks(args.Params.Title);
 
                 //lvwLinkHierarchy.LargeImageList = images;
             }
@@ -221,7 +221,7 @@ namespace FormSmartGetIm
             if (args.Done) // Current page fetch is complete
             {
                 string referrer = currentUrl;
-                LogMessage(args.ContentType);
+                LogMessage(args.Params.ContentType);
                 switch (args.DocumentType)
                 { 
                     case HttpHelper.DocType.image:
@@ -237,7 +237,7 @@ namespace FormSmartGetIm
                             HttpHelper http = new HttpHelper();
  
                             http.AddPostKey("op", "view");
-                            string imageId = args.Url.Substring(args.Url.IndexOf("/", 9)+1);
+                            string imageId = args.Params.Url.Substring(args.Params.Url.IndexOf("/", 9)+1);
                             http.AddPostKey("id", imageId);
                             http.AddPostKey(postParam, (attempt).ToString());
                             //if(attempt ==2)
@@ -247,12 +247,12 @@ namespace FormSmartGetIm
                             http.UserAgent = "Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0";
                             http.HandleCookies = true;
                             http.OnReceiveData += new HttpHelper.OnReceiveDataHandler(http_OnReceiveData);
-                            string doc = http.GetUrl(args.Url);
+                            string doc = http.GetUrl(args.Params.Url);
                             //new FileViewer().Show(doc);
-                            referrer = args.Url;
+                            referrer = args.Params.Url;
                             attempt++;
                             //http.get
-                            SaveImages(doc, args.Url);
+                            SaveImages(doc, args.Params.Url);
                         }
                         else
                             MessageBox.Show("Max attempts exhausted");

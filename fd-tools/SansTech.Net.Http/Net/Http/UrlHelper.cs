@@ -28,5 +28,12 @@ namespace SansTech.Net.Http
 
             return uri.AbsoluteUri;
         }
+
+        public static string GetDomain(string url)
+        {
+            Uri myUri = new Uri(url);
+            string host = myUri.Host;
+            return host;
+        }
     }
 }

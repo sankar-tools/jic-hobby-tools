@@ -297,6 +297,10 @@ namespace SansTech.Net.Http
                 formattedLink = basePath + link;
             }
 
+            // fix to http://localhost//abc to http://localhost/abc
+            formattedLink = formattedLink.Replace("//", "/");
+            formattedLink = formattedLink.Replace(":/", "://");
+
             return formattedLink;
         }
 
