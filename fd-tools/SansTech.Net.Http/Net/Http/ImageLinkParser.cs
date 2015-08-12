@@ -21,7 +21,8 @@ namespace SansTech.Net.Http
         //private const string _HREF_REGEX = "href=\"[a-zA-Z./:&\\d_-]+\"";
         private const string _A_REGEX = "<a.+?href=[\"'](.+?)[\"'].*?>*</a>";// @"<([\w]+)[^>]*>(.*?)<\/\1>";
         private const string _HREF_REGEX = "href=\"[a-zA-Z./:&\\d_-]+.*?\"";
-        private const string _IMG_REGEX = "src=[\"'](.+?)[\"'].*?";
+        private const string _IMG_LINK_REGEX = "src=[\"'](.+?)[\"'].*?";
+        private const string _IMG_REGEX = "<img.+?src=[\"'](.+?)[\"'].*?>";
 
         #endregion
         #region Private Instance Fields
@@ -155,9 +156,9 @@ namespace SansTech.Net.Http
             for (int i = 0; i <= matches.Count - 1; i++)
             {
                 Match anchorMatch = matches[i];
-                string anchorStr = anchorMatch.Value;
+                string imgTagStr = anchorMatch.Value;
 
-                if (anchorStr == String.Empty)
+                if (imgTagStr == String.Empty)
                 {
                     BadUrls.Add("Blank url value on page " + sourceUrl);
                     continue;
@@ -173,19 +174,26 @@ namespace SansTech.Net.Http
                 //        hrefStr = FixPath(sourceUrl, hrefStr);
                 //        hrefStr = hrefStr.Substring(0, hrefStr.IndexOf("\""));
                 //    }
-                //    MatchCollection imgMatches = Regex.Matches(anchorStr, _IMG_REGEX);
-                //    if (imgMatches.Count > 0)
-                //    {
-                //        imgStr = imgMatches[0].Value.Replace("src=\"", "");
-                //        imgStr = FixPath(sourceUrl, imgStr);
-                //        imgStr = imgStr.Substring(0, imgStr.IndexOf("\""));
+                    MatchCollection imgMatches = Regex.Matches(imgTagStr, _IMG_LINK_REGEX);
+                    string anchorStr = string.Empty;
+                    if (imgMatches.Count > 0)
+                    {
+                        anchorStr = imgMatches[0].Value.Replace("src=\"", "");
+                        anchorStr = anchorStr.Replace("src='", "");
+                        if(anchorStr.IndexOf("\"") > 0)
+                            anchorStr = anchorStr.Substring(0, anchorStr.IndexOf("\""));
+                        if(anchorStr.IndexOf("'") > 0)
+                            anchorStr = anchorStr.Substring(0, anchorStr.IndexOf("'"));
+                        anchorStr = FixPath(sourceUrl, anchorStr);
 
-                //    }
+                    }
                     
-                    //anchorStr = anchorMatch.Value.Replace("href=\"", "");
-                    anchorStr = anchorMatch.Value.Replace("src=\"", "");
-                    anchorStr = FixPath(sourceUrl, anchorStr);
-                    anchorStr = anchorStr.Substring(0, anchorStr.IndexOf("\""));
+                    //anchorStr = ancho                        anchorStr = anchorStr.Substring(0, anchorStr.IndexOf("'"));.Value.Replace("<img", "");
+                    //anchorStr = anchorStr.Replace("src=\"", "");
+                    //anchorStr = anchorStr.Replace("/>", "");
+                    //anchorStr = anchorStr.Replace(">", "");
+                    //anchorStr = FixPath(sourceUrl, anchorStr);
+                    //anchorStr = anchorStr.Substring(0, anchorStr.IndexOf("\""));
 
 
                 //    //foundHref = FixPath(sourceUrl, foundHref);

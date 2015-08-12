@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonTools">
-      <HintPath>..\..\..\..\..\trials\UrlHierarchy\UrlHierarchy\CommonTools\bin\Release\CommonTools.dll</HintPath>
+      <HintPath>..\..\Builds\CommonTools.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,6 +55,12 @@
     </Compile>
     <Compile Include="FileViewer.Designer.cs">
       <DependentUpon>FileViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImViewer.Designer.cs">
+      <DependentUpon>ImViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="IProcessModel.cs" />
     <Compile Include="Main.cs">
@@ -76,6 +82,9 @@
     <EmbeddedResource Include="FileViewer.resx">
       <DependentUpon>FileViewer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ImViewer.resx">
+      <DependentUpon>ImViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -92,7 +101,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

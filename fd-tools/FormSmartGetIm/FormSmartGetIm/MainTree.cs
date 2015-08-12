@@ -205,10 +205,10 @@ namespace FormSmartGetIm
 
         private void ProcessLinks()
         {
-            while (true)
+            //while (true)
             {
-                if (GlobalParams.State == RunState.Stopped)
-                    break;
+                //if (GlobalParams.State == RunState.Stopped)
+                //    break;
 
                 GlobalParams.CurrentLevel = 1;
 
@@ -228,46 +228,63 @@ namespace FormSmartGetIm
                 string currentUrl = GetCurrentUrl(node);
                 httpHandle.Referrer = currentUrl;
 
-                if(UrlIsIndomain(currentUrl))
+                if(!CanIgnore(currentUrl))
                 {
-                    string domain = UrlHelper.GetDomain(currentUrl);
+
+                    if(UrlIsIndomain(currentUrl))
+                    {
+                        string domain = UrlHelper.GetDomain(currentUrl);
                 
-                    // Handle post params
-                    int attempt = 2;
-                    string imageId = currentUrl.Substring(currentUrl.IndexOf("/", 9) + 1);
+                        // Handle post params
+                        int attempt = 2;
+                        string imageId = currentUrl.Substring(currentUrl.IndexOf("/", 9) + 1);
 
-                    httpHandle.AddPostKey("op", "view");
-                    httpHandle.AddPostKey("id", imageId);
-                    httpHandle.AddPostKey("pre", (attempt).ToString());
-                    httpHandle.AddPostKey("next", "Continue+to+image.");
+                        httpHandle.AddPostKey("op", "view");
+                        httpHandle.AddPostKey("id", imageId);
+                        httpHandle.AddPostKey("pre", (attempt).ToString());
+                        httpHandle.AddPostKey("next", "Continue+to+image.");
+                    }
+
+
+                    GlobalParams.CurrentNode[(int)eColumns.Status] = "Initiated";
+
+                    string doc = httpHandle.GetUrlEvents(currentUrl, 10240);
                 }
-
-
-                GlobalParams.CurrentNode[(int)eColumns.Status] = "Initiated";
-
-                string doc = httpHandle.GetUrlEvents(currentUrl, 10240);
 
                 // Current link processed, find the next one.
 
-                if (GlobalParams.CurrentNode.HasChildren)
-                    ProcessThisNode(GlobalParams.CurrentNode.Nodes[0]);
-                else // this node is leaf, go with next sibling
-                {
-                    CommonTools.Node sibling = GlobalParams.CurrentNode.NextSibling;
-                    if (sibling != null)
-                        ProcessThisNode(sibling);
-                    else // no more siblings, move to parent node
-                    {
-                        if (GlobalParams.CurrentNode.Parent != null)
-                        {
-                            CommonTools.Node parentSibling = GlobalParams.CurrentNode.Parent.NextSibling;
-                            ProcessThisNode(parentSibling);
-                            // if parentsibling is also null, then ProcessThisNode exits to while(true) loop finding if any more links added
-                        }
-                        //else if parent is null... top level item stop
-                    }
-                }
+                //if (GlobalParams.CurrentNode.HasChildren)
+                //    ProcessThisNode(GlobalParams.CurrentNode.Nodes[0]);
+                //else // this node is leaf, go with next sibling
+                //{
+                //    CommonTools.Node sibling = GlobalParams.CurrentNode.NextSibling;
+                //    if (sibling != null)
+                //        ProcessThisNode(sibling);
+                //    else // no more siblings, move to parent node
+                //    {
+                //        if (GlobalParams.CurrentNode.Parent != null)
+                //        {
+                //            CommonTools.Node parentSibling = GlobalParams.CurrentNode.Parent.NextSibling;
+                //            ProcessThisNode(parentSibling);
+                //            // if parentsibling is also null, then ProcessThisNode exits to while(true) loop finding if any more links added
+                //        }
+                //        //else if parent is null... top level item stop
+                //    }
+                //}
             }
+        }
+
+        private bool CanIgnore(string currentUrl)
+        {
+            string thisDomain = UrlHelper.GetDomain(currentUrl);
+
+            foreach (string domain in Properties.Settings.Default.ignoreList.Split(new char[] { ',', ';' }))
+            {
+                if (thisDomain.IndexOf(domain) >= 0)
+                    return true;
+            }
+
+            return false;
         }
 
         private bool UrlIsIndomain(string currentUrl)
@@ -288,7 +305,7 @@ namespace FormSmartGetIm
             HttpHelper httpHandle = new HttpHelper();
             httpHandle.OnReceiveData += new HttpHelper.OnReceiveDataHandler(httpHandle_OnReceiveData);
 
-            httpHandle.AllowRedirect = true;
+            httpHandle.AllowRedirect = false;
             httpHandle.TimeOut = 60;
             httpHandle.UserAgent = "Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0";
             httpHandle.HandleCookies = true;
@@ -300,6 +317,11 @@ namespace FormSmartGetIm
         private string GetCurrentUrl(CommonTools.Node node)
         {
             return node[(int)eColumns.Url].ToString();
+        }
+
+        private string GetCurrentTitle(CommonTools.Node node)
+        {
+            return node[(int)eColumns.Title].ToString();
         }
 
         private void httpHandle_OnReceiveData(object sender, HttpHelper.OnReceiveDataEventArgs args)
@@ -322,20 +344,19 @@ namespace FormSmartGetIm
                         //images.ImageSize = new Size(150, 150);
                         //lvwProcess.Items.Clear();
 
-                        AddUrlSet2Tree(lparse);
+                        AddUrlSet2Tree(lparse, args);
                         int imageCount = lparse.GoodUrls.Count;
 
-                        lparse.ParseHrefLinks(args.Document, currentUrl);
-                        AddUrlSet2Tree(lparse);
+                        //lparse.ParseHrefLinks(args.Document, currentUrl);
+                        //AddUrlSet2Tree(lparse, args);
                         int pageCount = lparse.GoodUrls.Count;
-
+                        ImViewer vw = new ImViewer();
+                        vw.ShowList(lparse);
                         LogMessage(String.Format("{0} processed, {1} image(s) & {2} page(s) found", currentUrl, imageCount, pageCount));
                         break;
 
                     case HttpHelper.DocType.image:
-                        string savePath = Properties.Settings.Default.savePath + "\\" + UrlHelper.GetFilename(args.Params.Url);
-                        SansTech.IO.File.WriteBinary(savePath, args.Document);
-                        LogMessage(currentUrl + " image saved to " + savePath);
+
                         break;
 
                     default:
@@ -351,8 +372,39 @@ namespace FormSmartGetIm
             else // Current page fetch is in progress update status
             {
                 UrlTrackParams oparams = new UrlTrackParams(args.Params);
-                oparams.DownloadedSize = args.CurrentByteCount;
-                oparams.Status = "WIP";
+
+                //bool cancel = false;
+                switch (args.DocumentType)
+                {
+                    case HttpHelper.DocType.html:
+                        oparams.DownloadedSize = args.CurrentByteCount;
+                        oparams.Status = "WIP";
+                        break;
+
+                    case HttpHelper.DocType.image:
+                        //cancel = true;
+                        args.Cancel = true;
+                        string savePath = Properties.Settings.Default.savePath + "\\" + GetCurrentTitle(GlobalParams.CurrentNode) + "\\" + UrlHelper.GetFilename(args.Params.Url);
+                        //SansTech.IO.File.WriteBinary(savePath, args.Document);
+                        
+                        HttpHelper http = new HttpHelper();
+                        http.AllowRedirect = true;
+                        http.DownloadFileEv(args.Params.Url, args.Params.Url, savePath);
+                        //SaveImage(lparse.GoodUrls[i].Link, saveFile);
+                        LogMessage("image " + args.Params.Url + " saved to " + savePath);
+
+                        //LogMessage(currentUrl + " image saved to " + savePath);
+                        oparams.DownloadedSize = args.CurrentByteCount;
+                        oparams.Status = "Done";
+                        break;
+
+                    default:
+                        //cancel = true;
+                        args.Cancel = true;
+                        oparams.DownloadedSize = 0;
+                        oparams.Status = "Cancelled";
+                        break;
+                }
 
                 UpdateTreeNode(oparams, GlobalParams.CurrentNode);
 
@@ -370,7 +422,7 @@ namespace FormSmartGetIm
             }
         }
 
-        private void AddUrlSet2Tree(ImageLinkParser lparse)
+        private void AddUrlSet2Tree(ImageLinkParser lparse, HttpHelper.OnReceiveDataEventArgs args)
         {
             for (int i = 0; i < lparse.GoodUrls.Count; i++)
             {
@@ -387,10 +439,9 @@ namespace FormSmartGetIm
                     //item.SubItems.Add(new ListViewItem.ListViewSubItem().Text = lparse.GoodUrls[i].Link);
                     //lvwProcess.Items.Add(item);
 
-
-
-
-                    AddUrl2Tree(lparse.GoodUrls[i].Link, GlobalParams.CurrentNode);
+                    UrlTrackParams oparams = new UrlTrackParams(args.Params);
+                    oparams.Url = lparse.GoodUrls[i].Link;
+                    AddTreeNode(oparams, GlobalParams.CurrentNode);
                 }
 
             }

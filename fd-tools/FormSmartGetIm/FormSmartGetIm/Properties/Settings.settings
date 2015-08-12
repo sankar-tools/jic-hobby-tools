@@ -12,7 +12,10 @@
       <Value Profile="(Default)">c:\temp\~!0001\Links.log</Value>
     </Setting>
     <Setting Name="domains" Type="System.String" Scope="User">
-      <Value Profile="(Default)">localhost,abc.com,def.com,hij.com</Value>
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ignoreList" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ajax.googleapis.com</Value>
     </Setting>
   </Settings>
 </SettingsFile>
