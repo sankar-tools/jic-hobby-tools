@@ -100,7 +100,7 @@ namespace SansTech.Net.Http
                         hrefStr = FixPath(sourceUrl, hrefStr);
                         hrefStr = hrefStr.Substring(0, hrefStr.IndexOf("\""));
                     }
-                    MatchCollection imgMatches = Regex.Matches(anchorStr, _IMG_REGEX);
+                    MatchCollection imgMatches = Regex.Matches(anchorStr, _IMG_LINK_REGEX);
                     if (imgMatches.Count > 0)
                     {
                         imgStr = imgMatches[0].Value.Replace("src=\"", "");
@@ -278,40 +278,44 @@ namespace SansTech.Net.Http
         /// <returns>A fixed url that is fit to be fetched.</returns>
         public string FixPath(string originatingUrl, string link)
         {
-            //Identify the base path of the originating url 
-            //   eg: http://www.csharp-station.com/HowTo/HttpWebFetch.aspx will return
-            //       http://www.csharp-station.com/HowTo/
-            string basePath = originatingUrl.Substring(0, originatingUrl.LastIndexOf("/"));
 
-            string formattedLink = String.Empty;
+            Uri newUri = new Uri(new Uri(originatingUrl), link);
+            return newUri.OriginalString;
 
-            // Check if the url is already an absolute url
-            if (link.Trim().StartsWith("http") || link.Trim().StartsWith("www"))
-            {
-                formattedLink = link;
-            }
+            ////Identify the base path of the originating url 
+            ////   eg: http://www.csharp-station.com/HowTo/HttpWebFetch.aspx will return
+            ////       http://www.csharp-station.com/HowTo/
+            //string basePath = originatingUrl.Substring(0, originatingUrl.LastIndexOf("/"));
 
-            // Check if the url is relative to base parent directory 
-            //   eg: http://www.csharp-station.com/ for http://www.csharp-station.com/HowTo/HttpWebFetch.aspx
-            else if (link.IndexOf("../") > -1)
-            {
-                formattedLink = ResolveRelativePaths(link, originatingUrl);
-            }
-            else if (originatingUrl.IndexOf(basePath) > -1
-                && link.IndexOf(basePath) == -1)
-            {
-                formattedLink = originatingUrl.Substring(0, originatingUrl.LastIndexOf("/") + 1) + link;
-            }
-            else if (link.IndexOf(basePath) == -1)
-            {
-                formattedLink = basePath + link;
-            }
+            //string formattedLink = String.Empty;
 
-            // fix to http://localhost//abc to http://localhost/abc
-            formattedLink = formattedLink.Replace("//", "/");
-            formattedLink = formattedLink.Replace(":/", "://");
+            //// Check if the url is already an absolute url
+            //if (link.Trim().StartsWith("http") || link.Trim().StartsWith("www"))
+            //{
+            //    formattedLink = link;
+            //}
 
-            return formattedLink;
+            //// Check if the url is relative to base parent directory 
+            ////   eg: http://www.csharp-station.com/ for http://www.csharp-station.com/HowTo/HttpWebFetch.aspx
+            //else if (link.IndexOf("../") > -1)
+            //{
+            //    formattedLink = ResolveRelativePaths(link, originatingUrl);
+            //}
+            //else if (originatingUrl.IndexOf(basePath) > -1
+            //    && link.IndexOf(basePath) == -1)
+            //{
+            //    formattedLink = originatingUrl.Substring(0, originatingUrl.LastIndexOf("/") + 1) + link;
+            //}
+            //else if (link.IndexOf(basePath) == -1)
+            //{
+            //    formattedLink = basePath + link;
+            //}
+
+            //// fix to http://localhost//abc to http://localhost/abc
+            //formattedLink = formattedLink.Replace("//", "/");
+            //formattedLink = formattedLink.Replace(":/", "://");
+
+            //return formattedLink;
         }
 
         /// <summary>

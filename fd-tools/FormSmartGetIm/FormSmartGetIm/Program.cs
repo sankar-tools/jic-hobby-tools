@@ -15,7 +15,7 @@ namespace FormSmartGetIm
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainTree());
+            Application.Run(new BullGet());
         }
     }
 }

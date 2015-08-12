@@ -50,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BullGet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BullGet.Designer.cs">
+      <DependentUpon>BullGet.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,6 +85,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UrlTrackParams.cs" />
+    <EmbeddedResource Include="BullGet.resx">
+      <DependentUpon>BullGet.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FileViewer.resx">
       <DependentUpon>FileViewer.cs</DependentUpon>
     </EmbeddedResource>
@@ -115,9 +124,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SansTech.Net.Http\SansTech.Net.Http.csproj">
+    <ProjectReference Include="..\..\SansTech.Net.Http\SansTech.Libs.csproj">
       <Project>{670381E5-F421-45A8-94C5-7E1CC705BBC2}</Project>
-      <Name>SansTech.Net.Http</Name>
+      <Name>SansTech.Libs</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

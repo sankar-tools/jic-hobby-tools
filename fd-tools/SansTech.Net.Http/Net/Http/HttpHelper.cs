@@ -547,6 +547,7 @@ namespace SansTech.Net.Http
                 // *** drag to a stream
                 StreamReader strResponse =
                     new StreamReader(Response.GetResponseStream(), enc);
+
                 return strResponse;
             }
             catch (Exception e)
@@ -614,6 +615,22 @@ namespace SansTech.Net.Http
                 return "";
 
             string lcResult = oHttpResponse.ReadToEnd();
+
+            // Build HttpParams
+            OnReceiveDataEventArgs oArgs = new OnReceiveDataEventArgs();
+            oArgs.TotalBytes = lcResult.Length;
+
+            oArgs.CurrentByteCount = lcResult.Length;
+
+            oArgs.Params.ContentType = this.oWebResponse.ContentType;
+            oArgs.DocumentType = HttpHelper.GetDocType(oArgs.Params.ContentType);
+            oArgs.Params.Url = Url;
+            oArgs.Document = lcResult;
+            oArgs.Done = true;
+            oArgs.Params.Size = lcResult.Length;
+            oArgs.Params.Title = new Html.HtmlDocument(lcResult).GetTitle();
+            HttpParams = oArgs;
+
             oHttpResponse.Close();
 
             return lcResult;
@@ -624,20 +641,20 @@ namespace SansTech.Net.Http
         /// </summary>
         /// <param name="Url">Url to retrieve.</param>
         /// <returns></returns>
-        public byte[] GetUrlBytes(string Url)
-        {
-            StreamReader oHttpResponse = this.GetUrlStream(Url);
+        //public byte[] GetUrlBytes(string Url)
+        //{
+        //    StreamReader oHttpResponse = this.GetUrlStream(Url);
 
-            if (oHttpResponse == null)
-            {
-                return null;
-            }
+        //    if (oHttpResponse == null)
+        //    {
+        //        return null;
+        //    }
 
-            string lcResult = oHttpResponse.ReadToEnd();
-            oHttpResponse.Close();
+        //    string lcResult = oHttpResponse.ReadToEnd();
+        //    oHttpResponse.Close();
 
-            return null;
-        }
+        //    return null;
+        //}
 
         /// <summary>
         /// Retrieves URL with events in the OnReceiveData event.
@@ -710,28 +727,18 @@ namespace SansTech.Net.Http
                 // *** Update the event handler
                 oArgs.Done = true;
                 oArgs.Document = loWriter.ToString();
-                oArgs.Params.Title = GetDocTitle(oArgs.Document);
+                oArgs.Params.Title = new Html.HtmlDocument(oArgs.Document).GetTitle();
                 this.OnReceiveData(this, oArgs);
             }
 
+            HttpParams = oArgs;
             //			return lcHtml;
             return loWriter.ToString();
         }
 
-        protected String GetDocTitle(string contents)
-        {
-            Regex titleCheck = new Regex(@"<title>\s*(.+?)\s*</title>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            string title = "unknown";
-            Match m = titleCheck.Match(contents);
+        public OnReceiveDataEventArgs HttpParams { get; set; }
 
-            if (m.Success)
-            {
-                // we found a <title></title> match =]
-                title = m.Groups[1].Value.ToString();
-            }
 
-            return title;
-        }
         protected void InitializeProxy(HttpWebRequest Request)
         {
             // *** Handle Proxy Server configuration

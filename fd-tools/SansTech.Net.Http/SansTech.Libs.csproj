@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Diagonstics\Log.cs" />
     <Compile Include="IO\File.cs" />
+    <Compile Include="Net\Html\HtmlDocument.cs" />
     <Compile Include="Net\Http\HttpHelper.cs" />
     <Compile Include="Net\Http\ImageLinkParser.cs" />
     <Compile Include="Net\Http\ImageLinks.cs" />
@@ -56,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <Compile Include="ObjectEx.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
