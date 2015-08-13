@@ -407,7 +407,7 @@ namespace FormSmartGetIm
 
                         ImageLinkParser lparse = new ImageLinkParser();
 
-                        lparse.ParseImageLinks(args.Document, currentUrl);
+                        lparse.ParseImageLinks(args.Document, currentUrl, GlobalParams.GetIgnoreList());
 
                         //ImageList images = new ImageList();
                         //images.ImageSize = new Size(150, 150);
@@ -416,7 +416,7 @@ namespace FormSmartGetIm
                         //AddUrlSet2Tree(lparse, args);
                         int imageCount = lparse.GoodUrls.Count;
 
-                        lparse.ParseHrefLinks(args.Document, currentUrl);
+                        lparse.ParseHrefLinks(args.Document, currentUrl, GlobalParams.GetIgnoreList());
                         //AddUrlSet2Tree(lparse, args);
                         int pageCount = lparse.GoodUrls.Count;
                         ImViewer vw = new ImViewer();
@@ -566,7 +566,7 @@ namespace FormSmartGetIm
         private void SaveImages(HttpHelper.OnReceiveDataEventArgs oparams, CommonTools.Node thisNode)
         {
             ImageLinkParser lparse = new ImageLinkParser();
-            lparse.ParseImageLinks(oparams.Document, oparams.Params.Url);
+            lparse.ParseImageLinks(oparams.Document, oparams.Params.Url, GlobalParams.GetIgnoreList());
 
             for (int i = 0; i < lparse.GoodUrls.Count; i++)
             {

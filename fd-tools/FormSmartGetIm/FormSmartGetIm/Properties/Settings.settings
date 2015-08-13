@@ -15,7 +15,7 @@
       <Value Profile="(Default)">localhost</Value>
     </Setting>
     <Setting Name="ignoreList" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ajax.googleapis.com</Value>
+      <Value Profile="(Default)">C:\temp\blacklist.txt</Value>
     </Setting>
     <Setting Name="procMap" Type="System.String" Scope="User">
       <Value Profile="(Default)">SolProc.map</Value>

@@ -73,7 +73,7 @@ namespace FormSmartGetIm.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ajax.googleapis.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\temp\\blacklist.txt")]
         public string ignoreList {
             get {
                 return ((string)(this["ignoreList"]));

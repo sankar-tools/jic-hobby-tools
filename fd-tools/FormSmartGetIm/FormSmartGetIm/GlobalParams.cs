@@ -17,6 +17,12 @@ namespace FormSmartGetIm
 
         public static int CurrentLevel = 1;
         public static CommonTools.Node CurrentNode = null;
+
+        public static string GetIgnoreList()
+        {
+            return SansTech.IO.File.ReadComplete(Properties.Settings.Default.ignoreList);
+        }
+
     }
 
     public enum RunState

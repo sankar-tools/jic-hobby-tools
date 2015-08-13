@@ -27,5 +27,14 @@ namespace SansTech.IO
 
             bw.Close();
         }
+
+        public static string ReadComplete(string path)
+        {
+            using (System.IO.StreamReader file =
+                new System.IO.StreamReader(path))
+                return file.ReadToEnd();
+
+            return string.Empty;
+        }
     }
 }

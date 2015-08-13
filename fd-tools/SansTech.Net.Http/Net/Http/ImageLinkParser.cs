@@ -73,7 +73,7 @@ namespace SansTech.Net.Http
         /// </summary>
         /// <param name="page">The page whose text is to be parsed.</param>
         /// <param name="sourceUrl">The source url of the page.</param>
-        public void ParseHrefLinks(string pageText, string sourceUrl)
+        public void ParseHrefLinks(string pageText, string sourceUrl, string ignorelist)
         {
             GoodUrls.Clear();
 
@@ -117,6 +117,10 @@ namespace SansTech.Net.Http
 
                     if ((hrefStr != null || imgStr != null))
                     {
+                        string host = new Uri(hrefStr).Host;
+                        if (ignorelist.IndexOf(host) > 0)
+                            break;
+
                         ImageLinks newLink = new ImageLinks();
                         newLink.Link = hrefStr;
                         newLink.Image = imgStr;
@@ -134,6 +138,7 @@ namespace SansTech.Net.Http
                             //    _otherUrls.Add(foundHref);
                             //}
                             //else
+
                             {
                                 GoodUrls.Add(newLink);
                             }
@@ -147,7 +152,7 @@ namespace SansTech.Net.Http
             }
         }
 
-        public void ParseImageLinks(string pageText, string sourceUrl)
+        public void ParseImageLinks(string pageText, string sourceUrl, string ignorelist)
         {
             GoodUrls.Clear();
 
@@ -200,6 +205,10 @@ namespace SansTech.Net.Http
 
                     if ((anchorStr != null))
                     {
+                        string host = new Uri(anchorStr).Host;
+                        if (ignorelist.IndexOf(host) > -1)
+                            break;
+
                         ImageLinks newLink = new ImageLinks();
                         newLink.Link = anchorStr;
                         newLink.Image = anchorStr;

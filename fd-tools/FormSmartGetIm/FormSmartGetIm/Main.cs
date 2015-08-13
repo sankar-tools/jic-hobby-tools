@@ -137,7 +137,7 @@ namespace FormSmartGetIm
             if (args.Done) // Current page fetch is complete
             {
                 ImageLinkParser lparse = new ImageLinkParser();
-                lparse.ParseHrefLinks(args.Document, currentUrl);
+                lparse.ParseHrefLinks(args.Document, currentUrl, GlobalParams.GetIgnoreList());
 
                 //ImageList images = new ImageList();
                 //images.ImageSize = new Size(150, 150);
@@ -287,7 +287,7 @@ namespace FormSmartGetIm
         private void SaveImages(string doc, string url)
         {
             ImageLinkParser lparse = new ImageLinkParser();
-            lparse.ParseImageLinks(doc, url);
+            lparse.ParseImageLinks(doc, url, GlobalParams.GetIgnoreList());
 
             for (int i = 0; i < lparse.GoodUrls.Count; i++)
             {
