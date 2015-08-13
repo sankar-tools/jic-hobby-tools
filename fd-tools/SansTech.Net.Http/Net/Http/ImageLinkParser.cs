@@ -119,7 +119,7 @@ namespace SansTech.Net.Http
                     {
                         string host = new Uri(hrefStr).Host;
                         if (ignorelist.IndexOf(host) > 0)
-                            break;
+                            continue;
 
                         ImageLinks newLink = new ImageLinks();
                         newLink.Link = hrefStr;
@@ -207,7 +207,7 @@ namespace SansTech.Net.Http
                     {
                         string host = new Uri(anchorStr).Host;
                         if (ignorelist.IndexOf(host) > -1)
-                            break;
+                            continue;
 
                         ImageLinks newLink = new ImageLinks();
                         newLink.Link = anchorStr;

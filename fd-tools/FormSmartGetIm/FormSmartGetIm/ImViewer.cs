@@ -71,9 +71,13 @@ namespace FormSmartGetIm
                 //ImageLinkParams oparams = links[i];
                 Image img = LoadImage(i);
 
+                if (img == null)
+                    img = Image.FromFile(Properties.Settings.Default.xPath);
+
                 if (img != null)
                 {
-                    Image imgThumb = img.GetThumbnailImage(150, 150, null, new IntPtr());
+                    
+                    Image imgThumb = img.GetThumbnailImage(180, 180, null, new IntPtr());
                     images.Images.Add(imgThumb);
                     string filename = UrlHelper.GetFilename(Links[i].Source);
                     listImg.Items.Add(filename, i);

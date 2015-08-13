@@ -27,8 +27,6 @@ namespace SansTech.IO
             string newName = name + "." + ext;
             while (System.IO.File.Exists(filepath + @"\" + newName))
             {
-
-
                 name = name + "_" + fileCounter.ToString().PadLeft(4, '0');
                 newName = name + "." + ext;
             }

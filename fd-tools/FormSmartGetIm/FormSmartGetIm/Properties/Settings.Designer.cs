@@ -94,5 +94,17 @@ namespace FormSmartGetIm.Properties {
                 this["procMap"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\temp\\x-mark-icon.png")]
+        public string xPath {
+            get {
+                return ((string)(this["xPath"]));
+            }
+            set {
+                this["xPath"] = value;
+            }
+        }
     }
 }

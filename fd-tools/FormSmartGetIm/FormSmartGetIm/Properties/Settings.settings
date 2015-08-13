@@ -20,5 +20,8 @@
     <Setting Name="procMap" Type="System.String" Scope="User">
       <Value Profile="(Default)">SolProc.map</Value>
     </Setting>
+    <Setting Name="xPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\temp\x-mark-icon.png</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
