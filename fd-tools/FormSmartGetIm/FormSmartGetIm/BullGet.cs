@@ -379,18 +379,18 @@ namespace FormSmartGetIm
             httpHandle.UserAgent = "Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0";
             httpHandle.HandleCookies = true;
             httpHandle.ThrowExceptions = false;
-
+            httpHandle.BufferSize = 10240;
             return httpHandle;
         }
 
         private string GetCurrentUrl(CommonTools.Node node)
         {
-            return node[(int)eColumns.Url].ToString();
+            return node[(int)eColumns.Url].ToEmptyString();
         }
 
         private string GetCurrentTitle(CommonTools.Node node)
         {
-            return node[(int)eColumns.Title].ToString();
+            return node[(int)eColumns.Title].ToEmptyString();
         }
 
         private void httpHandle_OnReceiveData(object sender, HttpHelper.OnReceiveDataEventArgs args)
@@ -449,34 +449,35 @@ namespace FormSmartGetIm
                 //bool cancel = false;
                 switch (args.DocumentType)
                 {
-                    case HttpHelper.DocType.html:
+                    default:
+                    //case HttpHelper.DocType.html:
                         oparams.DownloadedSize = args.CurrentByteCount;
                         oparams.Status = "WIP";
                         break;
 
-                    case HttpHelper.DocType.image:
-                        //cancel = true;
-                        args.Cancel = true;
-                        string savePath = Properties.Settings.Default.savePath + "\\" + GetCurrentTitle(GlobalParams.CurrentNode) + "\\" + UrlHelper.GetFilename(args.Params.Url);
-                        //SansTech.IO.File.WriteBinary(savePath, args.Document);
+                    //case HttpHelper.DocType.image:
+                    //    //cancel = true;
+                    //    args.Cancel = true;
+                    //    string savePath = Properties.Settings.Default.savePath + "\\" + GetCurrentTitle(GlobalParams.CurrentNode) + "\\" + UrlHelper.GetFilename(args.Params.Url);
+                    //    //SansTech.IO.File.WriteBinary(savePath, args.Document);
                         
-                        HttpHelper http = new HttpHelper();
-                        http.AllowRedirect = true;
-                        http.DownloadFileEv(args.Params.Url, args.Params.Url, savePath);
-                        //SaveImage(lparse.GoodUrls[i].Link, saveFile);
-                        LogMessage("image " + args.Params.Url + " saved to " + savePath);
+                    //    HttpHelper http = new HttpHelper();
+                    //    http.AllowRedirect = true;
+                    //    http.DownloadFileEv(args.Params.Url, args.Params.Url, savePath);
+                    //    //SaveImage(lparse.GoodUrls[i].Link, saveFile);
+                    //    LogMessage("image " + args.Params.Url + " saved to " + savePath);
 
-                        //LogMessage(currentUrl + " image saved to " + savePath);
-                        oparams.DownloadedSize = args.CurrentByteCount;
-                        oparams.Status = "Done";
-                        break;
+                    //    //LogMessage(currentUrl + " image saved to " + savePath);
+                    //    oparams.DownloadedSize = args.CurrentByteCount;
+                    //    oparams.Status = "Done";
+                    //    break;
 
-                    default:
-                        //cancel = true;
-                        args.Cancel = true;
-                        oparams.DownloadedSize = 0;
-                        oparams.Status = "Cancelled";
-                        break;
+                    //default:
+                    //    //cancel = true;
+                    //    args.Cancel = true;
+                    //    oparams.DownloadedSize = 0;
+                    //    oparams.Status = "Cancelled";
+                    //    break;
                 }
 
                 UpdateTreeNode(oparams, GlobalParams.CurrentNode);
@@ -573,10 +574,14 @@ namespace FormSmartGetIm
                 {
                     try
                     {
+                        //string uniqueFileName = GetUniqueFilename(imagePath, UrlHelper.GetFilename(lparse.GoodUrls[i].Link)
                         string saveImageFile = imagePath + "\\" + UrlHelper.GetFilename(lparse.GoodUrls[i].Link);
-                        HttpHelper http = new HttpHelper();
+                        string saveImageFile2 = imagePath + @"\try\" + UrlHelper.GetFilename(lparse.GoodUrls[i].Link);
+                        HttpHelper http = GetHttpHandle();
                         http.AllowRedirect = true;
-                        http.DownloadFileEv(lparse.GoodUrls[i].Link, oparams.Params.Url, saveImageFile);
+                        //http.DownloadFileEv(lparse.GoodUrls[i].Link, oparams.Params.Url, saveImageFile);
+                        http.DownloadFileEv(lparse.GoodUrls[i].Link, lparse.GoodUrls[i].Link, saveImageFile);
+                        //SaveImage(lparse.GoodUrls[i].Link, saveImageFile2);
                         //SaveImage(lparse.GoodUrls[i].Link, saveFile);
                         LogMessage("image " + lparse.GoodUrls[i].Link + " saved to " + saveImageFile);
                         UrlTrackParams uparams = new UrlTrackParams(oparams.Params);
@@ -590,6 +595,33 @@ namespace FormSmartGetIm
                 }
                 LogMessage(i.ToString() + " image(s) saved.");
             }
+        }
+
+        private void SaveImage(string url, string path)
+        {
+            try
+            {
+                System.Net.WebRequest request =
+                    System.Net.WebRequest.Create(url);
+
+                System.Net.WebResponse response = request.GetResponse();
+                System.IO.Stream responseStream =
+                    response.GetResponseStream();
+
+                //Bitmap bmp = new Bitmap(responseStream);
+                Image img = Image.FromStream(responseStream);
+
+                responseStream.Dispose();
+                img.Save(path);
+
+                //return img;
+            }
+            catch (Exception e)
+            {
+                //MessageBox.Show(e.ToString());
+            }
+            //return null;
+
         }
 
         private CommonTools.Node GetNextNewTreeNode()
@@ -606,16 +638,11 @@ namespace FormSmartGetIm
         }
         #endregion
 
-
         private void LogMessage(string s)
         {
             string logMsg = "[" + DateTime.Now.ToString() + "] " + s ;
             txtLog.Text += logMsg + "\r\n";
             GlobalParams.ActivityLog.Write(logMsg);
         }
-
-
     }
-
-
 }

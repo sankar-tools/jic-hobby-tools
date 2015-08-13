@@ -40,24 +40,45 @@ namespace FormSmartGetIm
 
         public void ShowList()
         {
+            //this.ShowDialog();
+
             ImageList images = new ImageList();
             images.ImageSize = new Size(150, 150);
+            images.ColorDepth = ColorDepth.Depth32Bit;
+            //
+
+            // first populate list
+            //for (int i = 0; i < Links.Count; i++)
+            //{
+            //    string filename = UrlHelper.GetFilename(Links[i].Source);
+            //    listImg.Items.Add(filename, i);
+            //}
+
+            // show images
+
+
+            //listImg.BeginUpdate();
+
 
             for (int i = 0; i < Links.Count; i++)
             {
                 //ImageLinkParams oparams = links[i];
-                Image bmp = LoadImage(i);
+                Image img = LoadImage(i);
 
-                if (bmp != null)
+                if (img != null)
                 {
-                    images.Images.Add(bmp);
+                    Image imgThumb = img.GetThumbnailImage(150, 150, null, new IntPtr());
+                    images.Images.Add(imgThumb);
                     string filename = UrlHelper.GetFilename(Links[i].Source);
                     listImg.Items.Add(filename, i);
                     listImg.LargeImageList = images;
+
                 }
 
                 //links[i] = oparams;
             }
+
+            //listImg.EndUpdate();
             this.ShowDialog();
         }
 

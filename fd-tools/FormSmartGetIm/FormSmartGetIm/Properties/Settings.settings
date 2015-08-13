@@ -17,5 +17,8 @@
     <Setting Name="ignoreList" Type="System.String" Scope="User">
       <Value Profile="(Default)">ajax.googleapis.com</Value>
     </Setting>
+    <Setting Name="procMap" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SolProc.map</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

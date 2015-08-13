@@ -201,8 +201,8 @@ namespace SansTech.Net.Http
 
         public int BufferSize
         {
-            get { return (this.nBufferSize / 1000); }
-            set { this.nBufferSize = value * 1000; }
+            get { return (this.nBufferSize); }
+            set { this.nBufferSize = value; }
         }
 
         public bool UseSiteCredentials
