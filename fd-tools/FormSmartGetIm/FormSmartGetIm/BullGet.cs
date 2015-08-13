@@ -574,16 +574,16 @@ namespace FormSmartGetIm
                 {
                     try
                     {
-                        //string uniqueFileName = GetUniqueFilename(imagePath, UrlHelper.GetFilename(lparse.GoodUrls[i].Link)
-                        string saveImageFile = imagePath + "\\" + UrlHelper.GetFilename(lparse.GoodUrls[i].Link);
-                        string saveImageFile2 = imagePath + @"\try\" + UrlHelper.GetFilename(lparse.GoodUrls[i].Link);
+                        string uniqueFileName = SansTech.IO.Directory.GetUniqueFilename(imagePath, UrlHelper.GetFilename(lparse.GoodUrls[i].Link), "jpg");
+                        //string saveImageFile = imagePath + "\\" + UrlHelper.GetFilename(lparse.GoodUrls[i].Link);
+                        //string saveImageFile2 = imagePath + @"\try\" + UrlHelper.GetFilename(lparse.GoodUrls[i].Link);
                         HttpHelper http = GetHttpHandle();
                         http.AllowRedirect = true;
                         //http.DownloadFileEv(lparse.GoodUrls[i].Link, oparams.Params.Url, saveImageFile);
-                        http.DownloadFileEv(lparse.GoodUrls[i].Link, lparse.GoodUrls[i].Link, saveImageFile);
+                        http.DownloadFileEv(lparse.GoodUrls[i].Link, lparse.GoodUrls[i].Link, uniqueFileName);
                         //SaveImage(lparse.GoodUrls[i].Link, saveImageFile2);
                         //SaveImage(lparse.GoodUrls[i].Link, saveFile);
-                        LogMessage("image " + lparse.GoodUrls[i].Link + " saved to " + saveImageFile);
+                        LogMessage("image " + lparse.GoodUrls[i].Link + " saved to " + uniqueFileName);
                         UrlTrackParams uparams = new UrlTrackParams(oparams.Params);
                         uparams.Status = "Done";
                         UpdateTreeNode(uparams, thisNode);
@@ -643,6 +643,11 @@ namespace FormSmartGetIm
             string logMsg = "[" + DateTime.Now.ToString() + "] " + s ;
             txtLog.Text += logMsg + "\r\n";
             GlobalParams.ActivityLog.Write(logMsg);
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

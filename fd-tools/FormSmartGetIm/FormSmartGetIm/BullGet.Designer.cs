@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainTree));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BullGet));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbtnAdd = new System.Windows.Forms.ToolStripButton();
             this.tsbtnStart = new System.Windows.Forms.ToolStripButton();
@@ -36,9 +36,10 @@
             this.btnAddUrl = new System.Windows.Forms.Button();
             this.txtAddUrl = new System.Windows.Forms.TextBox();
             this.mainSplitter = new System.Windows.Forms.SplitContainer();
+            this.pnlTree = new System.Windows.Forms.Panel();
             this.pnlMsg = new System.Windows.Forms.Panel();
             this.txtLog = new System.Windows.Forms.TextBox();
-            this.pnlTree = new System.Windows.Forms.Panel();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.pnlAddUrl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitter)).BeginInit();
@@ -52,7 +53,8 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbtnAdd,
-            this.tsbtnStart});
+            this.tsbtnStart,
+            this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(988, 25);
@@ -64,7 +66,7 @@
             this.tsbtnAdd.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnAdd.Image")));
             this.tsbtnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnAdd.Name = "tsbtnAdd";
-            this.tsbtnAdd.Size = new System.Drawing.Size(67, 22);
+            this.tsbtnAdd.Size = new System.Drawing.Size(69, 22);
             this.tsbtnAdd.Text = "Url (++)";
             this.tsbtnAdd.Click += new System.EventHandler(this.tsbtnAdd_Click);
             // 
@@ -122,6 +124,14 @@
             this.mainSplitter.SplitterDistance = 357;
             this.mainSplitter.TabIndex = 4;
             // 
+            // pnlTree
+            // 
+            this.pnlTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTree.Location = new System.Drawing.Point(0, 0);
+            this.pnlTree.Name = "pnlTree";
+            this.pnlTree.Size = new System.Drawing.Size(988, 357);
+            this.pnlTree.TabIndex = 0;
+            // 
             // pnlMsg
             // 
             this.pnlMsg.Controls.Add(this.txtLog);
@@ -141,15 +151,16 @@
             this.txtLog.Size = new System.Drawing.Size(988, 110);
             this.txtLog.TabIndex = 0;
             // 
-            // pnlTree
+            // toolStripButton1
             // 
-            this.pnlTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTree.Location = new System.Drawing.Point(0, 0);
-            this.pnlTree.Name = "pnlTree";
-            this.pnlTree.Size = new System.Drawing.Size(988, 357);
-            this.pnlTree.TabIndex = 0;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(90, 22);
+            this.toolStripButton1.Text = "Show Again";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
-            // MainTree
+            // BullGet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -188,5 +199,6 @@
         private System.Windows.Forms.Panel pnlMsg;
         private System.Windows.Forms.TextBox txtLog;
         private System.Windows.Forms.Panel pnlTree;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }

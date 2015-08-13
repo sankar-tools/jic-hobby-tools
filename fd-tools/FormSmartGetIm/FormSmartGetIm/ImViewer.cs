@@ -28,6 +28,12 @@ namespace FormSmartGetIm
         {
             Links = new List<UrlTrackParams>();
             this.listImg.CheckBoxes = true;
+            listImg.SelectedIndexChanged += new EventHandler(listImg_SelectedIndexChanged);
+        }
+
+        void listImg_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //list
         }
 
         public void AssignLinks(List<ImageLinks> links)
