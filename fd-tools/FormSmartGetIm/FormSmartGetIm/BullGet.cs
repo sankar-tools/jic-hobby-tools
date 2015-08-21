@@ -537,13 +537,21 @@ namespace FormSmartGetIm
                     http.HandleCookies = true;
                     //http.OnReceiveData += new HttpHelper.OnReceiveDataHandler(http_OnReceiveData);
                     string doc = http.GetUrl(url);
-                    //new FileViewer().Show(doc);
-                    //referrer = args.Params.Url;
-                    //attempt++;
-                    //http.HttpParams;
-                    SaveImages(http.HttpParams, thisNode);
-                    
-                    LogMessage("Completed downloading " + url);
+                    if (http.Error)
+                    {
+                        LogMessage("Error downloading " + url);
+                        LogMessage(">>> " + http.ErrorMsg);
+                    }
+                    else
+                    {
+                        //new FileViewer().Show(doc);
+                        //referrer = args.Params.Url;
+                        //attempt++;
+                        //http.HttpParams;
+                        SaveImages(http.HttpParams, thisNode);
+
+                        LogMessage("Completed downloading " + url);
+                    }
                 }
 
                 //string saveFile = savePath + "\\" + UrlHelper.GetFilename(url);

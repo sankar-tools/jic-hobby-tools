@@ -3,25 +3,25 @@
   <Profiles />
   <Settings>
     <Setting Name="savePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">c:\temp\~!0001</Value>
+      <Value Profile="(Default)">Y:\dwn\mytool</Value>
     </Setting>
     <Setting Name="logPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">c:\temp\~!0001\SmartIm.log</Value>
+      <Value Profile="(Default)">Y:\dwn\mytool\SmartIm.log</Value>
     </Setting>
     <Setting Name="linkList" Type="System.String" Scope="User">
-      <Value Profile="(Default)">c:\temp\~!0001\Links.log</Value>
+      <Value Profile="(Default)">Y:\dwn\mytool\Links.log</Value>
     </Setting>
     <Setting Name="domains" Type="System.String" Scope="User">
       <Value Profile="(Default)">localhost</Value>
     </Setting>
     <Setting Name="ignoreList" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\temp\blacklist.txt</Value>
+      <Value Profile="(Default)">Y:\dwn\mytool\blacklist.txt</Value>
     </Setting>
     <Setting Name="procMap" Type="System.String" Scope="User">
       <Value Profile="(Default)">SolProc.map</Value>
     </Setting>
     <Setting Name="xPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\temp\x-mark-icon.png</Value>
+      <Value Profile="(Default)">Y:\dwn\mytool\x-mark-icon.png</Value>
     </Setting>
   </Settings>
 </SettingsFile>
