@@ -112,6 +112,7 @@ namespace FormSmartGetIm
         {
             pnlAddUrl.Visible = true;
             pnlAddUrl.BringToFront();
+            txtAddUrl.SelectAll();
             txtAddUrl.Focus();
         }
 
@@ -284,6 +285,8 @@ namespace FormSmartGetIm
                 ProcessThisNode(GetNextNewTreeNode());
                 //Thread.Sleep(10000);
             }
+
+            MessageBox.Show("Process completed successfully");
         }
 
         private void ProcessThisNode(CommonTools.Node node)
@@ -656,6 +659,17 @@ namespace FormSmartGetIm
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void btnPaste_Click(object sender, EventArgs e)
+        {
+            string clipBoardData = Clipboard.GetText();
+            if (UrlHelper.IsUrl(clipBoardData))
+            {
+                txtAddUrl.Text = clipBoardData;
+            }
+            else
+                MessageBox.Show("Not a valid Url");
         }
     }
 }

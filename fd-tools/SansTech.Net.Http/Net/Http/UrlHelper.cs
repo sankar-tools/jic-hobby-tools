@@ -35,5 +35,12 @@ namespace SansTech.Net.Http
             string host = myUri.Host;
             return host;
         }
+
+        public static bool IsUrl(string url)
+        {
+            Uri uriResult;
+            bool result = Uri.TryCreate(url, UriKind.Absolute, out uriResult) && uriResult.Scheme == Uri.UriSchemeHttp;
+            return result;
+        }
     }
 }
