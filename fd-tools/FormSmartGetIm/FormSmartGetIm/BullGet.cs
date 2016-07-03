@@ -112,6 +112,7 @@ namespace FormSmartGetIm
         {
             pnlAddUrl.Visible = true;
             pnlAddUrl.BringToFront();
+            txtAddUrl.SelectAll();
             txtAddUrl.Focus();
         }
 
@@ -284,6 +285,8 @@ namespace FormSmartGetIm
                 ProcessThisNode(GetNextNewTreeNode());
                 //Thread.Sleep(10000);
             }
+
+            MessageBox.Show("Process completed successfully");
         }
 
         private void ProcessThisNode(CommonTools.Node node)
@@ -537,13 +540,21 @@ namespace FormSmartGetIm
                     http.HandleCookies = true;
                     //http.OnReceiveData += new HttpHelper.OnReceiveDataHandler(http_OnReceiveData);
                     string doc = http.GetUrl(url);
-                    //new FileViewer().Show(doc);
-                    //referrer = args.Params.Url;
-                    //attempt++;
-                    //http.HttpParams;
-                    SaveImages(http.HttpParams, thisNode);
-                    
-                    LogMessage("Completed downloading " + url);
+                    if (http.Error)
+                    {
+                        LogMessage("Error downloading " + url);
+                        LogMessage(">>> " + http.ErrorMsg);
+                    }
+                    else
+                    {
+                        //new FileViewer().Show(doc);
+                        //referrer = args.Params.Url;
+                        //attempt++;
+                        //http.HttpParams;
+                        SaveImages(http.HttpParams, thisNode);
+
+                        LogMessage("Completed downloading " + url);
+                    }
                 }
 
                 //string saveFile = savePath + "\\" + UrlHelper.GetFilename(url);
@@ -648,6 +659,17 @@ namespace FormSmartGetIm
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void btnPaste_Click(object sender, EventArgs e)
+        {
+            string clipBoardData = Clipboard.GetText();
+            if (UrlHelper.IsUrl(clipBoardData))
+            {
+                txtAddUrl.Text = clipBoardData;
+            }
+            else
+                MessageBox.Show("Not a valid Url");
         }
     }
 }

@@ -80,7 +80,7 @@ namespace GTech.Olivia.Gyzer
 		{
 			InitializeComponent();
 
-            Control.CheckForIllegalCrossThreadCalls = false;
+            //Control.CheckForIllegalCrossThreadCalls = false;
 
 			maxThreads = Convert.ToInt32(ConfigurationSettings.AppSettings["MaxGrabThreads"].ToString());
 
@@ -689,6 +689,8 @@ namespace GTech.Olivia.Gyzer
 
 				myThreadDelegates[i] = new ThreadStart(myClients[i].StartDownload);
 				myThreads[i] = new Thread(myThreadDelegates[i]);
+                myThreads[i].IsBackground = true;
+
 				myThreads[i].Start();
 			}
 
@@ -801,6 +803,7 @@ namespace GTech.Olivia.Gyzer
                     {
 
                         selectedList.Items.Clear();
+                        grabCount = 0;
                         LoadLinks();
                     }
 				}
@@ -860,8 +863,13 @@ namespace GTech.Olivia.Gyzer
             string constr = ConfigurationSettings.AppSettings["ControlDatabase"];
 
             string selectionVw = "select top " + tbstxtRecLimit.Text + " * from " + tscboDBLogic.SelectedText;
+            if (String.IsNullOrEmpty(tscboDBLogic.SelectedText))
+            {
+                MessageBox.Show("Select rules");
+                return;
+            }
 
-            try
+            //try
             {
                 cn.ConnectionString = constr;
                 cn.Open();
@@ -911,11 +919,11 @@ namespace GTech.Olivia.Gyzer
                     }
                 }
             }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
-            finally
+            //catch (Exception e)
+            //{
+            //    MessageBox.Show(e.ToString());
+            //}
+            //finally
             {
                 cmd.Dispose();
                 cn.Close();
@@ -962,16 +970,28 @@ namespace GTech.Olivia.Gyzer
             ListViewItem item = null;
                 grabCount++;
                 //Following line is make thread safe through SetControlValue method
-                sbpCount.Text = Convert.ToString(grabCount) + "/" + Convert.ToString(selectedList.Items.Count);
+                //sbpCount.SetPropertyThreadSafe(() => sbpCount.Text, Convert.ToString(grabCount) + "/" + Convert.ToString(selectedList.Items.Count);
+
+                this.Invoke((MethodInvoker)delegate
+                {
+                    sbpCount.Text = Convert.ToString(grabCount) + "/" + Convert.ToString(selectedList.Items.Count); ; // runs on UI thread
+                });
+
+                //sbpCount.Text = Convert.ToString(grabCount) + "/" + Convert.ToString(selectedList.Items.Count);
                 //SetControlPropertyValue((Control) sbpCount, "Text", Convert.ToString(grabCount) + "/" + Convert.ToString(selectedList.Items.Count));
                 for (int i = 0; i < selectedList.Items.Count; i++)
                 {
-                    if (GetListViewItem(i).SubItems[Convert.ToInt32(Global.ListColumns.Status)].Text == "New")
+                    bool canBreak = false;
+                    this.Invoke((MethodInvoker)delegate
                     {
-                        item = GetListViewItem(i);
-                        GetListViewItem(i).SubItems[Convert.ToInt32(Global.ListColumns.Status)].Text = "WIP";
-                        break;
-                    }
+                        if (GetListViewItem(i).SubItems[Convert.ToInt32(Global.ListColumns.Status)].Text == "New")
+                        {
+                            item = GetListViewItem(i);
+                            GetListViewItem(i).SubItems[Convert.ToInt32(Global.ListColumns.Status)].Text = "WIP";
+                            canBreak = true;
+                        }
+                    });
+                    if (canBreak) break;
                 }
             //}
             //else
@@ -1094,28 +1114,28 @@ namespace GTech.Olivia.Gyzer
 
         // SetControlValueCallback delegate and SetControlPropertyValue are implemented to make the contorl access thread safe
         // To avoid [cross thread operations not valid] error
-        delegate void SetControlValueCallback(Control oControl, string propName, object propValue);
+        //delegate void SetControlValueCallback(Control oControl, string propName, object propValue);
         
-        private void SetControlPropertyValue(Control oControl, string propName, object propValue)
-        {
-            if (oControl.InvokeRequired)
-            {
-                SetControlValueCallback d = new SetControlValueCallback(SetControlPropertyValue);
-                oControl.Invoke(d, new object[] { oControl, propName, propValue });
-            }
-            else
-            {
-                Type t = oControl.GetType();
-                PropertyInfo[] props = t.GetProperties();
-                foreach (PropertyInfo p in props)
-                {
-                    if (p.Name.ToUpper() == propName.ToUpper())
-                    {
-                        p.SetValue(oControl, propValue, null);
-                    }
-                }
-            }
-        }
+        //private void SetControlPropertyValue(Control oControl, string propName, object propValue)
+        //{
+        //    if (oControl.InvokeRequired)
+        //    {
+        //        SetControlValueCallback d = new SetControlValueCallback(SetControlPropertyValue);
+        //        oControl.Invoke(d, new object[] { oControl, propName, propValue });
+        //    }
+        //    else
+        //    {
+        //        Type t = oControl.GetType();
+        //        PropertyInfo[] props = t.GetProperties();
+        //        foreach (PropertyInfo p in props)
+        //        {
+        //            if (p.Name.ToUpper() == propName.ToUpper())
+        //            {
+        //                p.SetValue(oControl, propValue, null);
+        //            }
+        //        }
+        //    }
+        //}
         private delegate ListViewItem GetListViewItemDelegate(int index);
 
         private ListViewItem GetListViewItem(int index)
@@ -1179,6 +1199,20 @@ namespace GTech.Olivia.Gyzer
           {
               tscboDBLogic.Items.Add(str);
           }
+
+        }
+
+        public void UpdateProgress(ListViewItem item, DownloadArgs args)
+        {
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                item.SubItems[Convert.ToInt32(Global.ListColumns.ThreadId)].Text = args.Id.ToString();
+                item.SubItems[Convert.ToInt32(Global.ListColumns.Size)].Text = args.Downloaded.ToString();
+                item.SubItems[Convert.ToInt32(Global.ListColumns.Total)].Text = args.Size.ToString();
+                item.SubItems[Convert.ToInt32(Global.ListColumns.Status)].Text = args.Status;
+                    //Convert.ToString((double)args.Downloaded / (double)args.Size * 100) + "%";
+            });
 
         }
         

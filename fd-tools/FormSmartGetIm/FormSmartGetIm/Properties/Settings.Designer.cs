@@ -25,7 +25,7 @@ namespace FormSmartGetIm.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("c:\\temp\\~!0001")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Y:\\dwn\\mytool")]
         public string savePath {
             get {
                 return ((string)(this["savePath"]));
@@ -37,7 +37,7 @@ namespace FormSmartGetIm.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("c:\\temp\\~!0001\\SmartIm.log")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Y:\\dwn\\mytool\\SmartIm.log")]
         public string logPath {
             get {
                 return ((string)(this["logPath"]));
@@ -49,7 +49,7 @@ namespace FormSmartGetIm.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("c:\\temp\\~!0001\\Links.log")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Y:\\dwn\\mytool\\Links.log")]
         public string linkList {
             get {
                 return ((string)(this["linkList"]));
@@ -73,7 +73,7 @@ namespace FormSmartGetIm.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\temp\\blacklist.txt")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Y:\\dwn\\mytool\\blacklist.txt")]
         public string ignoreList {
             get {
                 return ((string)(this["ignoreList"]));
@@ -97,7 +97,7 @@ namespace FormSmartGetIm.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\temp\\x-mark-icon.png")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Y:\\dwn\\mytool\\x-mark-icon.png")]
         public string xPath {
             get {
                 return ((string)(this["xPath"]));

@@ -1,0 +1,13 @@
+Issues / Enhancements
+
+
+1. Provision to open the thubs and reselect
+2. Files and image are matching in thubs
+3. Download progress is always shows at parent
+4. After wrapper download, show img download process on same item with corresponding status update
+5. filter ignore list
+6. dup file name append isssue xxxx_xxxx_xxxx
+7. Root node status indicator total, selected downloaded
+8. fail safe on connection failure
+9. Monitor clipboard
+

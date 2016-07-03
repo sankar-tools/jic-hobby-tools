@@ -29,6 +29,7 @@ namespace FormSmartGetIm
             Links = new List<UrlTrackParams>();
             this.listImg.CheckBoxes = true;
             listImg.SelectedIndexChanged += new EventHandler(listImg_SelectedIndexChanged);
+            listImg.ShowItemToolTips = true;
         }
 
         void listImg_SelectedIndexChanged(object sender, EventArgs e)
@@ -71,17 +72,24 @@ namespace FormSmartGetIm
                 //ImageLinkParams oparams = links[i];
                 Image img = LoadImage(i);
 
+                img = null; //ToDo: Temp supress, remove this
+
                 if (img == null)
                     img = Image.FromFile(Properties.Settings.Default.xPath);
 
+                
                 if (img != null)
                 {
                     
                     Image imgThumb = img.GetThumbnailImage(180, 180, null, new IntPtr());
                     images.Images.Add(imgThumb);
                     string filename = UrlHelper.GetFilename(Links[i].Source);
-                    listImg.Items.Add(filename, i);
+                    ListViewItem item = new ListViewItem(filename, i);
+                    item.ToolTipText = Links[i].Source;
+                    listImg.Items.Add(item);
                     listImg.LargeImageList = images;
+                    
+
 
                 }
 

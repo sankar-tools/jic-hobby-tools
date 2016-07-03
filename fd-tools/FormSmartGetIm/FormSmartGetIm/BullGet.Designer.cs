@@ -32,6 +32,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbtnAdd = new System.Windows.Forms.ToolStripButton();
             this.tsbtnStart = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.pnlAddUrl = new System.Windows.Forms.Panel();
             this.btnAddUrl = new System.Windows.Forms.Button();
             this.txtAddUrl = new System.Windows.Forms.TextBox();
@@ -39,7 +40,7 @@
             this.pnlTree = new System.Windows.Forms.Panel();
             this.pnlMsg = new System.Windows.Forms.Panel();
             this.txtLog = new System.Windows.Forms.TextBox();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.btnPaste = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.pnlAddUrl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitter)).BeginInit();
@@ -79,18 +80,28 @@
             this.tsbtnStart.Text = "Start";
             this.tsbtnStart.Click += new System.EventHandler(this.tsbtnStart_Click);
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(90, 22);
+            this.toolStripButton1.Text = "Show Again";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
             // pnlAddUrl
             // 
+            this.pnlAddUrl.Controls.Add(this.btnPaste);
             this.pnlAddUrl.Controls.Add(this.btnAddUrl);
             this.pnlAddUrl.Controls.Add(this.txtAddUrl);
             this.pnlAddUrl.Location = new System.Drawing.Point(98, 223);
             this.pnlAddUrl.Name = "pnlAddUrl";
-            this.pnlAddUrl.Size = new System.Drawing.Size(792, 51);
+            this.pnlAddUrl.Size = new System.Drawing.Size(858, 51);
             this.pnlAddUrl.TabIndex = 2;
             // 
             // btnAddUrl
             // 
-            this.btnAddUrl.Location = new System.Drawing.Point(691, 15);
+            this.btnAddUrl.Location = new System.Drawing.Point(757, 14);
             this.btnAddUrl.Name = "btnAddUrl";
             this.btnAddUrl.Size = new System.Drawing.Size(98, 23);
             this.btnAddUrl.TabIndex = 1;
@@ -151,22 +162,23 @@
             this.txtLog.Size = new System.Drawing.Size(988, 110);
             this.txtLog.TabIndex = 0;
             // 
-            // toolStripButton1
+            // btnPaste
             // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(90, 22);
-            this.toolStripButton1.Text = "Show Again";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.btnPaste.Location = new System.Drawing.Point(691, 15);
+            this.btnPaste.Name = "btnPaste";
+            this.btnPaste.Size = new System.Drawing.Size(60, 23);
+            this.btnPaste.TabIndex = 2;
+            this.btnPaste.Text = "^V";
+            this.btnPaste.UseVisualStyleBackColor = true;
+            this.btnPaste.Click += new System.EventHandler(this.btnPaste_Click);
             // 
             // BullGet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(988, 496);
-            this.Controls.Add(this.mainSplitter);
             this.Controls.Add(this.pnlAddUrl);
+            this.Controls.Add(this.mainSplitter);
             this.Controls.Add(this.toolStrip1);
             this.Name = "BullGet";
             this.Text = "BullGet";
@@ -200,5 +212,6 @@
         private System.Windows.Forms.TextBox txtLog;
         private System.Windows.Forms.Panel pnlTree;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.Button btnPaste;
     }
 }
