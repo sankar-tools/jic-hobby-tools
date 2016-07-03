@@ -103,6 +103,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DialUpHelper.cs" />
+    <Compile Include="DownloadArgs.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="HttpHelper.cs" />
     <Compile Include="CrawlWin.cs">
@@ -116,9 +117,7 @@
     <Compile Include="SeriesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WebClient.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="WebClient.cs" />
     <EmbeddedResource Include="CrawlWin.resx">
       <DependentUpon>CrawlWin.cs</DependentUpon>
       <SubType>Designer</SubType>

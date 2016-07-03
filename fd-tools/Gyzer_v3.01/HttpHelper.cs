@@ -412,7 +412,7 @@ namespace GTech.Olivia.Gyzer
 
 		protected StreamReader GetUrlStream(string Url, HttpWebRequest Request)
 		{
-			HttpWebResponse Response = null;
+            HttpWebResponse Response = null;
 
             try
             {
@@ -498,6 +498,7 @@ namespace GTech.Olivia.Gyzer
 
 
                 // *** Retrieve the response headers 
+                //ToDo:: SansCheck - Throwing stack overflow exception
                 Response = (HttpWebResponse)Request.GetResponse();
 
                 // ** Save cookies the server sends
@@ -559,6 +560,7 @@ namespace GTech.Olivia.Gyzer
                     statusCode = HttpStatusCode.NotFound;
 
                 return strResponse;
+
             }
             catch (WebException we)
             {
@@ -573,6 +575,15 @@ namespace GTech.Olivia.Gyzer
                 this.bError = true;
                 return null;
 
+            }
+            catch (StackOverflowException sfe)
+            {
+                if (this.bThrowExceptions)
+                    throw sfe;
+
+                this.cErrorMsg = sfe.Message;
+                this.bError = true;
+                return null;
             }
             catch (Exception e)
             {
@@ -683,6 +694,7 @@ namespace GTech.Olivia.Gyzer
 			char[] lcTemp = new char[BufferSize];
 
 			OnReceiveDataEventArgs oArgs = new OnReceiveDataEventArgs();
+            oArgs.Url = Url;
 			oArgs.TotalBytes = lnSize;
 
 			lnSize = 1;
@@ -763,6 +775,7 @@ namespace GTech.Olivia.Gyzer
 
 		public class OnReceiveDataEventArgs
 		{
+            public string Url;
 			public long CurrentByteCount = 0;
 			public long TotalBytes = 0;
 			public int NumberOfReads = 0;

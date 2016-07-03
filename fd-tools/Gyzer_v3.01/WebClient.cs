@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Configuration;
+using System.Runtime.CompilerServices;
 
 namespace GTech.Olivia.Gyzer
 {
@@ -40,10 +41,16 @@ namespace GTech.Olivia.Gyzer
 		public void Grabber_DownloadProgressChanged(object sender, HttpHelper.OnReceiveDataEventArgs args)
 		{
 			MyWebClient thisClient = (MyWebClient) sender;
+            string status = "unknown";
+            long size = args.TotalBytes;
+            long count = args.CurrentByteCount;
 
 			if (args.Done == true)
 			{
-                this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Status)].Text = args.StatusCode.ToString();
+                //this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Status)].Text = args.StatusCode.ToString();
+                status = args.StatusCode.ToString();
+                DownloadArgs a = new DownloadArgs(this.myKey, status, size, count);
+                GrabberForm.UpdateProgress(currentListItem, a);
 
 				UpdateDatabase();
 
@@ -64,13 +71,21 @@ namespace GTech.Olivia.Gyzer
 			}
 			else
 			{
-                this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Size)].Text = 
-					args.CurrentByteCount.ToString();
-                this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Total)].Text =
-					args.TotalBytes.ToString();
-                this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Status)].Text = 
-					Convert.ToString((double)args.CurrentByteCount / (double)args.TotalBytes * 100) + "%";
+                size = args.TotalBytes;
+                count = args.CurrentByteCount;
+                //this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Size)].Text = 
+                //    args.CurrentByteCount.ToString();
+                //this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Total)].Text =
+                //    args.TotalBytes.ToString();
+                //this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Status)].Text = 
+                //    Convert.ToString((double)args.CurrentByteCount / (double)args.TotalBytes * 100) + "%";
+                status = Convert.ToString((double)args.CurrentByteCount / (double)args.TotalBytes * 100) + "%";
+
+                DownloadArgs a = new DownloadArgs(this.myKey, status, size, count);
+                GrabberForm.UpdateProgress(currentListItem, a);
 			}
+
+
 		}
 
 		private void DownloadNextFile()
@@ -86,9 +101,12 @@ namespace GTech.Olivia.Gyzer
                     string tag = this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Tag)].Text.Split(new char[] {',' , ';'})[0];
                     this.SaveLocation = GetSavePath(this.URL, tag);
 
-                    this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Size)].Text = "-1";
-                    this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Status)].Text = "Unknown";
-                    this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.ThreadId)].Text = this.myKey.ToString();
+                    //this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Size)].Text = "-1";
+                    //this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Status)].Text = "Unknown";
+                    //this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.ThreadId)].Text = this.myKey.ToString();
+
+                    DownloadArgs args = new DownloadArgs(this.myKey, "Unknown", -1, -1);
+                    GrabberForm.UpdateProgress(this.currentListItem, args);
 
 
                     string massaged = MassageUrl(URL);
@@ -160,6 +178,7 @@ namespace GTech.Olivia.Gyzer
             return directory + @"\" + uniqueFileName + "." + fileExt;
 		}
 
+        [MethodImplAttribute(MethodImplOptions.Synchronized)]
 		private void UpdateDatabase()
 		{
 			SqlConnection cn = new SqlConnection();
@@ -218,14 +237,6 @@ namespace GTech.Olivia.Gyzer
 		}
 	}
 
-	public enum ThreadState
-	{
-		New = 0,
-		Starting = 1,
-		Started = 2,
-		Pausing = 3,
-		Paused = 4,
-		Stopping = 5,
-		Stopped = 6
-	}
+
+
 }
