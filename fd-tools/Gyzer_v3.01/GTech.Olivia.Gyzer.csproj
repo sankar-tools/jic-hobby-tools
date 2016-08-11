@@ -26,8 +26,9 @@
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -105,7 +106,6 @@
     <Compile Include="DialUpHelper.cs" />
     <Compile Include="DownloadArgs.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="HttpHelper.cs" />
     <Compile Include="CrawlWin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +134,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="NEWS.ICO" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SansTech.Libs\SansTech.Libs.csproj">
+      <Project>{670381E5-F421-45A8-94C5-7E1CC705BBC2}</Project>
+      <Name>SansTech.Libs</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

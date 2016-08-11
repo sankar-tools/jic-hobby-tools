@@ -5,9 +5,12 @@ using System.Windows.Forms;
 using System.Configuration;
 using System.Runtime.CompilerServices;
 
+using System.Net;
+using System.ComponentModel;
+
 namespace GTech.Olivia.Gyzer
 {
-	class MyWebClient : HttpHelper
+	class MyWebClient
 	{
         public CrawlWin GrabberForm = null;
 		public string URL = string.Empty;
@@ -24,9 +27,15 @@ namespace GTech.Olivia.Gyzer
 			set { myKey = value; }
 		}
 
+        WebClient client = null;
 		public void StartDownload()
 		{
-			this.OnReceiveData += new HttpHelper.OnReceiveDataHandler(Grabber_DownloadProgressChanged);
+			//this.OnReceiveData += new HttpHelper.OnReceiveDataHandler(Grabber_DownloadProgressChanged);
+
+            client = new WebClient();
+
+            //client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
+            //client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
 
 			DownloadNextFile();
 			State = ThreadState.Started;
@@ -38,55 +47,44 @@ namespace GTech.Olivia.Gyzer
 			State = ThreadState.Started;
 		}
 
-		public void Grabber_DownloadProgressChanged(object sender, HttpHelper.OnReceiveDataEventArgs args)
+		//public void Grabber_DownloadProgressChanged(object sender, HttpHelper.OnReceiveDataEventArgs args)
+        void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs args)
 		{
-			MyWebClient thisClient = (MyWebClient) sender;
             string status = "unknown";
-            long size = args.TotalBytes;
-            long count = args.CurrentByteCount;
+            double size = double.Parse(args.TotalBytesToReceive.ToString());
+            double count = double.Parse(args.BytesReceived.ToString());
+            double percentage = count / size * 100;
 
-			if (args.Done == true)
-			{
-                //this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Status)].Text = args.StatusCode.ToString();
-                status = args.StatusCode.ToString();
-                DownloadArgs a = new DownloadArgs(this.myKey, status, size, count);
-                GrabberForm.UpdateProgress(currentListItem, a);
+            status = percentage.ToString() + "%";
 
-				UpdateDatabase();
-
-				switch (State)
-				{
-					case ThreadState.Pausing:
-						State = ThreadState.Paused;
-						break;
-
-					case ThreadState.Stopping:
-						State = ThreadState.Stopped;
-						break;
-
-					default:
-						DownloadNextFile();
-						break;
-				}
-			}
-			else
-			{
-                size = args.TotalBytes;
-                count = args.CurrentByteCount;
-                //this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Size)].Text = 
-                //    args.CurrentByteCount.ToString();
-                //this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Total)].Text =
-                //    args.TotalBytes.ToString();
-                //this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Status)].Text = 
-                //    Convert.ToString((double)args.CurrentByteCount / (double)args.TotalBytes * 100) + "%";
-                status = Convert.ToString((double)args.CurrentByteCount / (double)args.TotalBytes * 100) + "%";
-
-                DownloadArgs a = new DownloadArgs(this.myKey, status, size, count);
-                GrabberForm.UpdateProgress(currentListItem, a);
-			}
-
-
+            DownloadArgs a = new DownloadArgs(this.myKey, status, size, count);
+            GrabberForm.UpdateProgress(currentListItem, a);
 		}
+
+        void client_DownloadFileCompleted(object sender, DownloadArgs args)
+	    {
+            //this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Status)].Text = args.Status;
+            //status = args.StatusCode.ToString();
+
+            GrabberForm.UpdateProgress(currentListItem, args);
+
+            UpdateDatabase();
+
+            switch (State)
+            {
+                case ThreadState.Pausing:
+                    State = ThreadState.Paused;
+                    break;
+
+                case ThreadState.Stopping:
+                    State = ThreadState.Stopped;
+                    break;
+
+                default:
+                    DownloadNextFile();
+                    break;
+            }
+	    }
 
 		private void DownloadNextFile()
 		{
@@ -97,9 +95,11 @@ namespace GTech.Olivia.Gyzer
 				if (this.currentListItem != null)
 				{
                     this.URL = this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Url)].Text;
+                    string massaged = MassageUrl(URL);
 
                     string tag = this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Tag)].Text.Split(new char[] {',' , ';'})[0];
-                    this.SaveLocation = GetSavePath(this.URL, tag);
+                    this.SaveLocation = GetSavePath(massaged, tag);
+                    SansTech.IO.Directory.EnsureDirectory(SansTech.IO.Directory.GetDirectoryForFilePath(this.SaveLocation));
 
                     //this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Size)].Text = "-1";
                     //this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Status)].Text = "Unknown";
@@ -109,8 +109,34 @@ namespace GTech.Olivia.Gyzer
                     GrabberForm.UpdateProgress(this.currentListItem, args);
 
 
-                    string massaged = MassageUrl(URL);
-                    DownloadFileEv(massaged, this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Referrer)].Text, SaveLocation);
+                    
+                    if(!string.IsNullOrEmpty(massaged))
+                    {
+                        DownloadArgs a = null;
+                        try
+                        {
+                            //DownloadFileEv(massaged, this.currentListItem.SubItems[Convert.ToInt32(Global.ListColumns.Referrer)].Text, SaveLocation);
+                            client.DownloadFile(new Uri(massaged), SaveLocation);
+                            a = new DownloadArgs(this.myKey, "OK", -1, -1);
+                        }
+                        catch (WebException ex)
+                        {
+                            if (ex.Response == null)
+                            {
+                                MessageBox.Show(ex.StackTrace);
+                                a = new DownloadArgs(this.myKey, "exception", -1,-1);
+                            }
+                            else
+                            {
+                                HttpWebResponse res = (HttpWebResponse)ex.Response;
+
+
+                                a = new DownloadArgs(this.myKey, res.StatusCode.ToString(), (double)res.ContentLength, (double)res.ContentLength);
+                            }
+                        }
+
+                        client_DownloadFileCompleted(null, a);
+                    }
 				}
 				else
 					State = ThreadState.Stopped;
@@ -124,7 +150,13 @@ namespace GTech.Olivia.Gyzer
             //    return "http://content
             //}
 
-            return URL;
+            if (URL.IndexOf("http://", 8) > -1)
+                URL = URL.Substring(0, URL.IndexOf("http://", 8)-1);
+
+            if (SansTech.Net.Http.UrlHelper.IsUrl(URL))
+                return URL;
+            else
+                return string.Empty;
         }
 
 		private string GetSavePath(string url, string tag)
