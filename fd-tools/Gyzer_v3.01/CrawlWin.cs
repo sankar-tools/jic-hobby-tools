@@ -103,7 +103,7 @@ namespace GTech.Olivia.Gyzer
 
             LoadDBLogicCombo();
 
-            MessageBox.Show("Select Selection Logic\r\nRefresh Grid");
+            //MessageBox.Show("Select Selection Logic\r\nRefresh Grid");
 		}
 
 		private void InitializeSelectedList()
@@ -198,9 +198,9 @@ namespace GTech.Olivia.Gyzer
             this.sbpReady = new System.Windows.Forms.StatusBarPanel();
             this.sbpCount = new System.Windows.Forms.StatusBarPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tbstxtRecLimit = new System.Windows.Forms.ToolStripTextBox();
             this.tscboDBLogic = new System.Windows.Forms.ToolStripComboBox();
             this.tsbtnRefreshDB = new System.Windows.Forms.ToolStripButton();
-            this.tbstxtRecLimit = new System.Windows.Forms.ToolStripTextBox();
             this.tcMain.SuspendLayout();
             this.tpInprogress.SuspendLayout();
             this.pnlMain.SuspendLayout();
@@ -534,6 +534,12 @@ namespace GTech.Olivia.Gyzer
             this.toolStrip1.TabIndex = 17;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // tbstxtRecLimit
+            // 
+            this.tbstxtRecLimit.Name = "tbstxtRecLimit";
+            this.tbstxtRecLimit.Size = new System.Drawing.Size(100, 25);
+            this.tbstxtRecLimit.Text = "10000";
+            // 
             // tscboDBLogic
             // 
             this.tscboDBLogic.Name = "tscboDBLogic";
@@ -550,12 +556,6 @@ namespace GTech.Olivia.Gyzer
             this.tsbtnRefreshDB.Text = "toolStripButton1";
             this.tsbtnRefreshDB.ToolTipText = "Refresh Grid";
             this.tsbtnRefreshDB.Click += new System.EventHandler(this.tsbtnRefreshDB_Click);
-            // 
-            // tbstxtRecLimit
-            // 
-            this.tbstxtRecLimit.Name = "tbstxtRecLimit";
-            this.tbstxtRecLimit.Size = new System.Drawing.Size(100, 25);
-            this.tbstxtRecLimit.Text = "1000";
             // 
             // CrawlWin
             // 
@@ -664,26 +664,26 @@ namespace GTech.Olivia.Gyzer
 				myClients[i].Key = i;
 				myClients[i].GrabberForm = this;
 
-				if (useProxy == true)
-				{
-					myClients[i].UseProxy = true;
-					myClients[i].ProxyAddress = ConfigurationSettings.AppSettings["ProxyUri"];
-					myClients[i].ProxyUserName = ConfigurationSettings.AppSettings["ProxyUser"];
-					myClients[i].ProxyPassword = ConfigurationSettings.AppSettings["ProxyPassword"];
-					myClients[i].ProxyDomain = ConfigurationSettings.AppSettings["ProxyDomain"];
-				}
+                //if (useProxy == true)
+                //{
+                //    myClients[i].UseProxy = true;
+                //    myClients[i].ProxyAddress = ConfigurationSettings.AppSettings["ProxyUri"];
+                //    myClients[i].ProxyUserName = ConfigurationSettings.AppSettings["ProxyUser"];
+                //    myClients[i].ProxyPassword = ConfigurationSettings.AppSettings["ProxyPassword"];
+                //    myClients[i].ProxyDomain = ConfigurationSettings.AppSettings["ProxyDomain"];
+                //}
 
-				myClients[i].BufferSize = Convert.ToInt32(ConfigurationSettings.AppSettings["BufferSize"]);
-				myClients[i].UserAgent = ConfigurationSettings.AppSettings["UserAgent"];
+                //myClients[i].BufferSize = Convert.ToInt32(ConfigurationSettings.AppSettings["BufferSize"]);
+                //myClients[i].UserAgent = ConfigurationSettings.AppSettings["UserAgent"];
 				
-				myClients[i].UseReferrer = Convert.ToBoolean(ConfigurationSettings.AppSettings["UseReferrer"]);
-				myClients[i].AllowRedirect = Convert.ToBoolean(ConfigurationSettings.AppSettings["AllowRedirect"]);
+                //myClients[i].UseReferrer = Convert.ToBoolean(ConfigurationSettings.AppSettings["UseReferrer"]);
+                //myClients[i].AllowRedirect = Convert.ToBoolean(ConfigurationSettings.AppSettings["AllowRedirect"]);
 
-				myClients[i].UseSiteCredentials = Convert.ToBoolean(ConfigurationSettings.AppSettings["UseSiteCredentials"]);
-				myClients[i].SiteUserName = ConfigurationSettings.AppSettings["SiteUserName"];
-				myClients[i].SitePassword = ConfigurationSettings.AppSettings["SitePassword"];
-				myClients[i].SiteDomain = ConfigurationSettings.AppSettings["SiteDomain"];
-				myClients[i].TimeOut = Convert.ToInt32(ConfigurationSettings.AppSettings["TimeOut"]);
+                //myClients[i].UseSiteCredentials = Convert.ToBoolean(ConfigurationSettings.AppSettings["UseSiteCredentials"]);
+                //myClients[i].SiteUserName = ConfigurationSettings.AppSettings["SiteUserName"];
+                //myClients[i].SitePassword = ConfigurationSettings.AppSettings["SitePassword"];
+                //myClients[i].SiteDomain = ConfigurationSettings.AppSettings["SiteDomain"];
+                //myClients[i].TimeOut = Convert.ToInt32(ConfigurationSettings.AppSettings["TimeOut"]);
 
 				myClients[i].State = ThreadState.Starting;
 
@@ -862,8 +862,8 @@ namespace GTech.Olivia.Gyzer
 
             string constr = ConfigurationSettings.AppSettings["ControlDatabase"];
 
-            string selectionVw = "select top " + tbstxtRecLimit.Text + " * from " + tscboDBLogic.SelectedText;
-            if (String.IsNullOrEmpty(tscboDBLogic.SelectedText))
+            string selectionVw = "select top " + tbstxtRecLimit.Text + " * from " + tscboDBLogic.Text;
+            if (String.IsNullOrEmpty(tscboDBLogic.Text))
             {
                 MessageBox.Show("Select rules");
                 return;

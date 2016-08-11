@@ -19,18 +19,18 @@ namespace GTech.Olivia.Gyzer
     {
         public int Id;
         public string Status;
-        public long Size;
-        public long Downloaded;
+        public double Size;
+        public double Downloaded;
         //public int ProgressPercent;
 
-        //public DownloadArgs(string status, long size, long count)
+        //public DownloadArgs(string status, double size, double count)
         //{
         //    this.Status = status;
         //    this.Size = size;
         //    this.Downloaded = count;
         //}
 
-        public DownloadArgs(int id, string status, long size, long count)
+        public DownloadArgs(int id, string status, double size, double count)
         {
             this.Id = id;
             this.Status = status;

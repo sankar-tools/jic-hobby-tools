@@ -58,5 +58,10 @@ namespace SansTech.IO
             DirectoryInfo di = System.IO.Directory.CreateDirectory(path);
         }
 
+        public static string GetDirectoryForFilePath(string filePath)
+        {
+            return Path.GetDirectoryName(filePath);
+        }
+
     }
 }
