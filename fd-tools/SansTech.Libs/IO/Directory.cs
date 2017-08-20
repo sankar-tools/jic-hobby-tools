@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace SansTech.IO
 {
@@ -14,6 +15,8 @@ namespace SansTech.IO
 
             string name = filename;
             string ext = string.Empty;
+
+            
 
             if (filename.LastIndexOf(".") > 1)
             {
@@ -27,11 +30,26 @@ namespace SansTech.IO
             string newName = name + "." + ext;
             while (System.IO.File.Exists(filepath + @"\" + newName))
             {
-                name = name + "_" + fileCounter.ToString().PadLeft(4, '0');
-                newName = name + "." + ext;
+                string tempname = name + "_" + fileCounter.ToString().PadLeft(4, '0');
+                newName = tempname + "." + ext;
+                fileCounter++;
             }
 
-            return filepath + @"\" + newName;
+            string newpath =  filepath + @"\" + newName;
+            if (newpath.Length > 255)
+                throw new Exception("Filepath too long");
+            return filepath + @"\" + MassageFileName(newName);
+        }
+
+        private static string MassageFileName(string filepath)
+        {
+
+           
+            // Remove illegal chars from file path
+            
+            string regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+            Regex r = new Regex(string.Format("[{0}]", Regex.Escape(regexSearch)));
+            return(r.Replace(filepath, ""));
         }
 
         public static string GetUniqueDirectory(string dirpath, string dirname)

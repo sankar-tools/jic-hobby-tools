@@ -223,7 +223,7 @@ namespace FormSmartGetIm
             {
                 HttpHelper httpHandle = GetHttpHandle();
 
-                GlobalParams.CurrentNode = node;
+                GlobalParams.ParentNode = node;
 
                 string currentUrl = GetCurrentUrl(node);
                 httpHandle.Referrer = currentUrl;
@@ -246,7 +246,7 @@ namespace FormSmartGetIm
                     }
 
 
-                    GlobalParams.CurrentNode[(int)eColumns.Status] = "Initiated";
+                    GlobalParams.ParentNode[(int)eColumns.Status] = "Initiated";
 
                     string doc = httpHandle.GetUrlEvents(currentUrl, 10240);
                 }
@@ -328,7 +328,7 @@ namespace FormSmartGetIm
         {
             if (args.Done) // Current page fetch is complete
             {
-                string currentUrl = GetCurrentUrl(GlobalParams.CurrentNode);
+                string currentUrl = GetCurrentUrl(GlobalParams.ParentNode);
 
                 UrlTrackParams oparams = new UrlTrackParams(args.Params);
 
@@ -366,7 +366,7 @@ namespace FormSmartGetIm
 
                 oparams.DownloadedSize = args.Params.Size;
                 oparams.Status = "Done";
-                UpdateTreeNode(oparams, GlobalParams.CurrentNode);
+                UpdateTreeNode(oparams, GlobalParams.ParentNode);
                 
             }
             else // Current page fetch is in progress update status
@@ -384,7 +384,7 @@ namespace FormSmartGetIm
                     case HttpHelper.DocType.image:
                         //cancel = true;
                         args.Cancel = true;
-                        string savePath = Properties.Settings.Default.savePath + "\\" + GetCurrentTitle(GlobalParams.CurrentNode) + "\\" + UrlHelper.GetFilename(args.Params.Url);
+                        string savePath = Properties.Settings.Default.savePath + "\\" + GetCurrentTitle(GlobalParams.ParentNode) + "\\" + UrlHelper.GetFilename(args.Params.Url);
                         //SansTech.IO.File.WriteBinary(savePath, args.Document);
                         
                         HttpHelper http = new HttpHelper();
@@ -406,7 +406,7 @@ namespace FormSmartGetIm
                         break;
                 }
 
-                UpdateTreeNode(oparams, GlobalParams.CurrentNode);
+                UpdateTreeNode(oparams, GlobalParams.ParentNode);
 
                 //item.SubItems[1].Text = args.CurrentByteCount.ToString() + "/" + args.TotalBytes.ToString();
             }
@@ -417,7 +417,7 @@ namespace FormSmartGetIm
                 oparams.DownloadedSize = args.CurrentByteCount;
                 oparams.Status = args.ErrorMsg;
 
-                UpdateTreeNode(oparams, GlobalParams.CurrentNode);
+                UpdateTreeNode(oparams, GlobalParams.ParentNode);
 
             }
         }
@@ -441,7 +441,7 @@ namespace FormSmartGetIm
 
                     UrlTrackParams oparams = new UrlTrackParams(args.Params);
                     oparams.Url = lparse.GoodUrls[i].Link;
-                    AddTreeNode(oparams, GlobalParams.CurrentNode);
+                    AddTreeNode(oparams, GlobalParams.ParentNode);
                 }
 
             }
@@ -467,6 +467,11 @@ namespace FormSmartGetIm
             string logMsg = "[" + DateTime.Now.ToString() + "] " + s ;
             txtLog.Text += logMsg + "\r\n";
             GlobalParams.ActivityLog.Write(logMsg);
+        }
+
+        private void tsbtnShowMsg_Click(object sender, EventArgs e)
+        {
+            GlobalParams.ShowMessages = tsbtnShowMsg.Checked;
         }
 
 

@@ -124,6 +124,7 @@ namespace FormSmartGetIm
             }
             catch (Exception ex)
             { 
+                
                 LogMessage(ex.ToString());
             }
 
@@ -348,10 +349,16 @@ namespace FormSmartGetIm
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString());
+                if(btnMsg.Checked)
+                    MessageBox.Show(e.ToString());
             }
             //return null;
 
+        }
+
+        private void btnMsg_Click(object sender, EventArgs e)
+        {
+            btnMsg.Checked = !btnMsg.Checked;
         }
     }
 }

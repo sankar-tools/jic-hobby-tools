@@ -12,11 +12,13 @@ namespace FormSmartGetIm
 
         public static int Counter = 1;
         public static string Referrer = "";
+        public static bool ShowMessages = false;
 
         public static RunState State = RunState.Stopped;
 
         public static int CurrentLevel = 1;
-        public static CommonTools.Node CurrentNode = null;
+        public static CommonTools.Node ParentNode = null;
+        public static CommonTools.Node ImageNode = null;
 
         public static string GetIgnoreList()
         {

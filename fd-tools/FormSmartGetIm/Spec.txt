@@ -11,3 +11,13 @@ Issues / Enhancements
 8. fail safe on connection failure
 9. Monitor clipboard
 
+tree is not getting updated
+application termination
+status update on Total / selected / downloaded / pending
+Delete selected feature
+inverse selected
+remove downloaded from list
+
+add counter to image name in viewer
+
+limit by file size to not download thms

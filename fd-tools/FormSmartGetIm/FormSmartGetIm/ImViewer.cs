@@ -28,6 +28,7 @@ namespace FormSmartGetIm
         {
             Links = new List<UrlTrackParams>();
             this.listImg.CheckBoxes = true;
+
             listImg.SelectedIndexChanged += new EventHandler(listImg_SelectedIndexChanged);
             listImg.ShowItemToolTips = true;
         }
@@ -72,7 +73,7 @@ namespace FormSmartGetIm
                 //ImageLinkParams oparams = links[i];
                 Image img = LoadImage(i);
 
-                img = null; //ToDo: Temp supress, remove this
+                //img = null; //ToDo: Temp supress, remove this
 
                 if (img == null)
                     img = Image.FromFile(Properties.Settings.Default.xPath);
@@ -85,6 +86,7 @@ namespace FormSmartGetIm
                     images.Images.Add(imgThumb);
                     string filename = UrlHelper.GetFilename(Links[i].Source);
                     ListViewItem item = new ListViewItem(filename, i);
+                    
                     item.ToolTipText = Links[i].Source;
                     listImg.Items.Add(item);
                     listImg.LargeImageList = images;
@@ -133,7 +135,7 @@ namespace FormSmartGetIm
         {
             for (int i = 0; i < listImg.Items.Count; i++)
             {
-                if (listImg.Items[i].Checked == true)
+                if (listImg.Items[i].Checked == true || listImg.Items[i].Selected)
                 {
                     if (Links[i].Status != "Invalid")
                         Links[i].Status = "Selected";
@@ -144,6 +146,49 @@ namespace FormSmartGetIm
                 OnSelectionCompleted(this);
 
             this.Close();
+        }
+
+        private void btnSelectAll_Click(object sender, EventArgs e)
+        {
+            SelectItems(SelectMode.All);
+        }
+
+        private void SelectItems(SelectMode mode)
+        {
+            foreach (ListViewItem item in listImg.Items)
+            {
+                switch (mode)
+                {
+                    case SelectMode.All:
+                        item.Selected = true;
+                        break;
+
+                    case SelectMode.None:
+                        item.Selected = false;
+                        break;
+
+                    case SelectMode.Inverse:
+                        item.Selected = !item.Selected;
+                        break;
+                }
+            }
+        }
+
+        private enum SelectMode
+        { 
+            All,
+            None,
+            Inverse
+        }
+
+        private void btnSelectNone_Click(object sender, EventArgs e)
+        {
+            SelectItems(SelectMode.None);
+        }
+
+        private void btnSelectInverse_Click(object sender, EventArgs e)
+        {
+            SelectItems(SelectMode.Inverse);
         }
     }
 }

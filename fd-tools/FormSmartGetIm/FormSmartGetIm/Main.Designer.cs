@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbtnAddUrl = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnRun = new System.Windows.Forms.ToolStripButton();
             this.txtLog = new System.Windows.Forms.TextBox();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.split = new System.Windows.Forms.SplitContainer();
@@ -47,7 +48,7 @@
             this.colId2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colUrl2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colStatus2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tsbtnRun = new System.Windows.Forms.ToolStripButton();
+            this.btnMsg = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.split)).BeginInit();
             this.split.Panel1.SuspendLayout();
@@ -60,7 +61,8 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbtnAddUrl,
-            this.tsbtnRun});
+            this.tsbtnRun,
+            this.btnMsg});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1024, 25);
@@ -73,9 +75,19 @@
             this.tsbtnAddUrl.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnAddUrl.Image")));
             this.tsbtnAddUrl.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnAddUrl.Name = "tsbtnAddUrl";
-            this.tsbtnAddUrl.Size = new System.Drawing.Size(40, 22);
+            this.tsbtnAddUrl.Size = new System.Drawing.Size(42, 22);
             this.tsbtnAddUrl.Text = "Url++";
             this.tsbtnAddUrl.Click += new System.EventHandler(this.tsbtnAddUrl_Click);
+            // 
+            // tsbtnRun
+            // 
+            this.tsbtnRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbtnRun.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnRun.Image")));
+            this.tsbtnRun.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnRun.Name = "tsbtnRun";
+            this.tsbtnRun.Size = new System.Drawing.Size(35, 22);
+            this.tsbtnRun.Text = "Start";
+            this.tsbtnRun.Click += new System.EventHandler(this.tsbtnRun_Click);
             // 
             // txtLog
             // 
@@ -209,15 +221,16 @@
             // 
             this.colStatus2.Text = "Status";
             // 
-            // tsbtnRun
+            // btnMsg
             // 
-            this.tsbtnRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsbtnRun.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnRun.Image")));
-            this.tsbtnRun.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbtnRun.Name = "tsbtnRun";
-            this.tsbtnRun.Size = new System.Drawing.Size(35, 22);
-            this.tsbtnRun.Text = "Start";
-            this.tsbtnRun.Click += new System.EventHandler(this.tsbtnRun_Click);
+            this.btnMsg.CheckOnClick = true;
+            this.btnMsg.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnMsg.Image = ((System.Drawing.Image)(resources.GetObject("btnMsg.Image")));
+            this.btnMsg.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMsg.Name = "btnMsg";
+            this.btnMsg.Size = new System.Drawing.Size(94, 22);
+            this.btnMsg.Text = "Show Messages";
+            this.btnMsg.Click += new System.EventHandler(this.btnMsg_Click);
             // 
             // Main
             // 
@@ -264,6 +277,7 @@
         private System.Windows.Forms.Button btnAddUrl;
         private System.Windows.Forms.TextBox txtAddUrl;
         private System.Windows.Forms.ToolStripButton tsbtnRun;
+        private System.Windows.Forms.ToolStripButton btnMsg;
     }
 }
 

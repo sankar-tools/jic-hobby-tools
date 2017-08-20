@@ -25,7 +25,7 @@ namespace FormSmartGetIm.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Y:\\dwn\\mytool")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\dump\\dwn\\mytool")]
         public string savePath {
             get {
                 return ((string)(this["savePath"]));
@@ -37,7 +37,7 @@ namespace FormSmartGetIm.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Y:\\dwn\\mytool\\SmartIm.log")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\dump\\dwn\\mytool\\SmartIm.log")]
         public string logPath {
             get {
                 return ((string)(this["logPath"]));
@@ -49,7 +49,7 @@ namespace FormSmartGetIm.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Y:\\dwn\\mytool\\Links.log")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\dump\\dwn\\mytool\\Links.log")]
         public string linkList {
             get {
                 return ((string)(this["linkList"]));
@@ -73,7 +73,7 @@ namespace FormSmartGetIm.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Y:\\dwn\\mytool\\blacklist.txt")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\dump\\dwn\\mytool\\blacklist.txt")]
         public string ignoreList {
             get {
                 return ((string)(this["ignoreList"]));
@@ -85,7 +85,7 @@ namespace FormSmartGetIm.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SolProc.map")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\dump\\dwn\\mytool\\SolProc.map")]
         public string procMap {
             get {
                 return ((string)(this["procMap"]));
@@ -97,7 +97,7 @@ namespace FormSmartGetIm.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Y:\\dwn\\mytool\\x-mark-icon.png")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\dump\\dwn\\mytool\\x-mark-icon.png")]
         public string xPath {
             get {
                 return ((string)(this["xPath"]));

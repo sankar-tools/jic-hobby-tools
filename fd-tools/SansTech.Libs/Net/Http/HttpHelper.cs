@@ -16,7 +16,7 @@ namespace SansTech.Net.Http
 
         int nPostMode = 1;
 
-        int nConnectTimeout = 30;
+        int nConnectTimeout = 120;
         string cUserAgent = "West Wind HTTP .NET";
         string cReferrer = string.Empty;
 
@@ -584,7 +584,10 @@ namespace SansTech.Net.Http
         {
             HttpWebRequest oHttpWebRequest = null;
 
+            //CookieContainer cookieJar = new CookieContainer();
             oHttpWebRequest = (HttpWebRequest)System.Net.WebRequest.Create(Url);
+            //oHttpWebRequest.CookieContainer = cookieJar;
+
             oHttpWebRequest.Referer = cReferrer;
 
             return this.GetUrlStream(Url, oHttpWebRequest);
@@ -610,30 +613,42 @@ namespace SansTech.Net.Http
         /// <returns></returns>
         public string GetUrl(string Url)
         {
-            StreamReader oHttpResponse = this.GetUrlStream(Url);
-            if (oHttpResponse == null)
-                return "";
+            int attempt = 0;
+            for (; attempt < 3; attempt++)
+            {
+                try
+                {
+                    StreamReader oHttpResponse = this.GetUrlStream(Url);
+                    if (oHttpResponse == null)
+                        return "";
 
-            string lcResult = oHttpResponse.ReadToEnd();
+                    string lcResult = oHttpResponse.ReadToEnd();
 
-            // Build HttpParams
-            OnReceiveDataEventArgs oArgs = new OnReceiveDataEventArgs();
-            oArgs.TotalBytes = lcResult.Length;
+                    // Build HttpParams
+                    OnReceiveDataEventArgs oArgs = new OnReceiveDataEventArgs();
+                    oArgs.TotalBytes = lcResult.Length;
 
-            oArgs.CurrentByteCount = lcResult.Length;
+                    oArgs.CurrentByteCount = lcResult.Length;
 
-            oArgs.Params.ContentType = this.oWebResponse.ContentType;
-            oArgs.DocumentType = HttpHelper.GetDocType(oArgs.Params.ContentType);
-            oArgs.Params.Url = Url;
-            oArgs.Document = lcResult;
-            oArgs.Done = true;
-            oArgs.Params.Size = lcResult.Length;
-            oArgs.Params.Title = new Html.HtmlDocument(lcResult).GetTitle();
-            HttpParams = oArgs;
+                    oArgs.Params.ContentType = this.oWebResponse.ContentType;
+                    oArgs.DocumentType = HttpHelper.GetDocType(oArgs.Params.ContentType);
+                    oArgs.Params.Url = Url;
+                    oArgs.Document = lcResult;
+                    oArgs.Done = true;
+                    oArgs.Params.Size = lcResult.Length;
+                    oArgs.Params.Title = new Html.HtmlDocument(lcResult).GetTitle();
+                    HttpParams = oArgs;
 
-            oHttpResponse.Close();
+                    oHttpResponse.Close();
 
-            return lcResult;
+                    return lcResult;
+                }
+                catch (Exception ex)
+                {
+                    attempt++;
+                }
+            }
+            return "";
         }
 
         /// <summary>

@@ -34,13 +34,14 @@
             this.tsbtnStart = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.pnlAddUrl = new System.Windows.Forms.Panel();
+            this.btnPaste = new System.Windows.Forms.Button();
             this.btnAddUrl = new System.Windows.Forms.Button();
             this.txtAddUrl = new System.Windows.Forms.TextBox();
             this.mainSplitter = new System.Windows.Forms.SplitContainer();
             this.pnlTree = new System.Windows.Forms.Panel();
             this.pnlMsg = new System.Windows.Forms.Panel();
             this.txtLog = new System.Windows.Forms.TextBox();
-            this.btnPaste = new System.Windows.Forms.Button();
+            this.tsbtnShowMsg = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.pnlAddUrl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitter)).BeginInit();
@@ -55,7 +56,8 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbtnAdd,
             this.tsbtnStart,
-            this.toolStripButton1});
+            this.toolStripButton1,
+            this.tsbtnShowMsg});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(988, 25);
@@ -98,6 +100,16 @@
             this.pnlAddUrl.Name = "pnlAddUrl";
             this.pnlAddUrl.Size = new System.Drawing.Size(858, 51);
             this.pnlAddUrl.TabIndex = 2;
+            // 
+            // btnPaste
+            // 
+            this.btnPaste.Location = new System.Drawing.Point(691, 15);
+            this.btnPaste.Name = "btnPaste";
+            this.btnPaste.Size = new System.Drawing.Size(60, 23);
+            this.btnPaste.TabIndex = 2;
+            this.btnPaste.Text = "^V";
+            this.btnPaste.UseVisualStyleBackColor = true;
+            this.btnPaste.Click += new System.EventHandler(this.btnPaste_Click);
             // 
             // btnAddUrl
             // 
@@ -162,15 +174,16 @@
             this.txtLog.Size = new System.Drawing.Size(988, 110);
             this.txtLog.TabIndex = 0;
             // 
-            // btnPaste
+            // tsbtnShowMsg
             // 
-            this.btnPaste.Location = new System.Drawing.Point(691, 15);
-            this.btnPaste.Name = "btnPaste";
-            this.btnPaste.Size = new System.Drawing.Size(60, 23);
-            this.btnPaste.TabIndex = 2;
-            this.btnPaste.Text = "^V";
-            this.btnPaste.UseVisualStyleBackColor = true;
-            this.btnPaste.Click += new System.EventHandler(this.btnPaste_Click);
+            this.tsbtnShowMsg.CheckOnClick = true;
+            this.tsbtnShowMsg.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbtnShowMsg.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnShowMsg.Image")));
+            this.tsbtnShowMsg.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnShowMsg.Name = "tsbtnShowMsg";
+            this.tsbtnShowMsg.Size = new System.Drawing.Size(94, 22);
+            this.tsbtnShowMsg.Text = "Show Messages";
+            this.tsbtnShowMsg.Click += new System.EventHandler(this.tsbtnShowMsg_Click);
             // 
             // BullGet
             // 
@@ -213,5 +226,6 @@
         private System.Windows.Forms.Panel pnlTree;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.Button btnPaste;
+        private System.Windows.Forms.ToolStripButton tsbtnShowMsg;
     }
 }
