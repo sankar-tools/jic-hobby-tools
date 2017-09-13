@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormSmartGetIm", "FormSmart
 		{670381E5-F421-45A8-94C5-7E1CC705BBC2} = {670381E5-F421-45A8-94C5-7E1CC705BBC2}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SansTech.Libs", "..\SansTech.Net.Http\SansTech.Libs.csproj", "{670381E5-F421-45A8-94C5-7E1CC705BBC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SansTech.Libs", "..\SansTech.Libs\SansTech.Libs.csproj", "{670381E5-F421-45A8-94C5-7E1CC705BBC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
