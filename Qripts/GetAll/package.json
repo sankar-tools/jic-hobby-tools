@@ -1,0 +1,18 @@
+{
+  "name": "getall",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.1",
+    "chalk": "^3.0.0",
+    "fsu": "^2.0.1",
+    "path": "^0.12.7",
+    "progress": "^2.0.3"
+  }
+}
