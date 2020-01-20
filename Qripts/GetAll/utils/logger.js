@@ -4,7 +4,7 @@ const fs = require('fs');
 
 // init logger
 var initLog = `Log file initialized\n${Date(Date.now()).toString()}\n`;
-fs.writeFileSync(`${_rootDir}/log/temp.log`, initLog);
+fs.writeFileSync(`${__rootDir}/logs/temp.log`, initLog);
 logger = {}
 
 // ToDo:: __function not returns the calling function names
@@ -30,6 +30,11 @@ logger.record = function(...args){
     s.push(JSON.stringify(arg,null,4));
   });
 
-  fs.appendFileSync(`${_rootDir}/log/temp.log`, s.join('\n'));
+  fs.appendFileSync(`${__rootDir}/log/temp.log`, s.join('\n'));
 }
+
+logger.banner = function(b){
+  console.log(chalk.bold(b));
+}
+
 module.exports = logger;

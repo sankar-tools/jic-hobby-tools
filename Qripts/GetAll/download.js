@@ -15,8 +15,8 @@ async function downloadImage (url) {
   })
   const totalLength = headers['content-length']
 
-  console.log('Download: ', url)
-  const progressBar = new ProgressBar('-> downloading [:bar] :percent :etas', {
+  console.log(`\n\n${url} =>`)
+  const progressBar = new ProgressBar('->[:bar] :percent :etas', {
       width: 40,
       complete: '=',
       incomplete: ' ',
@@ -24,14 +24,31 @@ async function downloadImage (url) {
       total: parseInt(totalLength)
     })
 
-  // const writer = Fs.createWriteStream(
-  //   Path.resolve(__dirname, 'images', 'code.jpg')
-  // )
-
-  const writer = require('./utils/file').getUniquePath(Path.resolve(__dirname, 'images'), 'code.jpg')
+  const writer = getDownloadStream(url)
   data.on('data', (chunk) => progressBar.tick(chunk.length))
   data.pipe(writer)
 }
 
-console.log('Connecting …')
-downloadImage('https://unsplash.com/photos/AaEQmoufHLk/download?force=true')
+module.exports = downloadImage;
+
+function getDownloadStream(url){
+  let fileComponents = filename.split('.');
+  let fileExt = fileComponents.pop();
+  let fileWithoutExt = fileComponents.pop();
+
+  let saveTo = `${filePath}/${fileWithoutExt}{_###}.${fileExt}`;
+
+  console.log(saveTo);
+
+  return fsu.createWriteStreamUnique(saveTo, { force: true });
+}
+
+function generateFilePath(url){
+  let urlMain = url.split('://').pop()
+  let urlComponents = urlMain.split('/');
+  let fileComponents = urlComponents.pop().split('.');
+  let fileExt = fileComponents.pop();
+  let fileWithoutExt = fileComponents.pop();
+
+
+}

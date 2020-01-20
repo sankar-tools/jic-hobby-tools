@@ -1,6 +1,6 @@
 module.exports = {
   input: {
-    source: ''
+    source: 'D:/tem/My Web Sites/adminLte/hts-cache/something/input.txt'
   },
   fetch: {
     request: {
@@ -10,7 +10,8 @@ module.exports = {
       }
     },
     domains: {
-      ignore: ''
+      blacklist: '',
+      mapper: ''
     }
   },
   save: {
@@ -22,9 +23,8 @@ module.exports = {
       min: {
         width: 2000,
         height: 2000,
-        size: 100,000,
+        size: 100000,
       }
     },
-
   },
 }

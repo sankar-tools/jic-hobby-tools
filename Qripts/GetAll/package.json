@@ -9,9 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^3.1.0",
     "axios": "^0.19.1",
     "chalk": "^3.0.0",
     "fsu": "^2.0.1",
+    "line-reader": "^0.4.0",
     "path": "^0.12.7",
     "progress": "^2.0.3"
   }
