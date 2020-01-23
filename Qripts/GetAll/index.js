@@ -16,16 +16,7 @@ let lineCount = 1;
 console.log('Save to ', mainConfig.save.path)
 
 var lines = require('fs').readFileSync(mainConfig.input.source, 'utf-8')
-    .split('\r\n')
-    .filter(Boolean);
+  .split('\r\n')
+  .filter(Boolean);
 
-lines.forEach(function(line){
-    if(line.trim().length>0){
-      console.log(`${lineCount}: ${line}`);
-      require('./download')(line)
-      lineCount++;
-    }
-
-});
-
-console.log(`Processed: ${lineCount-1} items`)
+require('./download')(lines)
